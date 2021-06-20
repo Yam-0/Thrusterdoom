@@ -41,10 +41,10 @@ public class PlayerScript : MonoBehaviour
 
 		boost = droneController.GetBoosting() ? Mathf.Max(0, boost - Time.deltaTime) : boost;
 		boost = droneController.GetGliding() ? Mathf.Min(maxBoost, boost + Time.deltaTime) : boost;
-		transform.Find("BoostMeter").localScale = new Vector3(0.6f, (boost / maxBoost) * 10, 1);
-		transform.Find("AmmoMeter").localScale = new Vector3(0.6f, (ammo / maxAmmo) * 10, 1);
+		transform.Find("BoostMeter").localScale = new Vector3(0.4f, (boost / maxBoost) * 10, 1);
+		transform.Find("AmmoMeter").localScale = new Vector3(0.4f, (ammo / maxAmmo) * 10, 1);
 		transform.Find("ReloadMeter").gameObject.SetActive(currentWeapon.weaponType == Weapon.WeaponType.summon);
-		transform.Find("ReloadMeter").localScale = new Vector3((fireCooldown / (1.0f / currentWeapon.firerate)) * 10, 0.6f, 1);
+		transform.Find("ReloadMeter").localScale = new Vector3((fireCooldown / (1.0f / currentWeapon.firerate)) * 10, 0.4f, 1);
 
 		input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 		input.y = Mathf.Max(0, input.y);
@@ -104,19 +104,40 @@ public class PlayerScript : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Pickup")
 		{
+			Debug.Log("Collided with pickup");
 			Pickup pickup;
 			if (other.gameObject.TryGetComponent<Pickup>(out pickup))
 			{
+				bool pickedUp = false;
+
 				switch (pickup.pickupType)
 				{
 					case Pickup.PickupType.health:
-						health += pickup.amount;
+						if (health < maxHealth)
+						{
+							health = Mathf.Min(maxHealth, health + pickup.amount);
+							pickedUp = true;
+						}
 						break;
 					case Pickup.PickupType.boost:
-						boost += pickup.amount;
+						if (boost < maxBoost)
+						{
+							boost = Mathf.Min(maxBoost, boost + pickup.amount);
+							pickedUp = true;
+						}
 						break;
 					case Pickup.PickupType.ammo:
+						if (ammo < maxAmmo)
+						{
+							ammo = Mathf.Min(maxAmmo, ammo + pickup.amount);
+							pickedUp = true;
+						}
 						break;
+				}
+
+				if (pickedUp)
+				{
+					Destroy(other.gameObject, 0);
 				}
 			}
 		}

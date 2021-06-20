@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 1
   weapon: {fileID: 1399594618760184098, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
-  ammoCost: 0.5
-  firerate: 8
+  ammoCost: 0.2
+  firerate: 4

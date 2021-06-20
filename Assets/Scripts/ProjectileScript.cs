@@ -8,6 +8,7 @@ public class ProjectileScript : MonoBehaviour
 	public float speed = 10.0f;
 	public float gravityScale = 0.0f;
 	public bool rotate;
+	public bool inheritVelocity;
 	public float maxTime = 6.0f;
 	public GameObject fireEffect;
 
@@ -18,7 +19,9 @@ public class ProjectileScript : MonoBehaviour
 		rb = GetComponent<Rigidbody2D>();
 		float angle = transform.rotation.eulerAngles.z;
 		Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-		rb.velocity = direction * speed;
+		Vector2 velocity = direction * speed;
+		velocity = inheritVelocity ? velocity + GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity : velocity;
+		rb.velocity = velocity;
 		rb.gravityScale = gravityScale;
 		Instantiate(fireEffect, transform.position, transform.rotation);
 		Destroy(gameObject, maxTime);
