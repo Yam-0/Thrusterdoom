@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(DroneController))]
 public class PlayerScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	private Vector2 input = Vector2.zero;
+	private DroneController droneController;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	void Start()
+	{
+		droneController = GetComponent<DroneController>();
+	}
+
+	void Update()
+	{
+		input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+		droneController.SetMoveInput(input);
+		droneController.SetNitroInput(Input.GetKey(KeyCode.LeftShift));
+		droneController.SetGlideInput(Input.GetKey(KeyCode.Space));
+	}
 }
