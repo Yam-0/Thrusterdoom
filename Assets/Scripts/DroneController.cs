@@ -6,14 +6,16 @@ using UnityEngine;
 public class DroneController : MonoBehaviour
 {
 	[Header("Drone Specs")]
+	public float maxHealth = 100.0f;
+	public float maxBoost = 1.2f;
 	public float thrust = 10.0f;
-	public float drag = 40.0f;
-	public float rotationSpeed = 100.0f;
-	public float maxSpeed = 100.0f;
-	public float sideThrust = 2.0f;
+	public float drag = 0.4f;
+	public float rotationSpeed = 4.5f;
+	public float maxSpeed = 12.0f;
+	public float sideThrust = 0.4f;
 	public float nitroBoostMult = 2.0f;
 	public float nitroTurnMult = 0.3f;
-	public float glideTurnMult = 1.3f;
+	public float glideTurnMult = 0.7f;
 
 	[Space]
 	[Header("Drone Effects")]
@@ -41,8 +43,12 @@ public class DroneController : MonoBehaviour
 	private Vector2 moveDirection = Vector2.zero;
 	private Vector2 lookDirection = Vector2.zero;
 	private float lookAngle = 0.0f;
-	private bool golding;
-	private bool nitro = false;
+	private bool boostInput = false;
+	private float health;
+	private float boost;
+
+	private bool golding = false;
+	private bool boosting = false;
 	private bool gliding = false;
 
 	void Start()
@@ -52,6 +58,9 @@ public class DroneController : MonoBehaviour
 
 		rocketSettings = rocket.main;
 		rocketEmission = rocket.emission;
+
+		health = maxHealth;
+		boost = maxBoost;
 	}
 
 	void Update()
@@ -68,7 +77,7 @@ public class DroneController : MonoBehaviour
 
 		if (!gliding)
 		{
-			if (nitro)
+			if (boosting)
 			{
 				rocketSettings.startColor = nitroColor;
 				rocketSettings.startSpeedMultiplier = 2.0f;
@@ -78,6 +87,14 @@ public class DroneController : MonoBehaviour
 				rocketSettings.startColor = goldingColor;
 				rocketSettings.startSpeedMultiplier = 2.0f;
 			}
+		}
+
+		boosting = (boost > 0 && boostInput && !gliding && moveInput.y > 0.1f);
+		boost = boosting ? Mathf.Max(0, boost - Time.deltaTime) : boost;
+		transform.Find("BoostMeter").localScale = new Vector3(0.6f, (boost / maxBoost) * 10, 1);
+		if (gliding)
+		{
+			boost = Mathf.Min(maxBoost, boost + Time.deltaTime);
 		}
 
 		laser.SetActive(gliding);
@@ -97,7 +114,7 @@ public class DroneController : MonoBehaviour
 		{
 			lookAngle -= rotateAmount * glideTurnMult;
 		}
-		else if (nitro)
+		else if (boosting)
 		{
 			lookAngle -= rotateAmount * nitroTurnMult;
 		}
@@ -118,7 +135,7 @@ public class DroneController : MonoBehaviour
 
 		float dot = Vector2.Dot(lookDirection, moveDirection);
 		float thrustMult = 1.0f;
-		if (nitro)
+		if (boosting)
 		{
 			thrustMult *= nitroBoostMult;
 		}
@@ -154,9 +171,9 @@ public class DroneController : MonoBehaviour
 		moveInput = axis;
 	}
 
-	public void SetNitroInput(bool nitro)
+	public void SetBoostingInput(bool boostInput)
 	{
-		this.nitro = nitro;
+		this.boostInput = boostInput;
 	}
 
 	public void SetGlideInput(bool gliding)

@@ -16,8 +16,9 @@ public class PlayerScript : MonoBehaviour
 	void Update()
 	{
 		input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+		input.y = Mathf.Max(0, input.y);
 		droneController.SetMoveInput(input);
-		droneController.SetNitroInput(Input.GetKey(KeyCode.LeftShift));
+		droneController.SetBoostingInput(Input.GetKey(KeyCode.LeftShift));
 		droneController.SetGlideInput(Input.GetKey(KeyCode.Space));
 	}
 }
