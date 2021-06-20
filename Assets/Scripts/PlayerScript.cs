@@ -43,6 +43,8 @@ public class PlayerScript : MonoBehaviour
 		boost = droneController.GetGliding() ? Mathf.Min(maxBoost, boost + Time.deltaTime) : boost;
 		transform.Find("BoostMeter").localScale = new Vector3(0.6f, (boost / maxBoost) * 10, 1);
 		transform.Find("AmmoMeter").localScale = new Vector3(0.6f, (ammo / maxAmmo) * 10, 1);
+		transform.Find("ReloadMeter").gameObject.SetActive(currentWeapon.weaponType == Weapon.WeaponType.summon);
+		transform.Find("ReloadMeter").localScale = new Vector3((fireCooldown / (1.0f / currentWeapon.firerate)) * 10, 0.6f, 1);
 
 		input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 		input.y = Mathf.Max(0, input.y);
@@ -78,13 +80,14 @@ public class PlayerScript : MonoBehaviour
 			case Weapon.WeaponType.summon:
 				firing = ammo > 0 && droneController.GetGliding();
 
-				if (fireCooldown == 0)
+				if (firing && fireCooldown == 0)
 				{
 					ammo = Mathf.Max(0, ammo - currentWeapon.ammoCost);
 					Instantiate(currentWeapon.weapon, firePoint.position, firePoint.rotation);
+					fireCooldown = 1.0f / currentWeapon.firerate;
 				}
 
-				fireCooldown = Mathf.Min(0, fireCooldown - Time.deltaTime);
+				fireCooldown = Mathf.Max(0, fireCooldown - Time.deltaTime);
 				break;
 
 			default:

@@ -134,6 +134,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6824815756793362257}
+  - component: {fileID: 996281293053382706}
+  - component: {fileID: 6739943499961457429}
   m_Layer: 0
   m_Name: PlayerBullet
   m_TagString: Untagged
@@ -157,6 +159,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &996281293053382706
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399594618760184098}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &6739943499961457429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399594618760184098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8657cade40bb11448e58a54995ca30c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  gravityScale: 0
+  rotate: 0
+  fireEffect: {fileID: 3042152123338241840, guid: a48c1d0272680974395e423ec0f6df4d, type: 3}
 --- !u!1001 &7959213226908373493
 PrefabInstance:
   m_ObjectHideFlags: 0
