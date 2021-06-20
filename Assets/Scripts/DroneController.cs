@@ -6,8 +6,6 @@ using UnityEngine;
 public class DroneController : MonoBehaviour
 {
 	[Header("Drone Specs")]
-	public float maxHealth = 100.0f;
-	public float maxBoost = 1.2f;
 	public float thrust = 10.0f;
 	public float drag = 0.4f;
 	public float rotationSpeed = 4.5f;
@@ -28,24 +26,16 @@ public class DroneController : MonoBehaviour
 	public Color goldingColor;
 	public Color nitroColor;
 
-	[Space]
-	[Header("Other")]
-	public GameObject laser;
-
 	private ParticleSystem.MainModule rocketSettings;
 	private ParticleSystem.EmissionModule rocketEmission;
 
 	private Rigidbody2D rb;
-	private Transform tr;
 	private Transform objectTransform;
 
 	private Vector2 moveInput = Vector2.zero;
 	private Vector2 moveDirection = Vector2.zero;
 	private Vector2 lookDirection = Vector2.zero;
 	private float lookAngle = 0.0f;
-	private bool boostInput = false;
-	private float health;
-	private float boost;
 
 	private bool golding = false;
 	private bool boosting = false;
@@ -58,9 +48,6 @@ public class DroneController : MonoBehaviour
 
 		rocketSettings = rocket.main;
 		rocketEmission = rocket.emission;
-
-		health = maxHealth;
-		boost = maxBoost;
 	}
 
 	void Update()
@@ -88,16 +75,6 @@ public class DroneController : MonoBehaviour
 				rocketSettings.startSpeedMultiplier = 2.0f;
 			}
 		}
-
-		boosting = (boost > 0 && boostInput && !gliding && moveInput.y > 0.1f);
-		boost = boosting ? Mathf.Max(0, boost - Time.deltaTime) : boost;
-		transform.Find("BoostMeter").localScale = new Vector3(0.6f, (boost / maxBoost) * 10, 1);
-		if (gliding)
-		{
-			boost = Mathf.Min(maxBoost, boost + Time.deltaTime);
-		}
-
-		laser.SetActive(gliding);
 	}
 
 	void FixedUpdate()
@@ -171,9 +148,9 @@ public class DroneController : MonoBehaviour
 		moveInput = axis;
 	}
 
-	public void SetBoostingInput(bool boostInput)
+	public void SetBoostingInput(bool boosting)
 	{
-		this.boostInput = boostInput;
+		this.boosting = (boosting && !gliding && moveInput.y > 0.1f);
 	}
 
 	public void SetGlideInput(bool gliding)
@@ -189,5 +166,20 @@ public class DroneController : MonoBehaviour
 	public Vector2 GetLookDirection()
 	{
 		return lookDirection;
+	}
+
+	public bool GetBoosting()
+	{
+		return boosting;
+	}
+
+	public bool GetGliding()
+	{
+		return gliding;
+	}
+
+	public bool GetGolding()
+	{
+		return golding;
 	}
 }
