@@ -10,8 +10,8 @@ public class ProjectileScript : MonoBehaviour
 	public bool rotate;
 	public bool inheritVelocity;
 	public float maxTime = 6.0f;
+	public bool destroyOnHit = true;
 	public GameObject fireEffect;
-	public GameObject hitEffect;
 
 	private Rigidbody2D rb;
 

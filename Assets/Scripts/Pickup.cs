@@ -9,11 +9,6 @@ public class Pickup : MonoBehaviour
 	public float amount = 10.0f;
 	public GameObject pickupEffect;
 
-	void OnDestroy()
-	{
-		Instantiate(pickupEffect, transform.position, Quaternion.identity);
-	}
-
 	public enum PickupType
 	{
 		health,

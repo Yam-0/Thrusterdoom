@@ -11,6 +11,7 @@ public class EnemyScript : MonoBehaviour
 
 	[Space]
 	public Weapon currentWeapon;
+	public GameObject dieEffect;
 
 	private Vector2 input = Vector2.zero;
 	private Transform objectTransform;
@@ -59,6 +60,7 @@ public class EnemyScript : MonoBehaviour
 
 		if (health <= 0)
 		{
+			Instantiate(dieEffect, transform.position, Quaternion.identity);
 			Destroy(gameObject, 0);
 		}
 	}
@@ -70,12 +72,19 @@ public class EnemyScript : MonoBehaviour
 			Hitbox hitbox;
 			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
 			{
-				if (hitbox.hitboxType != Hitbox.HitboxType.enemy)
-				{
-					health = Mathf.Max(0, health - hitbox.damage);
-					Destroy(other.gameObject, 0);
-					Debug.Log("Enemy hit for " + hitbox.damage + " damage.");
-				}
+				health = Mathf.Max(0, health - hitbox.Hit(Hitbox.HitboxSource.enemy, other.transform.position));
+			}
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (other.gameObject.tag == "Hitbox")
+		{
+			Hitbox hitbox;
+			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
+			{
+				health = Mathf.Max(0, health - hitbox.Hitting(Hitbox.HitboxSource.enemy, transform.position));
 			}
 		}
 	}

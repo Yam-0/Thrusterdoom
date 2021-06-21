@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(DroneController))]
 public class PlayerScript : MonoBehaviour
@@ -15,6 +16,7 @@ public class PlayerScript : MonoBehaviour
 
 	[Space]
 	public Weapon currentWeapon;
+	public GameObject dieEffect;
 
 	private Vector2 input = Vector2.zero;
 	private Transform objectTransform;
@@ -23,7 +25,6 @@ public class PlayerScript : MonoBehaviour
 	private bool firing;
 	private GameObject weaponReference;
 	Transform firePoint;
-
 
 	void Start()
 	{
@@ -51,6 +52,14 @@ public class PlayerScript : MonoBehaviour
 		droneController.SetMoveInput(input);
 		droneController.SetBoostingInput(Input.GetKey(KeyCode.LeftShift) && boost > 0);
 		droneController.SetGlideInput(Input.GetKey(KeyCode.Space));
+
+		if (health <= 0)
+		{
+			Debug.Log("Player died!");
+
+			//If this is not temporary i swear to god.
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
 	}
 
 	void HandleFiring()
@@ -137,6 +146,7 @@ public class PlayerScript : MonoBehaviour
 
 				if (pickedUp)
 				{
+					Instantiate(pickup.pickupEffect, other.transform.position, Quaternion.identity);
 					Destroy(other.gameObject, 0);
 				}
 			}
@@ -147,13 +157,16 @@ public class PlayerScript : MonoBehaviour
 			Hitbox hitbox;
 			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
 			{
-				if (hitbox.hitboxType != Hitbox.HitboxType.player)
-				{
-					health = Mathf.Max(0, health - hitbox.damage);
-					Destroy(other.gameObject, 0);
-					Debug.Log("Player hit for " + hitbox.damage + " damage.");
-				}
+				health = Mathf.Max(0, health - hitbox.Hit(Hitbox.HitboxSource.player, other.transform.position));
 			}
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (other.gameObject.tag == "Ocean")
+		{
+			health -= 50 * Time.deltaTime;
 		}
 	}
 }

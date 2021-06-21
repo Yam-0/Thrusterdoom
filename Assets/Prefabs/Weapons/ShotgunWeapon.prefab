@@ -46,4 +46,4 @@ MonoBehaviour:
   weaponType: 1
   weapon: {fileID: 8155597095875993238, guid: 979d057369a0c7e408985e01eaf35228, type: 3}
   ammoCost: 1
-  firerate: 1
+  firerate: 1.6

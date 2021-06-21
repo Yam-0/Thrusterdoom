@@ -122,9 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 321ea97f3c464c840b595029fcf2f55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitboxSource: 0
   hitboxType: 0
-  damage: 10
-  instaKill: 0
+  damage: 80
+  projectile: {fileID: 1399594618760184098}
+  hitEffect: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
 --- !u!1 &1399594618760184098
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +199,7 @@ MonoBehaviour:
   rotate: 1
   inheritVelocity: 1
   maxTime: 10
+  destroyOnHit: 1
   fireEffect: {fileID: 3042152123338241840, guid: a48c1d0272680974395e423ec0f6df4d, type: 3}
 --- !u!1001 &7959213226908373493
 PrefabInstance:

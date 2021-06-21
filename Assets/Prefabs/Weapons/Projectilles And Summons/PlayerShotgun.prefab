@@ -50,6 +50,6 @@ MonoBehaviour:
   - {fileID: 1399594618760184098, guid: 3fddd606e1938544891978a22b02128a, type: 3}
   - {fileID: 1399594618760184098, guid: 3fddd606e1938544891978a22b02128a, type: 3}
   firePattern: 0
-  outerAngle: 45
+  outerAngle: 30
   delay: 0
   fireTime: 0
