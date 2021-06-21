@@ -11,6 +11,7 @@ public class ProjectileScript : MonoBehaviour
 	public bool inheritVelocity;
 	public float maxTime = 6.0f;
 	public GameObject fireEffect;
+	public GameObject hitEffect;
 
 	private Rigidbody2D rb;
 

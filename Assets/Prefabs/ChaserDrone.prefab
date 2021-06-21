@@ -75,10 +75,10 @@ GameObject:
   - component: {fileID: 876925212604747861}
   - component: {fileID: 876925212604747862}
   - component: {fileID: 1127351955288576075}
-  - component: {fileID: 5621232188289833558}
-  m_Layer: 8
-  m_Name: Drone
-  m_TagString: Player
+  - component: {fileID: 6509858830953689384}
+  m_Layer: 11
+  m_Name: ChaserDrone
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,9 +135,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.25, y: 0}
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.6
 --- !u!114 &1127351955288576075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,10 +150,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a8dd18febc422408f200fd98ee1fa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 12
-  drag: 0.25
-  rotationSpeed: 4.5
-  maxSpeed: 18
+  thrust: 18
+  drag: 0.4
+  rotationSpeed: 9
+  maxSpeed: 22
   sideThrust: 0.4
   nitroBoostMult: 2.4
   nitroTurnMult: 0.3
@@ -163,7 +163,7 @@ MonoBehaviour:
   trailNormal: {r: 1, g: 1, b: 1, a: 1}
   goldingColor: {r: 1, g: 0.9420089, b: 0.5518868, a: 1}
   nitroColor: {r: 0.495283, g: 0.86342967, b: 1, a: 1}
---- !u!114 &5621232188289833558
+--- !u!114 &6509858830953689384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,13 +172,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 876925212604747856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726d0667289ca4648b6f1a7614c42358, type: 3}
+  m_Script: {fileID: 11500000, guid: 0478e8e0e5b79194c8296d098b40e106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  maxAmmo: 10
-  maxBoost: 1.2
-  currentWeapon: {fileID: 1716766456238828278, guid: efff57b112747bb4aa0d90f25ec97002, type: 3}
+  currentWeapon: {fileID: 1716766456238828278, guid: a0b0d05c4e4d28847a6f731936244417, type: 3}
 --- !u!1 &1955920051972680136
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +331,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_Sprite: {fileID: -444944157808530595, guid: d39acb7aa9b6e854b8070e96139dd43f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5344,7 +5342,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: -5350782685410850790, guid: d39acb7aa9b6e854b8070e96139dd43f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5508,7 +5506,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 7
   m_Sprite: {fileID: 5840340868724290176, guid: d39acb7aa9b6e854b8070e96139dd43f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

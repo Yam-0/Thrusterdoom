@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Hitbox
   - Pickup
+  - Enemy
   layers:
   - Default
   - TransparentFX

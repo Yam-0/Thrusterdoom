@@ -150,6 +150,7 @@ public class PlayerScript : MonoBehaviour
 				if (hitbox.hitboxType != Hitbox.HitboxType.player)
 				{
 					health = Mathf.Max(0, health - hitbox.damage);
+					Destroy(other.gameObject, 0);
 					Debug.Log("Player hit for " + hitbox.damage + " damage.");
 				}
 			}
