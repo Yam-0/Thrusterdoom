@@ -41,9 +41,6 @@ public class CameraScript : MonoBehaviour
 		if (shaking)
 		{
 			shakeTime = Mathf.Max(0, shakeTime - Time.deltaTime);
-
 		}
-
-
 	}
 }
