@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6361358541857629060}
   - component: {fileID: 108274532449542469}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 5219217727100501528}
   - component: {fileID: 5219217727100501991}
   - component: {fileID: 3567164818112678184}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AmmoPickup
   m_TagString: Pickup
   m_Icon: {fileID: 0}

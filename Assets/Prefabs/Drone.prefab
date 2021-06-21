@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a8dd18febc422408f200fd98ee1fa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 10
-  drag: 0.35
+  thrust: 12
+  drag: 0.25
   rotationSpeed: 4.5
   maxSpeed: 18
   sideThrust: 0.4
