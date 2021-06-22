@@ -17,20 +17,15 @@ public class PlayerScript : MonoBehaviour
 	[Space]
 	public Weapon currentWeapon;
 	public GameObject dieEffect;
+	public Transform firePoint;
 
 	private Vector2 input = Vector2.zero;
-	private Transform objectTransform;
 	private DroneController droneController;
-	private float fireCooldown;
-	private bool firing;
-	private GameObject weaponReference;
-	Transform firePoint;
 
 	void Start()
 	{
 		droneController = GetComponent<DroneController>();
-		objectTransform = transform.Find("object");
-		firePoint = objectTransform.Find("Body").Find("firePoint");
+
 		health = maxHealth;
 		ammo = maxAmmo;
 		boost = maxBoost;
@@ -38,14 +33,14 @@ public class PlayerScript : MonoBehaviour
 
 	void Update()
 	{
-		HandleFiring();
+		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding());
 
 		boost = droneController.GetBoosting() ? Mathf.Max(0, boost - Time.deltaTime) : boost;
 		boost = droneController.GetGliding() ? Mathf.Min(maxBoost, boost + Time.deltaTime) : boost;
 		transform.Find("BoostMeter").localScale = new Vector3(0.4f, (boost / maxBoost) * 10, 1);
 		transform.Find("AmmoMeter").localScale = new Vector3(0.4f, (ammo / maxAmmo) * 10, 1);
 		transform.Find("ReloadMeter").gameObject.SetActive(currentWeapon.weaponType == Weapon.WeaponType.summon);
-		transform.Find("ReloadMeter").localScale = new Vector3((fireCooldown / (1.0f / currentWeapon.firerate)) * 10, 0.4f, 1);
+		transform.Find("ReloadMeter").localScale = new Vector3((currentWeapon.GetFireCooldown() / (1.0f / currentWeapon.firerate)) * 10, 0.4f, 1);
 
 		input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 		input.y = Mathf.Max(0, input.y);
@@ -53,54 +48,16 @@ public class PlayerScript : MonoBehaviour
 		droneController.SetBoostingInput(Input.GetKey(KeyCode.LeftShift) && boost > 0);
 		droneController.SetGlideInput(Input.GetKey(KeyCode.Space));
 
+		float shakeIntensity = droneController.GetMoveInput().y / 20.0f;
+		shakeIntensity = droneController.GetBoosting() ? shakeIntensity * 2 : shakeIntensity;
+		Camera.main.GetComponent<CameraScript>().Shake(0.1f, shakeIntensity);
+
 		if (health <= 0)
 		{
 			Debug.Log("Player died!");
 
 			//If this is not temporary i swear to god.
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		}
-	}
-
-	void HandleFiring()
-	{
-		switch (currentWeapon.weaponType)
-		{
-			case Weapon.WeaponType.active:
-				firing = ammo > 0 && droneController.GetGliding();
-
-				if (firing)
-				{
-					ammo = Mathf.Max(0, ammo - currentWeapon.ammoCost * Time.deltaTime);
-				}
-
-				if (firing && weaponReference == null)
-				{
-					if (firePoint != null)
-						weaponReference = Instantiate(currentWeapon.weapon, firePoint.position, firePoint.rotation, firePoint);
-				}
-
-				if (!firing && weaponReference != null)
-				{
-					Destroy(weaponReference, 0);
-				}
-				break;
-
-			case Weapon.WeaponType.summon:
-				firing = ammo > 0 && droneController.GetGliding();
-
-				if (firing && fireCooldown == 0)
-				{
-					ammo = Mathf.Max(0, ammo - currentWeapon.ammoCost);
-					Instantiate(currentWeapon.weapon, firePoint.position, firePoint.rotation);
-					fireCooldown = 1.0f / currentWeapon.firerate;
-				}
-
-				fireCooldown = Mathf.Max(0, fireCooldown - Time.deltaTime);
-				break;
-
-			default:
-				break;
 		}
 	}
 
@@ -146,8 +103,7 @@ public class PlayerScript : MonoBehaviour
 
 				if (pickedUp)
 				{
-					Instantiate(pickup.pickupEffect, other.transform.position, Quaternion.identity);
-					Destroy(other.gameObject, 0);
+					pickup.Trigger();
 				}
 			}
 		}

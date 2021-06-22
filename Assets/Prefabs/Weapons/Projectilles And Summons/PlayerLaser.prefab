@@ -4936,7 +4936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitboxSource: 0
   hitboxType: 1
-  damage: 90
+  damage: 120
+  projectile: {fileID: 0}
   hitEffect: {fileID: 3042152123338241840, guid: 17daf4d6c3182084c9644dddacc3ec20, type: 3}
 --- !u!1 &6557456982066702223
 GameObject:

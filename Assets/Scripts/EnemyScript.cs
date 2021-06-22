@@ -12,28 +12,25 @@ public class EnemyScript : MonoBehaviour
 	[Space]
 	public Weapon currentWeapon;
 	public GameObject dieEffect;
+	public Transform firePoint;
 
 	private Vector2 input = Vector2.zero;
-	private Transform objectTransform;
 	private DroneController droneController;
-	private float fireCooldown;
-	private bool firing;
-	private GameObject weaponReference;
-	Transform firePoint;
-
 	private GameObject player;
 
 	void Start()
 	{
 		droneController = GetComponent<DroneController>();
-		objectTransform = transform.Find("object");
-		firePoint = objectTransform.Find("Body").Find("firePoint");
-		health = maxHealth;
 		player = GameObject.FindGameObjectWithTag("Player");
+
+		health = maxHealth;
 	}
 
 	void Update()
 	{
+		float ammo = 1.0f; //Infinite ammo temp fix
+		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding());
+
 		Vector2 deltaPosition = player.transform.position - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		Vector2 direction = droneController.GetLookDirection();
@@ -46,17 +43,6 @@ public class EnemyScript : MonoBehaviour
 
 		droneController.SetGlideInput(Mathf.Abs(deltaAngle) < 30 * Mathf.Rad2Deg && distance < 10.0f);
 		droneController.SetMoveInput(input.normalized);
-
-		if (droneController.GetGliding())
-		{
-			if (fireCooldown == 0)
-			{
-				Instantiate(currentWeapon.weapon, firePoint.position, firePoint.rotation);
-				fireCooldown = 1.0f / currentWeapon.firerate;
-			}
-
-			fireCooldown = Mathf.Max(0, fireCooldown - Time.deltaTime);
-		}
 
 		if (health <= 0)
 		{

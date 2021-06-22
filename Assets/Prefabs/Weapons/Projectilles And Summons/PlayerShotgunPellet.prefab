@@ -127,6 +127,8 @@ MonoBehaviour:
   damage: 12
   projectile: {fileID: 1399594618760184098}
   hitEffect: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
+  hitShakeLength: 0.1
+  hitShakeIntensity: 0.15
 --- !u!1 &1399594618760184098
 GameObject:
   m_ObjectHideFlags: 0

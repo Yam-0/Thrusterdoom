@@ -10,11 +10,14 @@ public class Hitbox : MonoBehaviour
 	public GameObject projectile;
 	//public bool instaKill;
 	public GameObject hitEffect;
+	public float hitShakeLength;
+	public float hitShakeIntensity;
 
 	public float Hit(HitboxSource self, Vector2 hitPoint)
 	{
 		if (hitboxSource != self && hitboxType == HitboxType.summon)
 		{
+			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
 			Destroy(projectile, 0);
 			Debug.Log(self.ToString() + " hit for " + damage + " damage.");
@@ -28,6 +31,7 @@ public class Hitbox : MonoBehaviour
 	{
 		if (hitboxSource != self && hitboxType == HitboxType.active)
 		{
+			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
 			float frameDamage = (damage * Time.deltaTime);
 			Debug.Log(self.ToString() + " hit for " + frameDamage + " damage. ");

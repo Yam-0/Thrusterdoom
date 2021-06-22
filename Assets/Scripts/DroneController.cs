@@ -158,6 +158,11 @@ public class DroneController : MonoBehaviour
 		this.gliding = gliding;
 	}
 
+	public Vector2 GetMoveInput()
+	{
+		return moveInput;
+	}
+
 	public Vector2 GetMoveDirection()
 	{
 		return moveDirection;

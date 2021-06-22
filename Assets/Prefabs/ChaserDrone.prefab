@@ -15,6 +15,7 @@ MonoBehaviour:
   maxHealth: 100
   currentWeapon: {fileID: 1716766456238828278, guid: a0b0d05c4e4d28847a6f731936244417, type: 3}
   dieEffect: {fileID: 3042152123338241840, guid: 2bbf955e8461d6346acc81a74f7fd839, type: 3}
+  firePoint: {fileID: 7676707051202367455}
 --- !u!1001 &3217803285654699548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,5 +157,10 @@ PrefabInstance:
 --- !u!1 &2345418691315478092 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 876925212604747856, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
+  m_PrefabInstance: {fileID: 3217803285654699548}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7676707051202367455 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5057203087596270019, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
   m_PrefabInstance: {fileID: 3217803285654699548}
   m_PrefabAsset: {fileID: 0}
