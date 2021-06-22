@@ -14,15 +14,14 @@ public class ProjectileScript : MonoBehaviour
 	public GameObject fireEffect;
 
 	private Rigidbody2D rb;
+	private Vector2 initialVelocity;
 
 	void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
 		float angle = transform.rotation.eulerAngles.z;
 		Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-		Vector2 velocity = direction * speed;
-		velocity = inheritVelocity ? velocity + GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity : velocity;
-		rb.velocity = velocity;
+		rb.velocity = direction * speed;
 		rb.gravityScale = gravityScale;
 		Instantiate(fireEffect, transform.position, transform.rotation);
 		Destroy(gameObject, maxTime);
@@ -30,10 +29,20 @@ public class ProjectileScript : MonoBehaviour
 
 	void Update()
 	{
+		if (inheritVelocity)
+		{
+			rb.velocity += initialVelocity;
+			inheritVelocity = false;
+		}
 		if (rotate)
 		{
 			float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.Euler(0, 0, angle);
 		}
+	}
+
+	public void SetInitialVelocity(Vector2 velocity)
+	{
+		initialVelocity = velocity;
 	}
 }

@@ -15,7 +15,7 @@ public class Weapon : MonoBehaviour
 	private float fireCooldown;
 	private bool firing;
 
-	public bool Handle(ref float ammo, Transform firePoint, bool tryFire)
+	public bool Handle(ref float ammo, Transform firePoint, bool tryFire, Rigidbody2D rb)
 	{
 		switch (weaponType)
 		{
@@ -49,7 +49,7 @@ public class Weapon : MonoBehaviour
 				{
 					ammo = Mathf.Max(0, ammo - ammoCost);
 					Camera.main.GetComponent<CameraScript>().Shake(fireShakeLength, fireShakeIntensity);
-					Instantiate(weapon, firePoint.position, firePoint.rotation);
+					Instantiate(weapon, firePoint.position, firePoint.rotation).GetComponent<ProjectileScript>().SetInitialVelocity(rb.velocity);
 					fireCooldown = 1.0f / firerate;
 				}
 

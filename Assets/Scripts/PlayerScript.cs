@@ -19,11 +19,13 @@ public class PlayerScript : MonoBehaviour
 	public GameObject dieEffect;
 	public Transform firePoint;
 
+	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
 	private DroneController droneController;
 
 	void Start()
 	{
+		rb = GetComponent<Rigidbody2D>();
 		droneController = GetComponent<DroneController>();
 
 		health = maxHealth;
@@ -33,7 +35,7 @@ public class PlayerScript : MonoBehaviour
 
 	void Update()
 	{
-		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding());
+		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb);
 
 		boost = droneController.GetBoosting() ? Mathf.Max(0, boost - Time.deltaTime) : boost;
 		boost = droneController.GetGliding() ? Mathf.Min(maxBoost, boost + Time.deltaTime) : boost;

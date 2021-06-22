@@ -13,13 +13,16 @@ public class EnemyScript : MonoBehaviour
 	public Weapon currentWeapon;
 	public GameObject dieEffect;
 	public Transform firePoint;
+	public GameObject wreckage;
 
+	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
 	private DroneController droneController;
 	private GameObject player;
 
 	void Start()
 	{
+		rb = GetComponent<Rigidbody2D>();
 		droneController = GetComponent<DroneController>();
 		player = GameObject.FindGameObjectWithTag("Player");
 
@@ -29,7 +32,7 @@ public class EnemyScript : MonoBehaviour
 	void Update()
 	{
 		float ammo = 1.0f; //Infinite ammo temp fix
-		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding());
+		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb);
 
 		Vector2 deltaPosition = player.transform.position - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
@@ -46,7 +49,9 @@ public class EnemyScript : MonoBehaviour
 
 		if (health <= 0)
 		{
+			Camera.main.GetComponent<CameraScript>().Shake(0.3f, 0.4f);
 			Instantiate(dieEffect, transform.position, Quaternion.identity);
+			Instantiate(wreckage, transform.position, transform.rotation).GetComponent<ProjectileScript>().SetInitialVelocity(rb.velocity);
 			Destroy(gameObject, 0);
 		}
 	}

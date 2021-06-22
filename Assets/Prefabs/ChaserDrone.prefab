@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0478e8e0e5b79194c8296d098b40e106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 80
   currentWeapon: {fileID: 1716766456238828278, guid: a0b0d05c4e4d28847a6f731936244417, type: 3}
-  dieEffect: {fileID: 3042152123338241840, guid: 2bbf955e8461d6346acc81a74f7fd839, type: 3}
+  dieEffect: {fileID: 3755075594882541199, guid: b73077f32296f544d849b73b34322e7e, type: 3}
   firePoint: {fileID: 7676707051202367455}
+  wreckage: {fileID: 8398265978084215800, guid: 7f4176dd10564494f9ee4858d1f8a9bd, type: 3}
 --- !u!1001 &3217803285654699548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53,11 +54,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 876925212604747863, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.3
       objectReference: {fileID: 0}
     - target: {fileID: 876925212604747863, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -5.47
       objectReference: {fileID: 0}
     - target: {fileID: 876925212604747863, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
       propertyPath: m_LocalPosition.z

@@ -10,12 +10,13 @@ public class Hitbox : MonoBehaviour
 	public GameObject projectile;
 	//public bool instaKill;
 	public GameObject hitEffect;
+	public GameObject hitWaterEffect;
 	public float hitShakeLength;
 	public float hitShakeIntensity;
 
 	public float Hit(HitboxSource self, Vector2 hitPoint)
 	{
-		if (hitboxSource != self && hitboxType == HitboxType.summon)
+		if (hitboxSource != self && hitboxType == HitboxType.summon && hitboxSource != HitboxSource.none)
 		{
 			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
@@ -29,7 +30,7 @@ public class Hitbox : MonoBehaviour
 
 	public float Hitting(HitboxSource self, Vector2 hitPoint)
 	{
-		if (hitboxSource != self && hitboxType == HitboxType.active)
+		if (hitboxSource != self && hitboxType == HitboxType.active && hitboxSource != HitboxSource.none)
 		{
 			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
@@ -41,11 +42,22 @@ public class Hitbox : MonoBehaviour
 		return 0;
 	}
 
+	public void HitWater()
+	{
+		if (hitboxType == HitboxType.summon)
+		{
+			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity / 2);
+			Instantiate(hitWaterEffect, transform.position, Quaternion.identity);
+			Destroy(projectile, 0);
+		}
+	}
+
 	public enum HitboxSource
 	{
 		player,
 		enemy,
-		both
+		both,
+		none
 	}
 
 	public enum HitboxType
