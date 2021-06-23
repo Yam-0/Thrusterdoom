@@ -62,6 +62,7 @@ public class Weapon : MonoBehaviour
 					if (projectile.TryGetComponent<ProjectileScript>(out projectileScript))
 					{
 						projectileScript.SetInitialVelocity(rb.velocity);
+						projectileScript.SetTarget(GameObject.FindGameObjectWithTag("Player"));
 					}
 
 					fireCooldown = 1.0f / firerate;

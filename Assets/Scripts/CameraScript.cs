@@ -8,9 +8,15 @@ public class CameraScript : MonoBehaviour
 	public Vector3 offset;
 	public float preMoveDistance;
 
+	private bool lockedOn = true;
 	private float shakeIntensity;
 	private float shakeTime;
 	private Vector3 shakeOffset;
+
+	private Vector2 smoothMoveFromPos, smoothMoveToPos;
+	private float smoothMoveFromRot, smoothMoveToRot;
+	private bool smoothMoving = false;
+	private float smoothMoveTime;
 
 	void Start()
 	{
@@ -19,12 +25,15 @@ public class CameraScript : MonoBehaviour
 
 	void Update()
 	{
-		Vector3 preMovePositionOffset = trackObject.GetComponent<Rigidbody2D>().velocity * preMoveDistance;
-		transform.position = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
+		if (lockedOn)
+		{
+			Vector3 preMovePositionOffset = trackObject.GetComponent<Rigidbody2D>().velocity * preMoveDistance;
+			transform.position = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
+		}
 
 		if (Input.GetKeyDown(KeyCode.K))
 		{
-			Shake(0.5f, 1.0f);
+			LockOff();
 		}
 
 		shakeTime = Mathf.Max(0, shakeTime - Time.deltaTime);
@@ -36,6 +45,12 @@ public class CameraScript : MonoBehaviour
 		else
 		{
 			shakeIntensity = 0.0f;
+		}
+
+		if (smoothMoving && smoothMoveTime > 0)
+		{
+			smoothMoveTime = Mathf.Max(0, smoothMoveTime - Time.deltaTime);
+			//transform.position = 
 		}
 	}
 
@@ -58,5 +73,27 @@ public class CameraScript : MonoBehaviour
 		Time.timeScale = 0;
 		yield return new WaitForSecondsRealtime(length);
 		Time.timeScale = 1.0f;
+	}
+
+	public void LockOn()
+	{
+		lockedOn = true;
+		smoothMoving = false;
+	}
+
+	public void LockOff()
+	{
+		lockedOn = false;
+	}
+
+	public void SmoothMoveTo(Vector2 position, float rotation, float time)
+	{
+		LockOff();
+		smoothMoveFromPos = transform.position;
+		smoothMoveFromRot = transform.rotation.eulerAngles.z;
+		smoothMoveToPos = position;
+		smoothMoveToRot = rotation;
+		smoothMoveTime = time;
+		smoothMoving = true;
 	}
 }

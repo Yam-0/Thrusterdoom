@@ -83,7 +83,7 @@ public class DroneController : MonoBehaviour
 		HandleMovement();
 	}
 
-	public void HandleMovement()
+	void HandleMovement()
 	{
 		rb.drag = drag;
 		float rotateAmount = rotationSpeed * moveInput.x;

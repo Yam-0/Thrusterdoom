@@ -179,7 +179,7 @@ MonoBehaviour:
   maxHealth: 100
   maxAmmo: 15
   maxBoost: 1.2
-  currentWeapon: {fileID: 1716766456238828278, guid: efff57b112747bb4aa0d90f25ec97002, type: 3}
+  currentWeapon: {fileID: 1716766456238828278, guid: 4591e517c761814419d02f69c606b89c, type: 3}
   dieEffect: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
   firePoint: {fileID: 5057203087596270019}
 --- !u!1 &1955920051972680136
@@ -332,8 +332,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 940604313
+  m_SortingLayer: 2
   m_SortingOrder: 6
   m_Sprite: {fileID: -444944157808530595, guid: d39acb7aa9b6e854b8070e96139dd43f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5371,8 +5371,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 940604313
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: -5350782685410850790, guid: d39acb7aa9b6e854b8070e96139dd43f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5535,8 +5535,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 940604313
+  m_SortingLayer: 2
   m_SortingOrder: 7
   m_Sprite: {fileID: 5840340868724290176, guid: d39acb7aa9b6e854b8070e96139dd43f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

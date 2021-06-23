@@ -17,13 +17,12 @@ public class ProjectileScript : MonoBehaviour
 
 	private Rigidbody2D rb;
 	private Vector2 initialVelocity;
+	private GameObject homingTarget;
 
 	void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
-		float angle = transform.rotation.eulerAngles.z;
-		Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-		rb.velocity = direction * speed;
+		rb.velocity = transform.right * speed;
 		rb.gravityScale = gravityScale;
 		Invoke("SelfDestruct", maxTime);
 	}
@@ -41,6 +40,15 @@ public class ProjectileScript : MonoBehaviour
 			float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.Euler(0, 0, angle);
 		}
+
+		if (homing)
+		{
+			Vector3 dir = homingTarget.transform.position - transform.position;
+			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, angle), Time.deltaTime * homingStrength);
+		}
+
+		rb.velocity = transform.right * rb.velocity.magnitude;
 	}
 
 	void SelfDestruct()
@@ -52,5 +60,10 @@ public class ProjectileScript : MonoBehaviour
 	public void SetInitialVelocity(Vector2 velocity)
 	{
 		initialVelocity = velocity;
+	}
+
+	public void SetTarget(GameObject target)
+	{
+		homingTarget = target;
 	}
 }

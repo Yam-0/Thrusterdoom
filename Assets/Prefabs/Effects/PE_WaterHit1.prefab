@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6200485198845192349}
   - component: {fileID: 5260169871654804981}
   m_Layer: 0
-  m_Name: PE_WaterHit2
+  m_Name: PE_WaterHit1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4844,8 +4844,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 940604313
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

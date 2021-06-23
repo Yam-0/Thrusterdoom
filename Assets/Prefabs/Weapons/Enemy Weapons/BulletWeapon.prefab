@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 1
-  weapon: {fileID: 6269209369987151107, guid: e9aa771c2ac3a3a4f8ee8ff59d9da067, type: 3}
+  weapon: {fileID: 4366860073875343172, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
   ammoCost: 0
   fireEffect: {fileID: 3042152123338241840, guid: 8318d63d1fd57224282bc1583f3bcdd3, type: 3}
   firerate: 4

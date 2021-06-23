@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2824813732509453274
+--- !u!114 &4168690373098593863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 80
+  ai: 0
   currentWeapon: {fileID: 1716766456238828278, guid: a0b0d05c4e4d28847a6f731936244417, type: 3}
   dieEffect: {fileID: 3755075594882541199, guid: b73077f32296f544d849b73b34322e7e, type: 3}
   firePoint: {fileID: 7676707051202367455}
   wreckage: {fileID: 8398265978084215800, guid: 7f4176dd10564494f9ee4858d1f8a9bd, type: 3}
+  killShakeDuration: 0.3
+  killShakeIntensity: 0.4
 --- !u!1001 &3217803285654699548
 PrefabInstance:
   m_ObjectHideFlags: 0
