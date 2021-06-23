@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 1
-  weapon: {fileID: 1399594618760184098, guid: 25de71815ba972646978488a1e440d71, type: 3}
+  weapon: {fileID: 9002992386147124476, guid: f30294ff1fddc7a44a04d5152fb71ad8, type: 3}
   ammoCost: 1
+  fireEffect: {fileID: 3042152123338241840, guid: a48c1d0272680974395e423ec0f6df4d, type: 3}
   firerate: 1
   fireShakeLength: 0.05
   fireShakeIntensity: 0.05

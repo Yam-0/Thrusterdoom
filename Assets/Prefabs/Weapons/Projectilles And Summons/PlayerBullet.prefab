@@ -199,11 +199,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   gravityScale: 0
+  maxTime: 6
+  timeoutExplosion: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
   rotate: 0
   inheritVelocity: 0
-  maxTime: 6
   destroyOnHit: 1
-  fireEffect: {fileID: 3042152123338241840, guid: a48c1d0272680974395e423ec0f6df4d, type: 3}
+  homing: 0
+  homingStrength: 0
 --- !u!1001 &7959213226908373493
 PrefabInstance:
   m_ObjectHideFlags: 0

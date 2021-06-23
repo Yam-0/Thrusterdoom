@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
 	public WeaponType weaponType;
 	public GameObject weapon;
 	public float ammoCost;
+	public GameObject fireEffect;
 	public float firerate;
 	public float fireShakeLength;
 	public float fireShakeIntensity;
@@ -55,9 +56,10 @@ public class Weapon : MonoBehaviour
 				{
 					ammo = Mathf.Max(0, ammo - ammoCost);
 					Camera.main.GetComponent<CameraScript>().Shake(fireShakeLength, fireShakeIntensity);
+					Instantiate(fireEffect, firePoint.position, firePoint.rotation);
 					GameObject projectile = Instantiate(weapon, firePoint.position, firePoint.rotation);
 					ProjectileScript projectileScript;
-					if (TryGetComponent<ProjectileScript>(out projectileScript))
+					if (projectile.TryGetComponent<ProjectileScript>(out projectileScript))
 					{
 						projectileScript.SetInitialVelocity(rb.velocity);
 					}

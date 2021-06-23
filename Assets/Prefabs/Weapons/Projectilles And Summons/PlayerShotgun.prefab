@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullets:
-  - {fileID: 1399594618760184098, guid: 3fddd606e1938544891978a22b02128a, type: 3}
-  - {fileID: 1399594618760184098, guid: 3fddd606e1938544891978a22b02128a, type: 3}
-  - {fileID: 1399594618760184098, guid: 3fddd606e1938544891978a22b02128a, type: 3}
-  - {fileID: 1399594618760184098, guid: 3fddd606e1938544891978a22b02128a, type: 3}
-  - {fileID: 1399594618760184098, guid: 3fddd606e1938544891978a22b02128a, type: 3}
+  - {fileID: 1537852699579441951, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
+  - {fileID: 1537852699579441951, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
+  - {fileID: 1537852699579441951, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
+  - {fileID: 1537852699579441951, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
+  - {fileID: 1537852699579441951, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
   firePattern: 0
   outerAngle: 30
   delay: 0

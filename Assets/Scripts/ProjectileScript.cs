@@ -7,11 +7,13 @@ public class ProjectileScript : MonoBehaviour
 {
 	public float speed = 10.0f;
 	public float gravityScale = 0.0f;
+	public float maxTime = 6.0f;
+	public GameObject timeoutExplosion;
 	public bool rotate;
 	public bool inheritVelocity;
-	public float maxTime = 6.0f;
 	public bool destroyOnHit = true;
-	public GameObject fireEffect;
+	public bool homing;
+	public float homingStrength;
 
 	private Rigidbody2D rb;
 	private Vector2 initialVelocity;
@@ -23,8 +25,7 @@ public class ProjectileScript : MonoBehaviour
 		Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 		rb.velocity = direction * speed;
 		rb.gravityScale = gravityScale;
-		Instantiate(fireEffect, transform.position, transform.rotation);
-		Destroy(gameObject, maxTime);
+		Invoke("SelfDestruct", maxTime);
 	}
 
 	void Update()
@@ -34,11 +35,18 @@ public class ProjectileScript : MonoBehaviour
 			rb.velocity += initialVelocity;
 			inheritVelocity = false;
 		}
+
 		if (rotate)
 		{
 			float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.Euler(0, 0, angle);
 		}
+	}
+
+	void SelfDestruct()
+	{
+		Instantiate(timeoutExplosion, transform.position, transform.rotation);
+		Destroy(gameObject, 0.0f);
 	}
 
 	public void SetInitialVelocity(Vector2 velocity)
