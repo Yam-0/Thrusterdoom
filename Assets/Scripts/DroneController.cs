@@ -19,6 +19,7 @@ public class DroneController : MonoBehaviour
 	[Header("Drone Effects")]
 	public ParticleSystem rocket;
 	public GameObject thrustPuff;
+	public Transform exhaustPoint;
 
 	[Space]
 	[Header("Effect Colors")]
@@ -142,7 +143,7 @@ public class DroneController : MonoBehaviour
 
 		if (moveInput.y < 0.1f && axis.y > 0.1f)
 		{
-			Instantiate(thrustPuff, transform.position, objectTransform.GetChild(0).rotation);
+			Instantiate(thrustPuff, exhaustPoint.position, exhaustPoint.rotation);
 		}
 
 		moveInput = axis;

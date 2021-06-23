@@ -14,7 +14,7 @@ public class CameraScript : MonoBehaviour
 
 	void Start()
 	{
-
+		Time.timeScale = 1.0f;
 	}
 
 	void Update()
@@ -46,5 +46,17 @@ public class CameraScript : MonoBehaviour
 			shakeIntensity = intensity;
 			shakeTime = length;
 		}
+	}
+
+	public void Freeze(float length)
+	{
+		StartCoroutine(FreezeEvent(length));
+	}
+
+	IEnumerator FreezeEvent(float length)
+	{
+		Time.timeScale = 0;
+		yield return new WaitForSecondsRealtime(length);
+		Time.timeScale = 1.0f;
 	}
 }

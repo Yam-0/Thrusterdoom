@@ -26,13 +26,19 @@ public class Weapon : MonoBehaviour
 				{
 					Camera.main.GetComponent<CameraScript>().Shake(fireShakeLength, fireShakeIntensity);
 					ammo = Mathf.Max(0, ammo - ammoCost * Time.deltaTime);
+
+					if (weaponReference != null)
+					{
+						weaponReference.transform.position = firePoint.transform.position;
+						weaponReference.transform.rotation = firePoint.transform.rotation;
+					}
 				}
 
 				if (firing && weaponReference == null)
 				{
 					if (firePoint != null)
 					{
-						weaponReference = Instantiate(weapon, firePoint.position, firePoint.rotation, firePoint);
+						weaponReference = Instantiate(weapon, firePoint.position, firePoint.rotation);
 					}
 				}
 
@@ -49,7 +55,13 @@ public class Weapon : MonoBehaviour
 				{
 					ammo = Mathf.Max(0, ammo - ammoCost);
 					Camera.main.GetComponent<CameraScript>().Shake(fireShakeLength, fireShakeIntensity);
-					Instantiate(weapon, firePoint.position, firePoint.rotation).GetComponent<ProjectileScript>().SetInitialVelocity(rb.velocity);
+					GameObject projectile = Instantiate(weapon, firePoint.position, firePoint.rotation);
+					ProjectileScript projectileScript;
+					if (TryGetComponent<ProjectileScript>(out projectileScript))
+					{
+						projectileScript.SetInitialVelocity(rb.velocity);
+					}
+
 					fireCooldown = 1.0f / firerate;
 				}
 
