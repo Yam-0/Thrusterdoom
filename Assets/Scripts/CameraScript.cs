@@ -49,9 +49,10 @@ public class CameraScript : MonoBehaviour
 					break;
 			}
 
+			Vector3 targetPos = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
+			if (targetPos.y < 0) { targetPos.y = 0; }
 			if (smoothTrack)
 			{
-				Vector3 targetPos = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
 				Vector3 moveDelta = (targetPos - transform.position) * Time.deltaTime * 3;
 				Vector3 newPos = transform.position + moveDelta;
 				Debug.DrawLine(transform.position, targetPos, new Color(255, 0, 0, 255));
@@ -59,7 +60,7 @@ public class CameraScript : MonoBehaviour
 			}
 			else
 			{
-				transform.position = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
+				transform.position = targetPos;
 			}
 		}
 
