@@ -51,7 +51,7 @@ public class PlayerScript : MonoBehaviour
 		droneController.SetGlideInput(Input.GetKey(KeyCode.Space));
 
 		float shakeIntensity = droneController.GetMoveInput().y / 20.0f;
-		shakeIntensity = droneController.GetBoosting() ? shakeIntensity * 2 : shakeIntensity;
+		shakeIntensity = droneController.GetBoosting() ? shakeIntensity * 2 : 0;
 		Camera.main.GetComponent<CameraScript>().Shake(0.1f, shakeIntensity);
 
 		if (health <= 0)

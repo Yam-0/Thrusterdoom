@@ -6,7 +6,9 @@ public class CameraScript : MonoBehaviour
 {
 	public GameObject trackObject;
 	public Vector3 offset;
+	public CameraTrackingType cameraTrackingType;
 	public float preMoveDistance;
+	public bool smoothTrack = false;
 
 	private bool lockedOn = true;
 	private float shakeIntensity;
@@ -27,8 +29,39 @@ public class CameraScript : MonoBehaviour
 	{
 		if (lockedOn)
 		{
-			Vector3 preMovePositionOffset = trackObject.GetComponent<Rigidbody2D>().velocity * preMoveDistance;
-			transform.position = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
+			Vector3 preMovePositionOffset = Vector3.zero;
+			Vector2 moveDirection;
+
+			switch (cameraTrackingType)
+			{
+				case CameraTrackingType.velocity:
+					preMovePositionOffset = trackObject.GetComponent<Rigidbody2D>().velocity * preMoveDistance;
+					break;
+				case CameraTrackingType.direction:
+					moveDirection = trackObject.GetComponent<DroneController>().GetLookDirection();
+					preMovePositionOffset = moveDirection * preMoveDistance * trackObject.GetComponent<Rigidbody2D>().velocity.magnitude;
+					break;
+				case CameraTrackingType.combined:
+					moveDirection = trackObject.GetComponent<DroneController>().GetLookDirection();
+					Vector3 preMovePositionOffsetVelocity = trackObject.GetComponent<Rigidbody2D>().velocity * preMoveDistance;
+					Vector3 preMovePositionOffsetDirection = moveDirection * preMoveDistance * trackObject.GetComponent<Rigidbody2D>().velocity.magnitude;
+					preMovePositionOffset = (preMovePositionOffsetVelocity + preMovePositionOffsetDirection * 2) / 2;
+					break;
+			}
+
+			Vector3 targetPos = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
+			Vector3 moveDelta = (targetPos - transform.position) * Time.deltaTime * 3;
+			Vector3 newPos = transform.position + moveDelta;
+			if (smoothTrack)
+			{
+				transform.position = newPos;
+			}
+			else
+			{
+				transform.position = targetPos;
+			}
+
+			Debug.DrawLine(transform.position, targetPos, new Color(255, 0, 0, 255));
 		}
 
 		if (Input.GetKeyDown(KeyCode.K))
@@ -95,5 +128,12 @@ public class CameraScript : MonoBehaviour
 		smoothMoveToRot = rotation;
 		smoothMoveTime = time;
 		smoothMoving = true;
+	}
+
+	public enum CameraTrackingType
+	{
+		direction,
+		velocity,
+		combined
 	}
 }

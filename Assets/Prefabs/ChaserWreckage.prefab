@@ -9971,11 +9971,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   gravityScale: 1
+  maxTime: 10
+  timeoutExplosion: {fileID: 0}
   rotate: 1
   inheritVelocity: 1
-  maxTime: 10
   destroyOnHit: 0
-  fireEffect: {fileID: 3042152123338241840, guid: a48c1d0272680974395e423ec0f6df4d, type: 3}
+  homing: 0
+  homingStrength: 0
 --- !u!1 &8418916071506545893
 GameObject:
   m_ObjectHideFlags: 0

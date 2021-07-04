@@ -46,6 +46,8 @@ MonoBehaviour:
   weaponType: 2
   weapon: {fileID: 6557456982372352892, guid: 8053ce6cbaf75b24bafdd36b07bde0f1, type: 3}
   ammoCost: 3.5
+  fireEffect: {fileID: 0}
+  recoilForce: 200
   firerate: 0
   fireShakeLength: 0.05
   fireShakeIntensity: 0.2
