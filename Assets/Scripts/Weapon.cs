@@ -81,6 +81,8 @@ public class Weapon : MonoBehaviour
 					Vector2 recoilDirection = -fireDirection;
 					rb.AddForce(recoilDirection * recoilForce);
 
+					AudioManager.Instance.PlaySfx("shoot1");
+
 					GameObject projectile = Instantiate(weapon, firePoint.position, Quaternion.Euler(0, 0, fireRotation));
 					ProjectileScript projectileScript;
 					if (projectile.TryGetComponent<ProjectileScript>(out projectileScript))
