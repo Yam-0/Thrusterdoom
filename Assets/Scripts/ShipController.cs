@@ -25,7 +25,7 @@ public class ShipController : MonoBehaviour
 
 	void Update()
 	{
-		engine.SetActive(Mathf.Abs(moveInput.x) > 0.1f);
+		engine.SetActive(Mathf.Abs(moveInput.magnitude) > 0.1f);
 	}
 
 	void FixedUpdate()
