@@ -182,6 +182,7 @@ MonoBehaviour:
   currentWeapon: {fileID: 1716766456238828278, guid: 4591e517c761814419d02f69c606b89c, type: 3}
   dieEffect: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
   firePoint: {fileID: 5057203087596270019}
+  waterSplash: {fileID: 3042152123338241840, guid: 524d0fd0748f68f4a8d3add5db6f3f1a, type: 3}
 --- !u!1 &1955920051972680136
 GameObject:
   m_ObjectHideFlags: 0
@@ -5161,8 +5162,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 940604313
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

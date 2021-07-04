@@ -49,24 +49,23 @@ public class CameraScript : MonoBehaviour
 					break;
 			}
 
-			Vector3 targetPos = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
-			Vector3 moveDelta = (targetPos - transform.position) * Time.deltaTime * 3;
-			Vector3 newPos = transform.position + moveDelta;
 			if (smoothTrack)
 			{
+				Vector3 targetPos = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
+				Vector3 moveDelta = (targetPos - transform.position) * Time.deltaTime * 3;
+				Vector3 newPos = transform.position + moveDelta;
+				Debug.DrawLine(transform.position, targetPos, new Color(255, 0, 0, 255));
 				transform.position = newPos;
 			}
 			else
 			{
-				transform.position = targetPos;
+				transform.position = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
 			}
-
-			Debug.DrawLine(transform.position, targetPos, new Color(255, 0, 0, 255));
 		}
 
 		if (Input.GetKeyDown(KeyCode.K))
 		{
-			LockOff();
+			Shake(0.1f, 1.0f);
 		}
 
 		shakeTime = Mathf.Max(0, shakeTime - Time.deltaTime);
@@ -78,6 +77,7 @@ public class CameraScript : MonoBehaviour
 		else
 		{
 			shakeIntensity = 0.0f;
+			shakeOffset = Vector3.zero;
 		}
 
 		if (smoothMoving && smoothMoveTime > 0)

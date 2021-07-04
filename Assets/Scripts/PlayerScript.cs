@@ -18,6 +18,7 @@ public class PlayerScript : MonoBehaviour
 	public Weapon currentWeapon;
 	public GameObject dieEffect;
 	public Transform firePoint;
+	public GameObject waterSplash;
 
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
@@ -108,6 +109,11 @@ public class PlayerScript : MonoBehaviour
 					pickup.Trigger();
 				}
 			}
+		}
+
+		if (other.gameObject.tag == "Ocean")
+		{
+			Instantiate(waterSplash, transform.position, Quaternion.identity);
 		}
 
 		if (other.gameObject.tag == "Hitbox")
