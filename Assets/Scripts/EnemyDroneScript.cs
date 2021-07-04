@@ -42,6 +42,9 @@ public class EnemyDroneScript : MonoBehaviour
 			case DroneAiType.cruiser:
 				CruiserAi();
 				break;
+			case DroneAiType.dart:
+				DartAi();
+				break;
 		}
 
 		if (health <= 0)
@@ -79,6 +82,25 @@ public class EnemyDroneScript : MonoBehaviour
 
 	}
 
+	void DartAi()
+	{
+		float ammo = 1.0f; //Infinite ammo temp fix
+		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, null);
+
+		Vector2 deltaPosition = player.transform.position - transform.position;
+		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
+		Vector2 direction = droneController.GetLookDirection();
+		float lookAngle = Mathf.Atan2(direction.y, direction.x);
+		float deltaAngle = lookAngle - toPlayerAngle;
+		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
+
+		input.y = 1;
+		input.x = deltaAngle > 0 ? 1 : -1;
+
+		droneController.SetGlideInput(Mathf.Abs(deltaAngle) < 30 * Mathf.Rad2Deg && distance < 10.0f);
+		droneController.SetMoveInput(input.normalized);
+	}
+
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "Hitbox")
@@ -106,6 +128,7 @@ public class EnemyDroneScript : MonoBehaviour
 	public enum DroneAiType
 	{
 		chaser,
-		cruiser
+		cruiser,
+		dart
 	}
 }
