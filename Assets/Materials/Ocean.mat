@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ocean
-  m_Shader: {fileID: -6465566751694194690, guid: 0a9104515e515bb43b74faa53b67315c, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 8d1731383b948cb4e9ff948e80e594ec, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,18 +19,19 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_618E0525:
+    - Texture2D_5ECA9480:
         m_Texture: {fileID: 8400000, guid: 0d43faf6c8803f446bf7234bb999ca45, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - Texture2D_F056855B:
-        m_Texture: {fileID: 8400000, guid: 0d43faf6c8803f446bf7234bb999ca45, type: 2}
+    - Texture2D_8DF08096:
+        m_Texture: {fileID: 2800000, guid: d668d1defebaabc43944b9834fec736f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 8400000, guid: 0d43faf6c8803f446bf7234bb999ca45, type: 2}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - Vector1_1C51CBE3: 1
     m_Colors: []
   m_BuildTextureStacks: []

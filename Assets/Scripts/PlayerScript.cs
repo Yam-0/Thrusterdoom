@@ -19,10 +19,13 @@ public class PlayerScript : MonoBehaviour
 	public GameObject dieEffect;
 	public Transform firePoint;
 	public GameObject waterSplash;
+	public GameObject wakeSplash;
+	public float wakeSplashRate = 16.0f;
 
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
 	private DroneController droneController;
+	private float wakeSplashTimer = 0.0f;
 
 	void Start()
 	{
@@ -36,7 +39,7 @@ public class PlayerScript : MonoBehaviour
 
 	void Update()
 	{
-		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb);
+		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, null);
 
 		boost = droneController.GetBoosting() ? Mathf.Max(0, boost - Time.deltaTime) : boost;
 		boost = droneController.GetGliding() ? Mathf.Min(maxBoost, boost + Time.deltaTime) : boost;
@@ -54,6 +57,14 @@ public class PlayerScript : MonoBehaviour
 		float shakeIntensity = droneController.GetMoveInput().y / 20.0f;
 		shakeIntensity = droneController.GetBoosting() ? shakeIntensity * 2 : 0;
 		Camera.main.GetComponent<CameraScript>().Shake(0.1f, shakeIntensity);
+
+		wakeSplashTimer = Mathf.Max(0, wakeSplashTimer - Time.deltaTime);
+		if (transform.position.y <= 2.5f && transform.position.y > 0 && wakeSplashTimer == 0 && input.y > 0.1f && !droneController.GetGliding())
+		{
+			wakeSplashTimer = 1.0f / wakeSplashRate;
+			Vector2 spawnLocation = new Vector2(transform.position.x - droneController.GetLookDirection().x * transform.position.y, 0.0f);
+			Instantiate(wakeSplash, spawnLocation, Quaternion.identity);
+		}
 
 		if (health <= 0)
 		{
@@ -130,7 +141,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Ocean")
 		{
-			health -= 50 * Time.deltaTime;
+			health -= 10 * Time.deltaTime;
 		}
 	}
 }

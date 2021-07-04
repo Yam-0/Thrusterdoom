@@ -10,15 +10,13 @@ public class ShipController : MonoBehaviour
 
 	[Space]
 	[Header("Ship Effects")]
-	public ParticleSystem engine;
+	public GameObject engine;
 	public GameObject enginePuff;
 	public Transform wakePoint;
 
 	private Rigidbody2D rb;
 	private Vector2 moveInput = Vector2.zero;
 	private Vector2 velocity = Vector2.zero;
-
-	private bool moving;
 
 	void Start()
 	{
@@ -27,7 +25,7 @@ public class ShipController : MonoBehaviour
 
 	void Update()
 	{
-
+		engine.SetActive(Mathf.Abs(moveInput.x) > 0.1f);
 	}
 
 	void FixedUpdate()
@@ -64,10 +62,5 @@ public class ShipController : MonoBehaviour
 	public Vector2 GetMoveDirection()
 	{
 		return velocity.normalized;
-	}
-
-	public bool GetMoving()
-	{
-		return moving;
 	}
 }

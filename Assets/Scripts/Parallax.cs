@@ -27,7 +27,6 @@ public class Parallax : MonoBehaviour
 	private Vector2 movementMultiplier;
 	private Vector3 initialPosition;
 	private Vector3 initialScale;
-	private float initialDistance = 0.0f;
 	private GameObject trackObject;
 
 	void Start()

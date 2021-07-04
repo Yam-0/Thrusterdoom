@@ -58,7 +58,7 @@ public class EnemyDroneScript : MonoBehaviour
 	void ChaserAi()
 	{
 		float ammo = 1.0f; //Infinite ammo temp fix
-		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb);
+		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, null);
 
 		Vector2 deltaPosition = player.transform.position - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);

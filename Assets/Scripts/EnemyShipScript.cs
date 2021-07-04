@@ -17,11 +17,18 @@ public class EnemyShipScript : MonoBehaviour
 	public GameObject wreckage;
 	public float killShakeDuration = 0.3f;
 	public float killShakeIntensity = 0.4f;
+	public TurretScript turretScript;
+	public GameObject engine;
+
+	public Weapon extraWeapon;
+	public Transform extraFirePoint;
+	public TurretScript extraTurretScript;
 
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
 	private ShipController shipController;
 	private GameObject player;
+	private bool dir = false;
 
 	void Start()
 	{
@@ -39,6 +46,15 @@ public class EnemyShipScript : MonoBehaviour
 			case ShipAiType.enforcer:
 				EnforcerAi();
 				break;
+			case ShipAiType.gunboat:
+				GunboatAi();
+				break;
+			case ShipAiType.canonboat:
+				CanonboatAi();
+				break;
+			case ShipAiType.carrier:
+				CarrierAi();
+				break;
 		}
 
 		if (health <= 0)
@@ -55,16 +71,161 @@ public class EnemyShipScript : MonoBehaviour
 	void EnforcerAi()
 	{
 		float ammo = 1.0f; //Infinite ammo temp fix
-		currentWeapon.Handle(ref ammo, firePoint, true, rb);
+		currentWeapon.Handle(ref ammo, firePoint, true, rb, turretScript);
+		extraWeapon.Handle(ref ammo, extraFirePoint, true, rb, extraTurretScript);
 
 		Vector2 deltaPosition = player.transform.position - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
 
-		input.y = 1;
-		input.x = (deltaPosition.x > 0 ? 1 : -1) / distance;
+		input.y = 1.0f / Mathf.Sqrt(distance);
+		input.x = (dir ? 1 : -1) / distance;
+		if (Mathf.Abs(deltaPosition.x) < 20.0f)
+		{
+			input.x = 0.0f;
+		}
 
 		shipController.SetMoveInput(input.normalized);
+
+		float swapRange = 40.0f;
+		if (deltaPosition.x > swapRange)
+		{
+			dir = true;
+		}
+		if (deltaPosition.x < -swapRange)
+		{
+			dir = false;
+		}
+
+		Vector3 scale = transform.localScale;
+		if (dir)
+		{
+			scale.x = -1;
+			transform.localScale = scale;
+		}
+		else
+		{
+			scale.x = 1;
+			transform.localScale = scale;
+
+		}
+	}
+
+	void GunboatAi()
+	{
+		float ammo = 1.0f; //Infinite ammo temp fix
+		currentWeapon.Handle(ref ammo, firePoint, true, rb, turretScript);
+
+		Vector2 deltaPosition = player.transform.position - transform.position;
+		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
+		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
+
+		input.y = 1.0f / Mathf.Sqrt(distance);
+		input.x = (dir ? 1 : -1) / distance;
+		shipController.SetMoveInput(input.normalized);
+
+		float swapRange = 40.0f;
+		if (deltaPosition.x > swapRange)
+		{
+			dir = true;
+		}
+		if (deltaPosition.x < -swapRange)
+		{
+			dir = false;
+		}
+
+		Vector3 scale = transform.localScale;
+		if (dir)
+		{
+			scale.x = -1;
+			transform.localScale = scale;
+		}
+		else
+		{
+			scale.x = 1;
+			transform.localScale = scale;
+
+		}
+	}
+
+	void CanonboatAi()
+	{
+		float ammo = 1.0f; //Infinite ammo temp fix
+		currentWeapon.Handle(ref ammo, firePoint, true, rb, turretScript);
+
+		Vector2 deltaPosition = player.transform.position - transform.position;
+		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
+		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
+
+		input.y = 1.0f / Mathf.Sqrt(distance);
+		input.x = (dir ? 1 : -1) / distance;
+		shipController.SetMoveInput(input.normalized);
+
+		float swapRange = 40.0f;
+		if (deltaPosition.x > swapRange)
+		{
+			dir = true;
+		}
+		if (deltaPosition.x < -swapRange)
+		{
+			dir = false;
+		}
+
+		Vector3 scale = transform.localScale;
+		if (dir)
+		{
+			scale.x = -1;
+			transform.localScale = scale;
+		}
+		else
+		{
+			scale.x = 1;
+			transform.localScale = scale;
+
+		}
+	}
+
+	void CarrierAi()
+	{
+		float ammo = 1.0f; //Infinite ammo temp fix
+		currentWeapon.Handle(ref ammo, firePoint, true, rb, turretScript);
+		extraWeapon.Handle(ref ammo, extraFirePoint, true, rb, extraTurretScript);
+
+		Vector2 deltaPosition = player.transform.position - transform.position;
+		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
+		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
+
+		input.y = 1.0f / Mathf.Sqrt(distance);
+		input.x = (dir ? 1 : -1) / distance;
+		if (Mathf.Abs(deltaPosition.x) < 20.0f)
+		{
+			input.x = 0.0f;
+		}
+
+		shipController.SetMoveInput(input.normalized);
+
+		float swapRange = 60.0f;
+		if (deltaPosition.x > swapRange)
+		{
+			dir = true;
+		}
+		if (deltaPosition.x < -swapRange)
+		{
+			dir = false;
+		}
+
+		Vector3 scale = transform.localScale;
+		if (dir)
+		{
+			scale.x = -1;
+			transform.localScale = scale;
+		}
+		else
+		{
+			scale.x = 1;
+			transform.localScale = scale;
+
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -93,6 +254,9 @@ public class EnemyShipScript : MonoBehaviour
 
 	public enum ShipAiType
 	{
-		enforcer
+		enforcer,
+		gunboat,
+		canonboat,
+		carrier
 	}
 }
