@@ -57,6 +57,23 @@ public class EnemyShipScript : MonoBehaviour
 				break;
 		}
 
+		Vector3 scale = transform.localScale;
+		Vector3 engineScale = engine.transform.localScale;
+		if (dir)
+		{
+			scale.x = -1;
+			engineScale.x = -1;
+			transform.localScale = scale;
+			engine.transform.localScale = engineScale;
+		}
+		else
+		{
+			scale.x = 1;
+			engineScale.x = 1;
+			transform.localScale = scale;
+			engine.transform.localScale = engineScale;
+		}
+
 		if (health <= 0)
 		{
 			Camera.main.GetComponent<CameraScript>().Shake(killShakeDuration, killShakeIntensity);
@@ -96,19 +113,6 @@ public class EnemyShipScript : MonoBehaviour
 		{
 			dir = false;
 		}
-
-		Vector3 scale = transform.localScale;
-		if (dir)
-		{
-			scale.x = -1;
-			transform.localScale = scale;
-		}
-		else
-		{
-			scale.x = 1;
-			transform.localScale = scale;
-
-		}
 	}
 
 	void GunboatAi()
@@ -133,19 +137,6 @@ public class EnemyShipScript : MonoBehaviour
 		{
 			dir = false;
 		}
-
-		Vector3 scale = transform.localScale;
-		if (dir)
-		{
-			scale.x = -1;
-			transform.localScale = scale;
-		}
-		else
-		{
-			scale.x = 1;
-			transform.localScale = scale;
-
-		}
 	}
 
 	void CanonboatAi()
@@ -169,19 +160,6 @@ public class EnemyShipScript : MonoBehaviour
 		if (deltaPosition.x < -swapRange)
 		{
 			dir = false;
-		}
-
-		Vector3 scale = transform.localScale;
-		if (dir)
-		{
-			scale.x = -1;
-			transform.localScale = scale;
-		}
-		else
-		{
-			scale.x = 1;
-			transform.localScale = scale;
-
 		}
 	}
 
@@ -212,19 +190,6 @@ public class EnemyShipScript : MonoBehaviour
 		if (deltaPosition.x < -swapRange)
 		{
 			dir = false;
-		}
-
-		Vector3 scale = transform.localScale;
-		if (dir)
-		{
-			scale.x = -1;
-			transform.localScale = scale;
-		}
-		else
-		{
-			scale.x = 1;
-			transform.localScale = scale;
-
 		}
 	}
 

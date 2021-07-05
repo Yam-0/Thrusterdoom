@@ -22,14 +22,8 @@ public class TurretScript : MonoBehaviour
 
 	void Update()
 	{
-		if (boat.transform.localScale.x == -1)
-		{
-			transform.localScale = new Vector3(-1, 1, 1);
-		}
-		else
-		{
-			transform.localScale = new Vector3(1, 1, 1);
-		}
+		transform.localScale = new Vector3(boat.transform.localScale.x, 1, 1);
+
 		Vector2 deltaPosition = transform.position - target.transform.position;
 		angleToTarget = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		float targetRotation = angleToTarget * Mathf.Rad2Deg + 90;
