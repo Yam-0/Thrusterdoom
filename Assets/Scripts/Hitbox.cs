@@ -11,6 +11,7 @@ public class Hitbox : MonoBehaviour
 	//public bool instaKill;
 	public GameObject hitEffect;
 	public GameObject hitWaterEffect;
+	public float hitFreezeLength = 0.06f;
 	public float hitShakeLength;
 	public float hitShakeIntensity;
 
@@ -21,7 +22,7 @@ public class Hitbox : MonoBehaviour
 			Destroy(projectile, 0);
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
 			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
-			Camera.main.GetComponent<CameraScript>().Freeze(0.06f);
+			Camera.main.GetComponent<CameraScript>().Freeze(hitFreezeLength);
 			Debug.Log(self.ToString() + " hit for " + damage + " damage.");
 			return damage;
 		}

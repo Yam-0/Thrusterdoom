@@ -19,6 +19,10 @@ PrefabInstance:
       propertyPath: hitShakeIntensity
       value: 0.12
       objectReference: {fileID: 0}
+    - target: {fileID: 2322460477854894369, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
+      propertyPath: hitFreezeLength
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 6211086177561833576, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4

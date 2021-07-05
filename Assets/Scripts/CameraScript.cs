@@ -10,6 +10,13 @@ public class CameraScript : MonoBehaviour
 	public float preMoveDistance;
 	public bool smoothTrack = false;
 
+	[Space]
+	public bool limitPosition = false;
+	public GameObject topLimit;
+	public GameObject rightLimit;
+	public GameObject bottomLimit;
+	public GameObject leftLimit;
+
 	private bool lockedOn = true;
 	private float shakeIntensity;
 	private float shakeTime;
@@ -50,7 +57,24 @@ public class CameraScript : MonoBehaviour
 			}
 
 			Vector3 targetPos = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
-			if (targetPos.y < 0) { targetPos.y = 0; }
+
+			if (topLimit != null)
+			{
+				if (targetPos.y > topLimit.transform.position.y) { targetPos.y = topLimit.transform.position.y; }
+			}
+			if (rightLimit != null)
+			{
+				if (targetPos.x > rightLimit.transform.position.x) { targetPos.x = rightLimit.transform.position.x; }
+			}
+			if (bottomLimit != null)
+			{
+				if (targetPos.y < bottomLimit.transform.position.y) { targetPos.y = bottomLimit.transform.position.y; }
+			}
+			if (leftLimit != null)
+			{
+				if (targetPos.y < leftLimit.transform.position.x) { targetPos.x = leftLimit.transform.position.x; }
+			}
+
 			if (smoothTrack)
 			{
 				Vector3 moveDelta = (targetPos - transform.position) * Time.deltaTime * 3;

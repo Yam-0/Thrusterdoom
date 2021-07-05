@@ -27,6 +27,10 @@ PrefabInstance:
       propertyPath: hitWaterEffect
       value: 
       objectReference: {fileID: 3042152123338241840, guid: 58b2e022ae7af21448d633f7150ff5f7, type: 3}
+    - target: {fileID: 2738433206064638748, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
+      propertyPath: hitFreezeLength
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 5767390363628622421, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
       propertyPath: m_LocalScale.x
       value: 4

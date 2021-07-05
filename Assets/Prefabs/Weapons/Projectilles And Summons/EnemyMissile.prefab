@@ -68,6 +68,14 @@ PrefabInstance:
       propertyPath: damage
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1138679004979400519, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
+      propertyPath: hitFreezeLength
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138679004979400519, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
+      propertyPath: hitShakeIntensity
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1594596305091749507, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
       propertyPath: m_Color.r
       value: 0.38679248
