@@ -75,6 +75,10 @@ public class Weapon : MonoBehaviour
 
 					Camera.main.GetComponent<CameraScript>().Shake(fireShakeLength, fireShakeIntensity);
 					Instantiate(fireEffect, firePoint.position, firePoint.rotation);
+					if (turretScript != null)
+					{
+						turretScript.Fire();
+					}
 
 					float angle = fireRotation * Mathf.Deg2Rad;
 					Vector2 fireDirection = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));

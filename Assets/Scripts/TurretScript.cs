@@ -8,16 +8,19 @@ public class TurretScript : MonoBehaviour
 	public float maxAngle = 30.0f;
 	public float maxRange = 10.0f;
 	public GameObject boat;
+	public bool targetUnder = false;
 
 	private float initialRotation;
 	private GameObject target;
 	private float angleToTarget;
 	private bool withinRange;
+	private Animation an;
 
 	void Start()
 	{
 		target = GameObject.FindGameObjectWithTag("Player");
 		initialRotation = transform.rotation.eulerAngles.z;
+		an = GetComponent<Animation>();
 	}
 
 	void Update()
@@ -29,7 +32,7 @@ public class TurretScript : MonoBehaviour
 		float targetRotation = angleToTarget * Mathf.Rad2Deg + 90;
 		float distanceToTarget = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
 
-		if (deltaPosition.y < 0)
+		if (deltaPosition.y < 0 || (targetUnder && deltaPosition.y > 0))
 		{
 			targetRotation = Mathf.Clamp(targetRotation, initialRotation - maxAngle / 2, initialRotation + maxAngle / 2);
 			transform.rotation = Quaternion.Euler(0, 0, targetRotation);
@@ -37,6 +40,12 @@ public class TurretScript : MonoBehaviour
 
 		withinRange = (deltaPosition.y < 0 && targetRotation > initialRotation - maxAngle / 2 && targetRotation < initialRotation + maxAngle / 2);
 		withinRange = withinRange && distanceToTarget <= maxRange;
+	}
+
+	public void Fire()
+	{
+		if (an != null)
+			an.Play();
 	}
 
 	public bool GetWithinRange()

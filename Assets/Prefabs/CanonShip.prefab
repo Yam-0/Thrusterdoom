@@ -4944,6 +4944,7 @@ MonoBehaviour:
   maxAngle: 160
   maxRange: 15
   boat: {fileID: 6631347438868157420}
+  targetUnder: 0
 --- !u!1 &6631347437028499673
 GameObject:
   m_ObjectHideFlags: 0

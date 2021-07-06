@@ -105,10 +105,13 @@ public class DroneController : MonoBehaviour
 		golding = false;
 		Vector2 offset = Vector2.zero;
 
-		for (int i = 0; i < objectTransform.childCount; i++)
+		if (objectTransform != null)
 		{
-			GameObject child = objectTransform.GetChild(i).gameObject;
-			child.transform.rotation = Quaternion.Euler(0, 0, lookAngle);
+			for (int i = 0; i < objectTransform.childCount; i++)
+			{
+				GameObject child = objectTransform.GetChild(i).gameObject;
+				child.transform.rotation = Quaternion.Euler(0, 0, lookAngle);
+			}
 		}
 
 		float dot = Vector2.Dot(lookDirection, moveDirection);

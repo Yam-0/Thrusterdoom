@@ -17,6 +17,7 @@ public class EnemyDroneScript : MonoBehaviour
 	public GameObject wreckage;
 	public float killShakeDuration = 0.3f;
 	public float killShakeIntensity = 0.4f;
+	public TurretScript turretScript;
 
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
@@ -79,7 +80,24 @@ public class EnemyDroneScript : MonoBehaviour
 
 	void CruiserAi()
 	{
+		float ammo = 1.0f; //Infinite ammo temp fix
+		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, turretScript);
 
+		Vector2 deltaPosition = player.transform.position - transform.position;
+		Vector2 playerOffset = new Vector2(0.0f, 10.0f);
+		deltaPosition += playerOffset;
+
+		float toTargetAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
+		Vector2 direction = droneController.GetLookDirection();
+		float lookAngle = Mathf.Atan2(direction.y, direction.x);
+		float deltaAngle = lookAngle - toTargetAngle;
+		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
+
+		input.y = 1;
+		input.x = deltaAngle > 0 ? 1 : -1;
+
+		droneController.SetGlideInput(Mathf.Abs(deltaAngle) < 30 * Mathf.Rad2Deg && distance < 10.0f);
+		droneController.SetMoveInput(input.normalized);
 	}
 
 	void DartAi()
