@@ -46,6 +46,11 @@ public class Game : MonoBehaviour
 		LoadScene(GetCurrentSceneIndex());
 	}
 
+	static public void LevelComplete()
+	{
+
+	}
+
 	public static class Events
 	{
 		public static void PlayerDied()
