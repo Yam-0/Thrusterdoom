@@ -20,6 +20,7 @@ MonoBehaviour:
   wreckage: {fileID: 8398265978084215800, guid: c5113569544db39439ec7ec7fdad20eb, type: 3}
   killShakeDuration: 0.3
   killShakeIntensity: 0.4
+  turretScript: {fileID: 0}
 --- !u!1001 &3217803285654699548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57,11 +58,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 876925212604747863, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 876925212604747863, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.47
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 876925212604747863, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
       propertyPath: m_LocalPosition.z

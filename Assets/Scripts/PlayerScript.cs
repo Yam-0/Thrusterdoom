@@ -68,10 +68,7 @@ public class PlayerScript : MonoBehaviour
 
 		if (health <= 0)
 		{
-			Debug.Log("Player died!");
-
-			//If this is not temporary i swear to god.
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			Game.Events.PlayerDied();
 		}
 	}
 

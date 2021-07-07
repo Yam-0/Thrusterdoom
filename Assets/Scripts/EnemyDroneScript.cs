@@ -98,6 +98,10 @@ public class EnemyDroneScript : MonoBehaviour
 
 		droneController.SetGlideInput(Mathf.Abs(deltaAngle) < 30 * Mathf.Rad2Deg && distance < 10.0f);
 		droneController.SetMoveInput(input.normalized);
+
+		//Rotate towards x move direction
+		float angle = droneController.GetMoveDirection().x * -30.0f;
+		transform.rotation = Quaternion.Euler(0, 0, angle);
 	}
 
 	void DartAi()

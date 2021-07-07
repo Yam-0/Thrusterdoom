@@ -47,8 +47,11 @@ public class DroneController : MonoBehaviour
 		rb = GetComponent<Rigidbody2D>();
 		objectTransform = transform.Find("object");
 
-		rocketSettings = rocket.main;
-		rocketEmission = rocket.emission;
+		if (rocket != null)
+		{
+			rocketSettings = rocket.main;
+			rocketEmission = rocket.emission;
+		}
 	}
 
 	void Update()
@@ -59,21 +62,24 @@ public class DroneController : MonoBehaviour
 		Debug.DrawLine(transform.position, transform.position + new Vector3(moveDirection.x, moveDirection.y) * 3.0f, lookColor);
 		Debug.DrawLine(transform.position, transform.position + new Vector3(lookDirection.x, lookDirection.y) * 4.0f, Color.red);
 
-		rocketSettings.startColor = trailNormal;
-		rocketSettings.startSpeedMultiplier = 1.0f;
-		rocketEmission.rateOverTime = 100 * moveInput.y;
-
-		if (!gliding)
+		if (rocket != null)
 		{
-			if (boosting)
+			rocketSettings.startColor = trailNormal;
+			rocketSettings.startSpeedMultiplier = 1.0f;
+			rocketEmission.rateOverTime = 100 * moveInput.y;
+
+			if (!gliding)
 			{
-				rocketSettings.startColor = nitroColor;
-				rocketSettings.startSpeedMultiplier = 2.0f;
-			}
-			if (golding)
-			{
-				rocketSettings.startColor = goldingColor;
-				rocketSettings.startSpeedMultiplier = 2.0f;
+				if (boosting)
+				{
+					rocketSettings.startColor = nitroColor;
+					rocketSettings.startSpeedMultiplier = 2.0f;
+				}
+				if (golding)
+				{
+					rocketSettings.startColor = goldingColor;
+					rocketSettings.startSpeedMultiplier = 2.0f;
+				}
 			}
 		}
 	}
