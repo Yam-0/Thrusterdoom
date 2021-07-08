@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1138679004979400519, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
       propertyPath: hitFreezeLength
-      value: 0.1
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 1138679004979400519, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
       propertyPath: hitShakeIntensity

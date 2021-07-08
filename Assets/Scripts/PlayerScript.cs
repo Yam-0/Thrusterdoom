@@ -13,6 +13,9 @@ public class PlayerScript : MonoBehaviour
 	private float ammo;
 	public float maxBoost = 1.2f;
 	private float boost;
+	public bool godmode = false;
+	public bool infiniteAmmo = false;
+	public bool infiniteBoost = false;
 
 	[Space]
 	public Weapon currentWeapon;
@@ -41,14 +44,21 @@ public class PlayerScript : MonoBehaviour
 
 	void Update()
 	{
+		if (godmode) { health = maxHealth; }
+		if (infiniteAmmo) { ammo = maxAmmo; }
+		if (infiniteBoost) { boost = maxBoost; }
+
 		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, null);
 
 		boost = droneController.GetBoosting() ? Mathf.Max(0, boost - Time.deltaTime) : boost;
 		boost = droneController.GetGliding() ? Mathf.Min(maxBoost, boost + Time.deltaTime) : boost;
+
 		transform.Find("BoostMeter").localScale = new Vector3(0.4f, (boost / maxBoost) * 10, 1);
 		transform.Find("AmmoMeter").localScale = new Vector3(0.4f, (ammo / maxAmmo) * 10, 1);
 		transform.Find("ReloadMeter").gameObject.SetActive(currentWeapon.weaponType == Weapon.WeaponType.summon);
 		transform.Find("ReloadMeter").localScale = new Vector3((currentWeapon.GetFireCooldown() / (1.0f / currentWeapon.firerate)) * 10, 0.4f, 1);
+		transform.Find("Healthbar").gameObject.SetActive(health != maxHealth);
+		transform.Find("Healthbar").localScale = new Vector3((health / maxHealth) * 10, 0.4f, 1);
 
 		input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 		input.y = Mathf.Max(0, input.y);

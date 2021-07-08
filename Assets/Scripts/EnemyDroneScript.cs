@@ -64,7 +64,7 @@ public class EnemyDroneScript : MonoBehaviour
 	void ChaserAi()
 	{
 		float ammo = 1.0f; //Infinite ammo temp fix
-		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, null);
+		currentWeapon.Handle(ref ammo, firePoint, (droneController.GetGliding() && (transform.position.y > 0)), rb, null);
 
 		Vector2 deltaPosition = player.transform.position - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
@@ -83,7 +83,7 @@ public class EnemyDroneScript : MonoBehaviour
 	void CruiserAi()
 	{
 		float ammo = 1.0f; //Infinite ammo temp fix
-		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, turretScript);
+		currentWeapon.Handle(ref ammo, firePoint, (droneController.GetGliding() && (transform.position.y > 0)), rb, turretScript);
 
 		Vector2 deltaPosition = player.transform.position - transform.position;
 		Vector2 playerOffset = new Vector2(0.0f, 10.0f);
@@ -109,7 +109,7 @@ public class EnemyDroneScript : MonoBehaviour
 	void DartAi()
 	{
 		float ammo = 1.0f; //Infinite ammo temp fix
-		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, null);
+		currentWeapon.Handle(ref ammo, firePoint, (droneController.GetGliding() && (transform.position.y > 0)), rb, null);
 
 		Vector2 deltaPosition = player.transform.position - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);

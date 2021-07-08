@@ -5049,7 +5049,7 @@ MonoBehaviour:
   currentWeapon: {fileID: 11400000, guid: 3c2226578e0fcfb499b8cecee1420948, type: 2}
   dieEffect: {fileID: 3755075594882541199, guid: b73077f32296f544d849b73b34322e7e, type: 3}
   firePoint: {fileID: 7681550744849601225}
-  wreckage: {fileID: 5219217727100501529, guid: 0b6528103cc83f84996a241552279cd7, type: 3}
+  wreckage: {fileID: 5219217727100501529, guid: e651814636967b04887ea024721421f0, type: 3}
   killShakeDuration: 0.3
   killShakeIntensity: 0.4
   turretScript: {fileID: 7648748573745648027}
