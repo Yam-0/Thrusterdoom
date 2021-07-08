@@ -22,7 +22,7 @@ PrefabInstance:
     - target: {fileID: 2322460477854894369, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
       propertyPath: hitEffect
       value: 
-      objectReference: {fileID: 3042152123338241840, guid: 17daf4d6c3182084c9644dddacc3ec20, type: 3}
+      objectReference: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
     - target: {fileID: 2322460477854894369, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
       propertyPath: hitShakeIntensity
       value: 0.2
@@ -34,7 +34,7 @@ PrefabInstance:
     - target: {fileID: 4167882573897670885, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8978bc2932360c24c84deeb077f516e8, type: 2}
+      objectReference: {fileID: 2100000, guid: b06ede893513f274c93fcfe04f487f05, type: 2}
     - target: {fileID: 6211086177561833576, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -46,7 +46,7 @@ PrefabInstance:
     - target: {fileID: 6739943499961457429, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
       propertyPath: timeoutExplosion
       value: 
-      objectReference: {fileID: 3042152123338241840, guid: 2bbf955e8461d6346acc81a74f7fd839, type: 3}
+      objectReference: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
     - target: {fileID: 6739943499961457429, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
       propertyPath: speed
       value: 12

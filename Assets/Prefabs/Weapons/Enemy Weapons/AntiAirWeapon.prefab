@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1716766456238828278, guid: a0b0d05c4e4d28847a6f731936244417, type: 3}
       propertyPath: firerate
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1716766456238828278, guid: a0b0d05c4e4d28847a6f731936244417, type: 3}
       propertyPath: spread
