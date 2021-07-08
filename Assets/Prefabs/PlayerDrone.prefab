@@ -255,7 +255,7 @@ MonoBehaviour:
   currentWeapon: {fileID: 1716766456238828278, guid: 4591e517c761814419d02f69c606b89c, type: 3}
   dieEffect: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
   firePoint: {fileID: 5057203087596270019}
-  waterSplash: {fileID: 3042152123338241840, guid: 524d0fd0748f68f4a8d3add5db6f3f1a, type: 3}
+  waterSplash: {fileID: 4013861695449668320, guid: bbf60badf4fd3ef43997303e838b859a, type: 3}
   wakeSplash: {fileID: 3042152123338241840, guid: fe9b479bb5044b64d96e3de817234d42, type: 3}
   wakeSplashRate: 24
 --- !u!1 &1955920051972680136

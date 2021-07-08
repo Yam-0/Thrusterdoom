@@ -10,4 +10,9 @@ public class SelfDestruct : MonoBehaviour
 	{
 		Destroy(gameObject, time);
 	}
+
+	public void Kill()
+	{
+		Destroy(gameObject);
+	}
 }
