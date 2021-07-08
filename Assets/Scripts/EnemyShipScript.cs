@@ -37,6 +37,8 @@ public class EnemyShipScript : MonoBehaviour
 		player = GameObject.FindGameObjectWithTag("Player");
 
 		currentWeapon = Weapon.MakeNewWeapon(currentWeapon);
+		if (extraWeapon != null)
+			extraWeapon = Weapon.MakeNewWeapon(extraWeapon);
 
 		health = maxHealth;
 	}
