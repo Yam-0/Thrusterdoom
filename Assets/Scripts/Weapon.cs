@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+[CreateAssetMenu(fileName = "Weapon", menuName = "ScriptableObjects/Weapon", order = 10)]
+public class Weapon : ScriptableObject
 {
 	public WeaponType weaponType;
 	public GameObject weapon;
@@ -106,6 +107,21 @@ public class Weapon : MonoBehaviour
 		}
 
 		return firing;
+	}
+
+	public static Weapon MakeNewWeapon(Weapon weapon)
+	{
+		Weapon newWeapon = Weapon.CreateInstance<Weapon>();
+		newWeapon.weaponType = weapon.weaponType;
+		newWeapon.weapon = weapon.weapon;
+		newWeapon.ammoCost = weapon.ammoCost;
+		newWeapon.fireEffect = weapon.fireEffect;
+		newWeapon.recoilForce = weapon.recoilForce;
+		newWeapon.firerate = weapon.firerate;
+		newWeapon.fireShakeLength = weapon.fireShakeLength;
+		newWeapon.fireShakeIntensity = weapon.fireShakeIntensity;
+		newWeapon.spread = weapon.spread;
+		return newWeapon;
 	}
 
 	public float GetFireCooldown()

@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 460
   ai: 3
-  currentWeapon: {fileID: 1716766456238828278, guid: ba829ad8bdae60b4e8b25569973e6c65, type: 3}
+  currentWeapon: {fileID: 11400000, guid: 920f3435b81eb8742ae6d6e37de4e484, type: 2}
   dieEffect: {fileID: 3755075594882541199, guid: b73077f32296f544d849b73b34322e7e, type: 3}
   firePoint: {fileID: 3032039464050937577}
   wreckage: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
@@ -211,7 +211,7 @@ MonoBehaviour:
   killShakeIntensity: 0.4
   turretScript: {fileID: 3032039463047453469}
   engine: {fileID: 4289922146767246120}
-  extraWeapon: {fileID: 5034481435444109398, guid: 3ea9d5810b15729498551c56495a63df, type: 3}
+  extraWeapon: {fileID: 11400000, guid: 3c2226578e0fcfb499b8cecee1420948, type: 2}
   extraFirePoint: {fileID: 1775010910624603733}
   extraTurretScript: {fileID: 1737706648383757575}
 --- !u!60 &7199607454602363173

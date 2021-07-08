@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 40
   ai: 2
-  currentWeapon: {fileID: 5034481435444109398, guid: 3ea9d5810b15729498551c56495a63df, type: 3}
+  currentWeapon: {fileID: 11400000, guid: 3c2226578e0fcfb499b8cecee1420948, type: 2}
   dieEffect: {fileID: 3755075594882541199, guid: b73077f32296f544d849b73b34322e7e, type: 3}
   firePoint: {fileID: 7676707051202367455}
   wreckage: {fileID: 8398265978084215800, guid: 7f4176dd10564494f9ee4858d1f8a9bd, type: 3}

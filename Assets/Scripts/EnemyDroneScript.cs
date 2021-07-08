@@ -30,6 +30,8 @@ public class EnemyDroneScript : MonoBehaviour
 		droneController = GetComponent<DroneController>();
 		player = GameObject.FindGameObjectWithTag("Player");
 
+		currentWeapon = Weapon.MakeNewWeapon(currentWeapon);
+
 		health = maxHealth;
 	}
 

@@ -36,6 +36,8 @@ public class EnemyShipScript : MonoBehaviour
 		shipController = GetComponent<ShipController>();
 		player = GameObject.FindGameObjectWithTag("Player");
 
+		currentWeapon = Weapon.MakeNewWeapon(currentWeapon);
+
 		health = maxHealth;
 	}
 

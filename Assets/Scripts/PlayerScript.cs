@@ -32,6 +32,8 @@ public class PlayerScript : MonoBehaviour
 		rb = GetComponent<Rigidbody2D>();
 		droneController = GetComponent<DroneController>();
 
+		currentWeapon = Weapon.MakeNewWeapon(currentWeapon);
+
 		health = maxHealth;
 		ammo = maxAmmo;
 		boost = maxBoost;
