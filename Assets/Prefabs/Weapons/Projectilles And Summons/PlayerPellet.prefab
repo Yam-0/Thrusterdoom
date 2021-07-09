@@ -27,6 +27,10 @@ PrefabInstance:
       propertyPath: hurtTime
       value: 0.02
       objectReference: {fileID: 0}
+    - target: {fileID: 5754412919643005545, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.172
+      objectReference: {fileID: 0}
     - target: {fileID: 6211086177561833576, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4

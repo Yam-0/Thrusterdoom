@@ -31,9 +31,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyPellet
       objectReference: {fileID: 0}
+    - target: {fileID: 5287827953709159857, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6930380075014530063, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0981
+      value: -0.1759
       objectReference: {fileID: 0}
     - target: {fileID: 8160788878110421303, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
       propertyPath: m_LocalPosition.x
