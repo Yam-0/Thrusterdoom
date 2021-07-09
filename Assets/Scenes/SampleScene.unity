@@ -479,7 +479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6631347438868157420, guid: 344f6aca811205543b8db1c420432fb3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6631347438868157423, guid: 344f6aca811205543b8db1c420432fb3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -639,7 +639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345418691315478092, guid: d58e0aeb7f508ba478da3374affc84c0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d58e0aeb7f508ba478da3374affc84c0, type: 3}
@@ -1000,7 +1000,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5621232188289833558, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
+      propertyPath: weapons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5621232188289833558, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
       propertyPath: currentWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: d530b885c5eb30449a685feb5cb4a7a5, type: 2}
+    - target: {fileID: 5621232188289833558, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
+      propertyPath: weapons.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0fc64b80297c1b84db27b66f198e965a, type: 2}
+    - target: {fileID: 5621232188289833558, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
+      propertyPath: weapons.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: d530b885c5eb30449a685feb5cb4a7a5, type: 2}
     m_RemovedComponents: []
@@ -1601,7 +1613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3032039462734304375, guid: 352e1eb5a3bb2e84b8e079610831d941, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 352e1eb5a3bb2e84b8e079610831d941, type: 3}
@@ -1973,7 +1985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3032039462734304375, guid: cb5c8581b380c684f99350796b770c4b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb5c8581b380c684f99350796b770c4b, type: 3}

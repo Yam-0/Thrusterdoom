@@ -20,7 +20,8 @@ public class Hitbox : MonoBehaviour
 	{
 		if (hitboxSource != self && hitboxType == HitboxType.summon && hitboxSource != HitboxSource.none)
 		{
-			Destroy(projectile, 0);
+			if (projectile.GetComponent<ProjectileScript>().destroyOnHit)
+				Destroy(projectile, 0);
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
 			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
 			Camera.main.GetComponent<CameraScript>().Freeze(hitFreezeLength);

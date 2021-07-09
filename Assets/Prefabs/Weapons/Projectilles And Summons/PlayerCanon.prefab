@@ -205,7 +205,7 @@ MonoBehaviour:
   timeoutExplosion: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
   rotate: 0
   inheritVelocity: 0
-  destroyOnHit: 1
+  destroyOnHit: 0
   homing: 0
   homingStrength: 0
 --- !u!1001 &7959213226908373493

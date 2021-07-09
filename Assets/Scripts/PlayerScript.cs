@@ -13,11 +13,13 @@ public class PlayerScript : MonoBehaviour
 	public bool godmode = false;
 	public bool infiniteAmmo = false;
 	public bool infiniteBoost = false;
-	public Weapon currentWeapon;
+	public List<Weapon> weapons;
 
 	private float health;
 	private float ammo;
 	private float boost;
+	private Weapon currentWeapon;
+	private int selectedWeapon = 0;
 
 	[Space]
 	public GameObject dieEffect;
@@ -48,7 +50,10 @@ public class PlayerScript : MonoBehaviour
 		for (int i = 0; i < spriteRenderers.Count; i++)
 			materials.Add(spriteRenderers[i].material);
 
-		currentWeapon = Weapon.MakeNewWeapon(currentWeapon);
+		for (int i = 0; i < weapons.Count; i++)
+		{
+			weapons[i] = Weapon.MakeNewWeapon(weapons[i]);
+		}
 
 		health = maxHealth;
 		ammo = maxAmmo;
@@ -61,6 +66,7 @@ public class PlayerScript : MonoBehaviour
 		if (infiniteAmmo) { ammo = maxAmmo; }
 		if (infiniteBoost) { boost = maxBoost; }
 
+		currentWeapon = weapons[selectedWeapon];
 		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, null);
 
 		boost = droneController.GetBoosting() ? Mathf.Max(0, boost - Time.deltaTime) : boost;
@@ -87,6 +93,12 @@ public class PlayerScript : MonoBehaviour
 		droneController.SetMoveInput(input);
 		droneController.SetBoostingInput(Input.GetKey(KeyCode.LeftShift) && boost > 0);
 		droneController.SetGlideInput(Input.GetKey(KeyCode.Space));
+
+		if (Input.GetKeyDown(KeyCode.Tab) && !droneController.GetGliding())
+		{
+			selectedWeapon++;
+			if (selectedWeapon > weapons.Count - 1) { selectedWeapon -= weapons.Count; }
+		}
 
 		float shakeIntensity = droneController.GetMoveInput().y / 20.0f;
 		shakeIntensity = droneController.GetBoosting() ? shakeIntensity * 2 : 0;
