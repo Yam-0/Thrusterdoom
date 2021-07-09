@@ -55,6 +55,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PE_RocketTrail
       objectReference: {fileID: 0}
+    - target: {fileID: 8927040273816551859, guid: 32a7bdcc59616f44bb04cc1eb88c5dfe, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 940604313
+      objectReference: {fileID: 0}
+    - target: {fileID: 8927040273816551859, guid: 32a7bdcc59616f44bb04cc1eb88c5dfe, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32a7bdcc59616f44bb04cc1eb88c5dfe, type: 3}
 --- !u!1001 &8358090994554386020
