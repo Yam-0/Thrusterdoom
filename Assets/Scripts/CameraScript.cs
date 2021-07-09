@@ -17,7 +17,7 @@ public class CameraScript : MonoBehaviour
 	public GameObject bottomLimit;
 	public GameObject leftLimit;
 
-	private bool lockedOn = true;
+	private bool lockedOn = false;
 	private float shakeIntensity;
 	private float shakeTime;
 	private Vector3 shakeOffset;
@@ -34,7 +34,21 @@ public class CameraScript : MonoBehaviour
 
 	void Update()
 	{
-		if (lockedOn)
+		transform.position -= shakeOffset;
+
+		shakeTime = Mathf.Max(0, shakeTime - Time.deltaTime);
+		if (shakeTime > 0)
+		{
+			shakeOffset.x = Random.value * shakeIntensity * 2 - shakeIntensity;
+			shakeOffset.y = Random.value * shakeIntensity * 2 - shakeIntensity;
+		}
+		else
+		{
+			shakeIntensity = 0.0f;
+			shakeOffset = Vector3.zero;
+		}
+
+		if (lockedOn && trackObject != null)
 		{
 			Vector3 preMovePositionOffset = Vector3.zero;
 			Vector2 moveDirection;
@@ -56,7 +70,7 @@ public class CameraScript : MonoBehaviour
 					break;
 			}
 
-			Vector3 targetPos = trackObject.transform.position + offset + preMovePositionOffset + shakeOffset;
+			Vector3 targetPos = trackObject.transform.position + offset + preMovePositionOffset;
 
 			if (topLimit != null)
 			{
@@ -77,32 +91,14 @@ public class CameraScript : MonoBehaviour
 
 			if (smoothTrack)
 			{
-				Vector3 moveDelta = (targetPos - transform.position) * Time.deltaTime * 3;
+				Vector3 moveDelta = (targetPos - transform.position) * Time.deltaTime * 16;
 				Vector3 newPos = transform.position + moveDelta;
-				Debug.DrawLine(transform.position, targetPos, new Color(255, 0, 0, 255));
-				transform.position = newPos;
+				transform.position = newPos + shakeOffset;
 			}
 			else
 			{
-				transform.position = targetPos;
+				transform.position = targetPos + shakeOffset;
 			}
-		}
-
-		if (Input.GetKeyDown(KeyCode.K))
-		{
-			Shake(0.1f, 1.0f);
-		}
-
-		shakeTime = Mathf.Max(0, shakeTime - Time.deltaTime);
-		if (shakeTime > 0)
-		{
-			shakeOffset.x = Random.value * shakeIntensity * 2 - shakeIntensity;
-			shakeOffset.y = Random.value * shakeIntensity * 2 - shakeIntensity;
-		}
-		else
-		{
-			shakeIntensity = 0.0f;
-			shakeOffset = Vector3.zero;
 		}
 
 		if (smoothMoving && smoothMoveTime > 0)
@@ -153,6 +149,11 @@ public class CameraScript : MonoBehaviour
 		smoothMoveToRot = rotation;
 		smoothMoveTime = time;
 		smoothMoving = true;
+	}
+
+	public void SetTrackObject(GameObject track)
+	{
+		trackObject = track;
 	}
 
 	public enum CameraTrackingType

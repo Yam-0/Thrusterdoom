@@ -10057,11 +10057,12 @@ MonoBehaviour:
   hitboxType: 0
   damage: 0
   projectile: {fileID: 8398265978084215800}
-  hitEffect: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
-  hitWaterEffect: {fileID: 3755075594882541199, guid: b4b03c1fa69bf8946a17048035a3277e, type: 3}
+  hitEffect: {fileID: 8155597095875993238, guid: 18e59d15da815b7408e81a8576089ad3, type: 3}
+  hitWaterEffect: {fileID: 8155597095875993238, guid: 18e59d15da815b7408e81a8576089ad3, type: 3}
   hitFreezeLength: 0.06
   hitShakeLength: 0.1
   hitShakeIntensity: 0.3
+  hurtTime: 0.1
 --- !u!1 &8596500228471349521
 GameObject:
   m_ObjectHideFlags: 0

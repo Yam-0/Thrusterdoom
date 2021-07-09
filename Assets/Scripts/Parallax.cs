@@ -21,8 +21,14 @@ public class Parallax : MonoBehaviour
 	public GameObject point2;
 
 	[Space]
+	public bool track = false;
 	public bool trackX = false;
 	public bool trackY = false;
+
+	[Space]
+	public bool move = false;
+	public float speedX = 0.0f;
+	public float speedY = 0.0f;
 
 	private Vector2 movementMultiplier;
 	private Vector3 initialPosition;
@@ -50,13 +56,15 @@ public class Parallax : MonoBehaviour
 
 			if (wrap)
 			{
-				if (transform.position.x - trackObject.transform.position.x > (wrapDistance / 2))
+				Vector3 deltaPos = transform.position - trackObject.transform.position;
+				float offset = (wrapDistance * 2);
+				if (deltaPos.x > wrapDistance)
 				{
-					initialPosition.x -= wrapDistance;
+					initialPosition.x -= offset;
 				}
-				if (transform.position.x - trackObject.transform.position.x < -(wrapDistance / 2))
+				if (deltaPos.x < -wrapDistance)
 				{
-					initialPosition.x += wrapDistance;
+					initialPosition.x += offset;
 				}
 			}
 
@@ -73,18 +81,28 @@ public class Parallax : MonoBehaviour
 				transform.position = location;
 			}
 
-			if (trackX)
+			if (track)
 			{
-				location = transform.position;
-				location.x = trackObject.transform.position.x;
-				transform.position = location;
-			}
-			if (trackY)
-			{
-				location = transform.position;
-				location.y = trackObject.transform.position.y;
-				transform.position = location;
+				if (trackX)
+				{
+					location = transform.position;
+					location.x = trackObject.transform.position.x + initialPosition.x;
+					transform.position = location;
+				}
+				if (trackY)
+				{
+					location = transform.position;
+					location.y = trackObject.transform.position.y + initialPosition.y;
+					transform.position = location;
 
+				}
+			}
+
+			if (move)
+			{
+				Vector2 delta = new Vector2(speedX, speedY);
+				delta *= Time.deltaTime;
+				initialPosition += (Vector3)delta;
 			}
 		}
 	}

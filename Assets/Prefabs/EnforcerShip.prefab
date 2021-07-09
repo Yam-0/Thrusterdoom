@@ -123,7 +123,7 @@ MonoBehaviour:
   currentWeapon: {fileID: 11400000, guid: d2987a9c34966ca4493368a29474afb7, type: 2}
   extraWeapon: {fileID: 11400000, guid: 3c2226578e0fcfb499b8cecee1420948, type: 2}
   ai: 0
-  dieEffect: {fileID: 3755075594882541199, guid: b73077f32296f544d849b73b34322e7e, type: 3}
+  dieEffect: {fileID: 8155597095875993238, guid: ef87b310168ee6749be31aa270afee83, type: 3}
   wreckage: {fileID: 3042152123338241840, guid: 1700979646c4e654e85af54fd5222e32, type: 3}
   engine: {fileID: 4289922146767246120}
   killShakeDuration: 0.3

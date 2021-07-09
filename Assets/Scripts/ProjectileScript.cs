@@ -53,7 +53,8 @@ public class ProjectileScript : MonoBehaviour
 
 	void SelfDestruct()
 	{
-		Instantiate(timeoutExplosion, transform.position, transform.rotation);
+		if (timeoutExplosion != null)
+			Instantiate(timeoutExplosion, transform.position, transform.rotation);
 		Destroy(gameObject, 0.0f);
 	}
 
