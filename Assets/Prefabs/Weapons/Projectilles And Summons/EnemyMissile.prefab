@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: hitShakeIntensity
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 1138679004979400519, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
+      propertyPath: hurtTime
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 1594596305091749507, guid: 1dacf0cafc50b1646b72ad315cac14a5, type: 3}
       propertyPath: m_Color.r
       value: 0.38679248

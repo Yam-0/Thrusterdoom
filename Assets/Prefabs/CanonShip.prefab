@@ -5045,18 +5045,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 180
-  ai: 2
   currentWeapon: {fileID: 11400000, guid: 1a8eb91ba4eb1f9408b178eb03c77233, type: 2}
+  extraWeapon: {fileID: 0}
+  ai: 2
   dieEffect: {fileID: 3755075594882541199, guid: b73077f32296f544d849b73b34322e7e, type: 3}
-  firePoint: {fileID: 6631347437684951410}
   wreckage: {fileID: 5219217727100501529, guid: e651814636967b04887ea024721421f0, type: 3}
+  engine: {fileID: 5592465755161810099}
   killShakeDuration: 0.3
   killShakeIntensity: 0.4
+  firePoint: {fileID: 6631347437684951410}
   turretScript: {fileID: 6631347436943613062}
-  engine: {fileID: 5592465755161810099}
-  extraWeapon: {fileID: 0}
   extraFirePoint: {fileID: 0}
   extraTurretScript: {fileID: 0}
+  hurtMaterial: {fileID: 2100000, guid: 66c4b3a774fbb3b4bb030134d70872a9, type: 2}
+  spriteRenderers:
+  - {fileID: 8470060946046850725}
+  - {fileID: 6631347437659979927}
 --- !u!60 &5693206296599215619
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5172,5 +5176,10 @@ MonoBehaviour:
 --- !u!4 &6631347437684951410 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7385529477782970389, guid: c5a8abdb3f652a04e945ad852c6cccd5, type: 3}
+  m_PrefabInstance: {fileID: 4213659176637213031}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &6631347437659979927 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7385529477891959280, guid: c5a8abdb3f652a04e945ad852c6cccd5, type: 3}
   m_PrefabInstance: {fileID: 4213659176637213031}
   m_PrefabAsset: {fileID: 0}

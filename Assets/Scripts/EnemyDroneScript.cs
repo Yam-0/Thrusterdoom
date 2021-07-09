@@ -7,28 +7,40 @@ public class EnemyDroneScript : MonoBehaviour
 {
 	[Header("Enemy Specs")]
 	public float maxHealth = 100.0f;
+	public Weapon currentWeapon;
 	private float health;
+	public DroneAiType ai;
 
 	[Space]
-	public DroneAiType ai;
-	public Weapon currentWeapon;
 	public GameObject dieEffect;
-	public Transform firePoint;
 	public GameObject wreckage;
 	public float killShakeDuration = 0.3f;
 	public float killShakeIntensity = 0.4f;
+
+	[Space]
+	public Transform firePoint;
 	public TurretScript turretScript;
+
+	[Space]
+	public Material hurtMaterial;
+	public List<SpriteRenderer> spriteRenderers;
 
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
 	private DroneController droneController;
 	private GameObject player;
+	private List<Material> materials;
+	private float hurtTimer;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
 		droneController = GetComponent<DroneController>();
 		player = GameObject.FindGameObjectWithTag("Player");
+		materials = new List<Material>();
+
+		for (int i = 0; i < spriteRenderers.Count; i++)
+			materials.Add(spriteRenderers[i].material);
 
 		currentWeapon = Weapon.MakeNewWeapon(currentWeapon);
 
@@ -48,6 +60,32 @@ public class EnemyDroneScript : MonoBehaviour
 			case DroneAiType.dart:
 				DartAi();
 				break;
+		}
+
+		if (hurtMaterial)
+		{
+			if (hurtTimer > 0.0f)
+			{
+				if (spriteRenderers[0].material != hurtMaterial)
+				{
+					for (int i = 0; i < spriteRenderers.Count; i++)
+					{
+						spriteRenderers[i].material = hurtMaterial;
+					}
+				}
+			}
+			else
+			{
+				if (spriteRenderers[0].material != materials[0])
+				{
+					for (int i = 0; i < spriteRenderers.Count; i++)
+					{
+						spriteRenderers[i].material = materials[i];
+					}
+				}
+			}
+
+			hurtTimer = Mathf.Max(0, hurtTimer - Time.deltaTime);
 		}
 
 		if (health <= 0)
@@ -132,7 +170,10 @@ public class EnemyDroneScript : MonoBehaviour
 			Hitbox hitbox;
 			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
 			{
+				float _health = health;
 				health = Mathf.Max(0, health - hitbox.Hit(Hitbox.HitboxSource.enemy, other.transform.position));
+				if (_health != health && hurtTimer < hitbox.hurtTime)
+					hurtTimer = hitbox.hurtTime;
 			}
 		}
 	}
@@ -144,7 +185,10 @@ public class EnemyDroneScript : MonoBehaviour
 			Hitbox hitbox;
 			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
 			{
+				float _health = health;
 				health = Mathf.Max(0, health - hitbox.Hitting(Hitbox.HitboxSource.enemy, transform.position));
+				if (_health != health && hurtTimer < hitbox.hurtTime)
+					hurtTimer = hitbox.hurtTime;
 			}
 		}
 	}

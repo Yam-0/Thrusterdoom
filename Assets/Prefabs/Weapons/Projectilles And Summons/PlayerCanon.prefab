@@ -131,6 +131,7 @@ MonoBehaviour:
   hitFreezeLength: 0.2
   hitShakeLength: 0.1
   hitShakeIntensity: 0.4
+  hurtTime: 0.08
 --- !u!1 &1399594618760184098
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +274,18 @@ PrefabInstance:
     - target: {fileID: 5201083324787250751, guid: 46dde15f19a8a974e860a3fa0f506d7f, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.atime0
       value: 46260
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201083324787250751, guid: 46dde15f19a8a974e860a3fa0f506d7f, type: 3}
+      propertyPath: NoiseModule.strength.scalar
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201083324787250751, guid: 46dde15f19a8a974e860a3fa0f506d7f, type: 3}
+      propertyPath: NoiseModule.scrollSpeed.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201083324787250751, guid: 46dde15f19a8a974e860a3fa0f506d7f, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46dde15f19a8a974e860a3fa0f506d7f, type: 3}

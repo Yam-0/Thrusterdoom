@@ -8,32 +8,45 @@ public class PlayerScript : MonoBehaviour
 {
 	[Header("Player Specs")]
 	public float maxHealth = 100.0f;
-	private float health;
 	public float maxAmmo = 10.0f;
-	private float ammo;
 	public float maxBoost = 1.2f;
-	private float boost;
 	public bool godmode = false;
 	public bool infiniteAmmo = false;
 	public bool infiniteBoost = false;
+	public Weapon currentWeapon;
+
+	private float health;
+	private float ammo;
+	private float boost;
 
 	[Space]
-	public Weapon currentWeapon;
 	public GameObject dieEffect;
-	public Transform firePoint;
 	public GameObject waterSplash;
 	public GameObject wakeSplash;
 	public float wakeSplashRate = 16.0f;
+
+	[Space]
+	public Transform firePoint;
+
+	[Space]
+	public Material hurtMaterial;
+	public List<SpriteRenderer> spriteRenderers;
 
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
 	private DroneController droneController;
 	private float wakeSplashTimer = 0.0f;
+	private List<Material> materials;
+	private float hurtTimer;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
 		droneController = GetComponent<DroneController>();
+		materials = new List<Material>();
+
+		for (int i = 0; i < spriteRenderers.Count; i++)
+			materials.Add(spriteRenderers[i].material);
 
 		currentWeapon = Weapon.MakeNewWeapon(currentWeapon);
 
@@ -85,6 +98,32 @@ public class PlayerScript : MonoBehaviour
 			wakeSplashTimer = 1.0f / wakeSplashRate;
 			Vector2 spawnLocation = new Vector2(transform.position.x - droneController.GetLookDirection().x * transform.position.y, 0.0f);
 			Instantiate(wakeSplash, spawnLocation, Quaternion.identity);
+		}
+
+		if (hurtMaterial)
+		{
+			if (hurtTimer > 0.0f)
+			{
+				if (spriteRenderers[0].material != hurtMaterial)
+				{
+					for (int i = 0; i < spriteRenderers.Count; i++)
+					{
+						spriteRenderers[i].material = hurtMaterial;
+					}
+				}
+			}
+			else
+			{
+				if (spriteRenderers[0].material != materials[0])
+				{
+					for (int i = 0; i < spriteRenderers.Count; i++)
+					{
+						spriteRenderers[i].material = materials[i];
+					}
+				}
+			}
+
+			hurtTimer = Mathf.Max(0, hurtTimer - Time.deltaTime);
 		}
 
 		if (health <= 0)
@@ -150,7 +189,10 @@ public class PlayerScript : MonoBehaviour
 			Hitbox hitbox;
 			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
 			{
+				float _health = health;
 				health = Mathf.Max(0, health - hitbox.Hit(Hitbox.HitboxSource.player, other.transform.position));
+				if (_health != health && hurtTimer < hitbox.hurtTime)
+					hurtTimer = hitbox.hurtTime;
 			}
 		}
 	}

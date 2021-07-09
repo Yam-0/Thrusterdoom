@@ -5045,18 +5045,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 180
-  ai: 1
   currentWeapon: {fileID: 11400000, guid: 3c2226578e0fcfb499b8cecee1420948, type: 2}
+  extraWeapon: {fileID: 0}
+  ai: 1
   dieEffect: {fileID: 3755075594882541199, guid: b73077f32296f544d849b73b34322e7e, type: 3}
-  firePoint: {fileID: 7681550744849601225}
   wreckage: {fileID: 5219217727100501529, guid: e651814636967b04887ea024721421f0, type: 3}
+  engine: {fileID: 5592465755161810099}
   killShakeDuration: 0.3
   killShakeIntensity: 0.4
+  firePoint: {fileID: 7681550744849601225}
   turretScript: {fileID: 7648748573745648027}
-  engine: {fileID: 5592465755161810099}
-  extraWeapon: {fileID: 0}
   extraFirePoint: {fileID: 0}
   extraTurretScript: {fileID: 0}
+  hurtMaterial: {fileID: 2100000, guid: 66c4b3a774fbb3b4bb030134d70872a9, type: 2}
+  spriteRenderers:
+  - {fileID: 8470060946046850725}
+  - {fileID: 8653518131000775164}
+  - {fileID: 6921849309553361899}
+  - {fileID: 7674632627066653838}
+  - {fileID: 7739370362613302236}
 --- !u!60 &4554082916329150452
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5172,5 +5179,25 @@ MonoBehaviour:
 --- !u!4 &7681550744849601225 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2035948125181074576, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
+  m_PrefabInstance: {fileID: 8564577363863506521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &8653518131000775164 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1066233087561277349, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
+  m_PrefabInstance: {fileID: 8564577363863506521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &6921849309553361899 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1644980421212605874, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
+  m_PrefabInstance: {fileID: 8564577363863506521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &7674632627066653838 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2043147734550168279, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
+  m_PrefabInstance: {fileID: 8564577363863506521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &7739370362613302236 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2142791942775180677, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
   m_PrefabInstance: {fileID: 8564577363863506521}
   m_PrefabAsset: {fileID: 0}

@@ -14,6 +14,7 @@ public class Hitbox : MonoBehaviour
 	public float hitFreezeLength = 0.06f;
 	public float hitShakeLength;
 	public float hitShakeIntensity;
+	public float hurtTime = 0.1f;
 
 	public float Hit(HitboxSource self, Vector2 hitPoint)
 	{

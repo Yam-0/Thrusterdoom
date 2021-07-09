@@ -129,6 +129,13 @@ MonoBehaviour:
   killShakeIntensity: 0.4
   turretScript: {fileID: 3032039463047453469}
   engine: {fileID: 4289922146767246120}
+  hurtMaterial: {fileID: 2100000, guid: 66c4b3a774fbb3b4bb030134d70872a9, type: 2}
+  spriteRenderers:
+  - {fileID: 4555345182482969285}
+  - {fileID: 3293400376261359209}
+  - {fileID: 3867646032316736638}
+  - {fileID: 4549268270052043547}
+  - {fileID: 4522808654478877769}
   extraWeapon: {fileID: 11400000, guid: 3c2226578e0fcfb499b8cecee1420948, type: 2}
   extraFirePoint: {fileID: 4555852135260222812}
   extraTurretScript: {fileID: 4577392906677302798}
@@ -5261,5 +5268,25 @@ MonoBehaviour:
 --- !u!4 &4555852135260222812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2035948125181074576, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
+  m_PrefabInstance: {fileID: 2555941675283884492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &3293400376261359209 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1066233087561277349, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
+  m_PrefabInstance: {fileID: 2555941675283884492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &3867646032316736638 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1644980421212605874, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
+  m_PrefabInstance: {fileID: 2555941675283884492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &4549268270052043547 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2043147734550168279, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
+  m_PrefabInstance: {fileID: 2555941675283884492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &4522808654478877769 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2142791942775180677, guid: efb8dcbb481b4384fb84d5af0cdf85d6, type: 3}
   m_PrefabInstance: {fileID: 2555941675283884492}
   m_PrefabAsset: {fileID: 0}

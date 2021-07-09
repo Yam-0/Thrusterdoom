@@ -4943,6 +4943,7 @@ MonoBehaviour:
   hitFreezeLength: 0.06
   hitShakeLength: 0
   hitShakeIntensity: 0
+  hurtTime: 0.03
 --- !u!1 &6557456982066702223
 GameObject:
   m_ObjectHideFlags: 0
