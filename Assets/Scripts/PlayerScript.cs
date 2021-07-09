@@ -55,8 +55,17 @@ public class PlayerScript : MonoBehaviour
 
 		transform.Find("BoostMeter").localScale = new Vector3(0.4f, (boost / maxBoost) * 10, 1);
 		transform.Find("AmmoMeter").localScale = new Vector3(0.4f, (ammo / maxAmmo) * 10, 1);
+
 		transform.Find("ReloadMeter").gameObject.SetActive(currentWeapon.weaponType == Weapon.WeaponType.summon);
-		transform.Find("ReloadMeter").localScale = new Vector3((currentWeapon.GetFireCooldown() / (1.0f / currentWeapon.firerate)) * 10, 0.4f, 1);
+		if (currentWeapon.GetLoadTime() > 0.0f && currentWeapon.GetFireCooldown() == 0)
+		{
+			transform.Find("ReloadMeter").localScale = new Vector3((1 - currentWeapon.GetLoadTime() / currentWeapon.loadTime) * 10, 0.4f, 1);
+		}
+		else
+		{
+			transform.Find("ReloadMeter").localScale = new Vector3((currentWeapon.GetFireCooldown() / (1.0f / currentWeapon.firerate)) * 10, 0.4f, 1);
+		}
+
 		transform.Find("Healthbar").gameObject.SetActive(health != maxHealth);
 		transform.Find("Healthbar").localScale = new Vector3((health / maxHealth) * 10, 0.4f, 1);
 

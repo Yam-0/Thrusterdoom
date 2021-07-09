@@ -14,9 +14,12 @@ public class Weapon : ScriptableObject
 	public float fireShakeLength;
 	public float fireShakeIntensity;
 	public float spread = 0.0f;
+	public float loadTime = 0.0f;
 
 	private GameObject weaponReference;
 	private float fireCooldown;
+	private float loadTimer;
+	private bool loadHolding;
 	private bool firing;
 
 	public bool Handle(ref float ammo, Transform firePoint, bool tryFire, Rigidbody2D rb, TurretScript turretScript)
@@ -58,6 +61,7 @@ public class Weapon : ScriptableObject
 				break;
 
 			case Weapon.WeaponType.summon:
+				if (loadTimer <= 0 && fireCooldown == 0) { loadTimer = loadTime; }
 				firing = ammo > 0 && tryFire;
 				if (turretScript != null)
 				{
@@ -66,6 +70,21 @@ public class Weapon : ScriptableObject
 						firing = firing && turretScript.GetWithinRange();
 					}
 				}
+
+				if (tryFire && loadHolding)
+				{
+					loadTimer = Mathf.Max(0, loadTimer - Time.deltaTime);
+				}
+				else
+				{
+					loadTimer = loadTime;
+				}
+
+				if (loadTimer > 0.0f)
+				{
+					firing = false;
+				}
+				loadHolding = tryFire;
 
 				if (firing && fireCooldown == 0)
 				{
@@ -96,6 +115,8 @@ public class Weapon : ScriptableObject
 						projectileScript.SetTarget(GameObject.FindGameObjectWithTag("Player"));
 					}
 
+					loadTimer = loadTime;
+
 					fireCooldown = 1.0f / firerate;
 				}
 
@@ -121,12 +142,18 @@ public class Weapon : ScriptableObject
 		newWeapon.fireShakeLength = weapon.fireShakeLength;
 		newWeapon.fireShakeIntensity = weapon.fireShakeIntensity;
 		newWeapon.spread = weapon.spread;
+		newWeapon.loadTime = weapon.loadTime;
 		return newWeapon;
 	}
 
 	public float GetFireCooldown()
 	{
 		return fireCooldown;
+	}
+
+	public float GetLoadTime()
+	{
+		return loadTimer;
 	}
 
 	public enum WeaponType

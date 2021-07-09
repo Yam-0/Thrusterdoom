@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c37735a649779949b418362632fbdc7, type: 3}
-  m_Name: ShotgunWeapon
+  m_Name: SniperWeapon
   m_EditorClassIdentifier: 
   weaponType: 1
-  weapon: {fileID: 8155597095875993238, guid: 979d057369a0c7e408985e01eaf35228, type: 3}
-  ammoCost: 1
+  weapon: {fileID: 1399594618760184098, guid: cbeed99e3ab31c14f97606ba74245e49, type: 3}
+  ammoCost: 4
   fireEffect: {fileID: 3042152123338241840, guid: a48c1d0272680974395e423ec0f6df4d, type: 3}
-  recoilForce: 200
-  firerate: 1.6
-  fireShakeLength: 0.2
+  recoilForce: 300
+  firerate: 0.35
+  fireShakeLength: 0.1
   fireShakeIntensity: 0.4
   spread: 0
-  loadTime: 0.2
+  loadTime: 0.6

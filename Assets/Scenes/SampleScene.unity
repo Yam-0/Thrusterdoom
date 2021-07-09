@@ -639,7 +639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345418691315478092, guid: d58e0aeb7f508ba478da3374affc84c0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d58e0aeb7f508ba478da3374affc84c0, type: 3}
@@ -900,7 +900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &711884334
 Transform:
   m_ObjectHideFlags: 0
@@ -1002,7 +1002,7 @@ PrefabInstance:
     - target: {fileID: 5621232188289833558, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
       propertyPath: currentWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 7011b44cb1ced794c81511a0ede98d2c, type: 2}
+      objectReference: {fileID: 11400000, guid: 8d0e2465746c25b42ac325104902e48f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ea40c7f297e816409d20ffa292bb5e2, type: 3}
 --- !u!1 &998940504
@@ -1540,7 +1540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345418691315478092, guid: 27a1c11883a814a45a2180e8ad93c98e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27a1c11883a814a45a2180e8ad93c98e, type: 3}
