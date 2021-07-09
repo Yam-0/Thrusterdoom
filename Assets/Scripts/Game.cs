@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
 	private static Game _instance;
 	public static Game Instance { get { return _instance; } }
 	public List<GameObject> levels;
-	private int level;
+	private int level = 0;
+	private int world = 0;
 
 	public GameObject player;
 	public Transform spawnPoint;
 
 	private CameraScript cameraScript;
+
+	[Space]
 	public Animator canvasAnimator;
+	public Animator popupAnimator;
+	public Text levelPopup1;
+	public Text levelPopup2;
+	public Text levelPopup3;
 
 	void Awake()
 	{
@@ -43,18 +51,19 @@ public class Game : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.J))
 		{
-			Play();
+			StartCoroutine(StartLevel_Event());
 		}
 	}
 
 	public void Play()
 	{
-		StartCoroutine(PlayEvent());
+		StartCoroutine(StartGame_Event());
 	}
 
-	private IEnumerator PlayEvent()
+	private IEnumerator StartGame_Event()
 	{
 		canvasAnimator.SetTrigger("StartGame");
+
 		yield return new WaitForSeconds(1.0f);
 		player.SetActive(true);
 		player.GetComponent<Rigidbody2D>().velocity = new Vector2(40.0f, 10.0f);
@@ -63,6 +72,21 @@ public class Game : MonoBehaviour
 		cameraScript.smoothTrack = true;
 		yield return new WaitForSeconds(0.3f);
 		cameraScript.smoothTrack = false;
+	}
+
+	private IEnumerator StartLevel_Event()
+	{
+		GameObject levelObject = levels[level];
+		LevelGroup levelGroup = levelObject.GetComponent<LevelGroup>();
+		levelPopup1.text = levelGroup.spawnMessage1;
+		levelPopup2.text = levelGroup.spawnMessage2;
+		levelPopup3.text = levelGroup.spawnMessage3;
+		popupAnimator.SetTrigger("NewLevel");
+
+		Instantiate(levelObject, new Vector3(player.transform.position.x + 75, 0.0f, 0.0f), Quaternion.identity);
+		Time.timeScale = 0;
+		yield return new WaitForSecondsRealtime(3.0f);
+		Time.timeScale = 1;
 	}
 
 	static public void LoadScene(int index)
@@ -80,9 +104,10 @@ public class Game : MonoBehaviour
 		LoadScene(GetCurrentSceneIndex());
 	}
 
-	static public void LevelComplete()
+	public void LevelComplete()
 	{
-
+		Debug.Log("Level complete!!");
+		level++;
 	}
 
 	public static class Events
