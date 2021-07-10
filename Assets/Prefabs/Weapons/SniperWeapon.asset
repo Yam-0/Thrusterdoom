@@ -18,7 +18,7 @@ MonoBehaviour:
   fireEffect: {fileID: 3042152123338241840, guid: 89cd8c18498ece54c8a45320d8c804a8, type: 3}
   recoilForce: 300
   firerate: 0.35
-  fireShakeLength: 0.1
+  fireShakeLength: 0.15
   fireShakeIntensity: 0.4
   spread: 0
   loadTime: 0.6

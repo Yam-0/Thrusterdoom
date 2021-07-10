@@ -65,6 +65,13 @@ public class Game : MonoBehaviour
 				enemy.Handle(player.transform.position, timer);
 			}
 		}
+		else
+		{
+			if (Input.anyKeyDown)
+			{
+				Play();
+			}
+		}
 	}
 
 	public void Play()
@@ -74,6 +81,7 @@ public class Game : MonoBehaviour
 
 	private IEnumerator StartGame_Event()
 	{
+		ingame = true;
 		canvasAnimator.SetTrigger("StartGame");
 
 		yield return new WaitForSeconds(1.0f);
@@ -84,7 +92,6 @@ public class Game : MonoBehaviour
 		cameraScript.smoothTrack = true;
 		yield return new WaitForSeconds(0.3f);
 		cameraScript.smoothTrack = false;
-		ingame = true;
 	}
 
 	public void PlayerDied()
