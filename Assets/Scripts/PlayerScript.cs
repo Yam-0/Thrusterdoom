@@ -7,13 +7,16 @@ using UnityEngine.SceneManagement;
 public class PlayerScript : MonoBehaviour
 {
 	[Header("Player Specs")]
-	public float maxHealth = 100.0f;
+	public float maxHealth = 10.0f;
 	public float maxAmmo = 10.0f;
 	public float maxBoost = 1.2f;
 	public bool godmode = false;
 	public bool infiniteAmmo = false;
 	public bool infiniteBoost = false;
-	public List<Weapon> weapons;
+	private List<Weapon> weapons;
+
+	[HideInInspector]
+	public float damageMultiplier = 1.0f;
 
 	private float health;
 	private float ammo;
@@ -54,11 +57,6 @@ public class PlayerScript : MonoBehaviour
 		for (int i = 0; i < spriteRenderers.Count; i++)
 			materials.Add(spriteRenderers[i].material);
 
-		for (int i = 0; i < weapons.Count; i++)
-		{
-			weapons[i] = Weapon.MakeNewWeapon(weapons[i]);
-		}
-
 		health = maxHealth;
 		ammo = maxAmmo;
 		boost = maxBoost;
@@ -70,25 +68,26 @@ public class PlayerScript : MonoBehaviour
 		if (infiniteAmmo) { ammo = maxAmmo; }
 		if (infiniteBoost) { boost = maxBoost; }
 
-		currentWeapon = weapons[selectedWeapon];
-		currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, null);
+		if (currentWeapon != null)
+		{
+			currentWeapon = weapons[selectedWeapon];
+			currentWeapon.Handle(ref ammo, firePoint, droneController.GetGliding(), rb, null);
+			transform.Find("ReloadMeter").gameObject.SetActive(currentWeapon.weaponType == Weapon.WeaponType.summon);
+			if (currentWeapon.GetLoadTime() > 0.0f && currentWeapon.GetFireCooldown() == 0)
+			{
+				transform.Find("ReloadMeter").localScale = new Vector3((1 - currentWeapon.GetLoadTime() / currentWeapon.loadTime) * 10, 0.4f, 1);
+			}
+			else
+			{
+				transform.Find("ReloadMeter").localScale = new Vector3((currentWeapon.GetFireCooldown() / (1.0f / currentWeapon.firerate)) * 10, 0.4f, 1);
+			}
+		}
 
 		boost = droneController.GetBoosting() ? Mathf.Max(0, boost - Time.deltaTime) : boost;
 		boost = droneController.GetGliding() ? Mathf.Min(maxBoost, boost + Time.deltaTime) : boost;
 
 		transform.Find("BoostMeter").localScale = new Vector3(0.4f, (boost / maxBoost) * 10, 1);
 		transform.Find("AmmoMeter").localScale = new Vector3(0.4f, (ammo / maxAmmo) * 10, 1);
-
-		transform.Find("ReloadMeter").gameObject.SetActive(currentWeapon.weaponType == Weapon.WeaponType.summon);
-		if (currentWeapon.GetLoadTime() > 0.0f && currentWeapon.GetFireCooldown() == 0)
-		{
-			transform.Find("ReloadMeter").localScale = new Vector3((1 - currentWeapon.GetLoadTime() / currentWeapon.loadTime) * 10, 0.4f, 1);
-		}
-		else
-		{
-			transform.Find("ReloadMeter").localScale = new Vector3((currentWeapon.GetFireCooldown() / (1.0f / currentWeapon.firerate)) * 10, 0.4f, 1);
-		}
-
 		transform.Find("Healthbar").gameObject.SetActive(health != maxHealth);
 		transform.Find("Healthbar").localScale = new Vector3((health / maxHealth) * 10, 0.4f, 1);
 
@@ -251,5 +250,26 @@ public class PlayerScript : MonoBehaviour
 		{
 			health -= 20 * Time.deltaTime;
 		}
+	}
+
+	public void SetWeapons(List<Weapon> weapons)
+	{
+		this.weapons = weapons;
+
+		if (weapons.Count > 0)
+		{
+			for (int i = 0; i < weapons.Count; i++)
+			{
+				weapons[i] = Weapon.MakeNewWeapon(weapons[i]);
+			}
+
+			currentWeapon = weapons[0];
+		}
+	}
+
+	public void SetHealth(float health)
+	{
+		maxHealth = health;
+		this.health = health;
 	}
 }

@@ -28,12 +28,32 @@ public class Game : MonoBehaviour
 
 	[Space(30)]
 	public List<Weapon> weapons;
-	private List<Weapon> unlockedWeapons;
+
+	public Color unlockedColor;
+	public Color lockedColor;
+	public Button[] healthUpgradeButtons;
+	public float[] healthUpgradeValues;
+	public string[] healthUpgradeEffects;
+	public int[] healthUpgradeCosts;
+	public int healthUpgradeLevel = 0;
+	public Button[] damageUpgradeButtons;
+	public float[] damageUpgradeValues;
+	public string[] damageUpgradeEffects;
+	public int damageUpgradeLevel = 0;
+	public int[] damageUpgradeCosts;
+	public bool[] weaponsUnlocked;
+	public bool[] weaponsEquipped;
+	public int[] weaponPrices;
+	public TextMeshProUGUI weaponPriceText;
+	public TextMeshProUGUI upgradePriceText;
+	public TextMeshProUGUI upgradeEffectText;
+	public TextMeshProUGUI[] weaponButtonTexts;
 
 	private int score = 0;
 	private int multiplier = 1;
 	private int highscore = 0;
-	private int funds = 0;
+	private int funds = 14000;
+	private int addFunds = 0;
 	private bool gainMultiplier;
 
 	private Animator gameAnimator;
@@ -59,8 +79,16 @@ public class Game : MonoBehaviour
 		gameState = GameState.StartScreen;
 		menuState = MenuState.StartScreen;
 
-		unlockedWeapons = new List<Weapon>();
-		unlockedWeapons.Add(weapons[0]);
+		for (int i = 0; i < weaponsUnlocked.Length; i++)
+		{
+			weaponsUnlocked[i] = false;
+		}
+		weaponsUnlocked[0] = true;
+		for (int i = 0; i < weaponsEquipped.Length; i++)
+		{
+			weaponsEquipped[i] = false;
+		}
+		weaponsEquipped[0] = true;
 	}
 
 	void Start()
@@ -75,6 +103,20 @@ public class Game : MonoBehaviour
 
 		Camera.main.TryGetComponent<CameraScript>(out cameraScript);
 		playerInstance = Instantiate(player, spawnPoint.position, spawnPoint.rotation);
+
+		List<Weapon> equippedWeaponsList = new List<Weapon>();
+		for (int i = 0; i < weaponsEquipped.Length; i++)
+		{
+			if (weaponsEquipped[i])
+			{
+				equippedWeaponsList.Add(weapons[i]);
+			}
+		}
+		PlayerScript playerScript = playerInstance.GetComponent<PlayerScript>();
+		playerScript.SetWeapons(equippedWeaponsList);
+		playerScript.SetHealth(healthUpgradeValues[healthUpgradeLevel]);
+		playerScript.damageMultiplier = damageUpgradeValues[damageUpgradeLevel];
+
 		cameraScript.SetTrackObject(playerInstance);
 		playerInstance.SetActive(false);
 		timer = 0.0f;
@@ -119,10 +161,6 @@ public class Game : MonoBehaviour
 				}
 				break;
 			case GameState.Shop:
-				if (Input.GetKeyDown(KeyCode.J))
-				{
-					PlayAgain();
-				}
 				break;
 		}
 	}
@@ -143,6 +181,63 @@ public class Game : MonoBehaviour
 
 			menu.canvasGroup.gameObject.SetActive(active);
 			menu.canvasGroup.interactable = interactable;
+		}
+	}
+
+	private void UpdateButtons()
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			string buttonText = "";
+
+			if (weaponsUnlocked[i])
+			{
+				if (weaponsEquipped[i])
+				{
+					buttonText = "Unequip";
+				}
+				else
+				{
+					buttonText = "Equip";
+				}
+			}
+			else
+			{
+				buttonText = "Buy";
+			}
+
+			weaponButtonTexts[i].SetText(buttonText);
+		}
+
+		addFunds = score / 10;
+		AddFunds(addFunds);
+		scoreText.SetText("Score: " + score);
+		highscoreText.SetText("Highscore: " + highscore);
+		fundsText.SetText("Funds: " + funds + " (+" + addFunds + ")");
+
+		for (int i = 0; i < 10; i++)
+		{
+			if (healthUpgradeLevel >= i)
+			{
+				healthUpgradeButtons[i].interactable = false;
+				healthUpgradeButtons[i].gameObject.GetComponent<Image>().color = unlockedColor;
+			}
+			else
+			{
+				healthUpgradeButtons[i].interactable = true;
+				healthUpgradeButtons[i].gameObject.GetComponent<Image>().color = lockedColor;
+			}
+
+			if (damageUpgradeLevel >= i)
+			{
+				damageUpgradeButtons[i].interactable = false;
+				damageUpgradeButtons[i].gameObject.GetComponent<Image>().color = unlockedColor;
+			}
+			else
+			{
+				damageUpgradeButtons[i].interactable = true;
+				damageUpgradeButtons[i].gameObject.GetComponent<Image>().color = lockedColor;
+			}
 		}
 	}
 
@@ -186,6 +281,99 @@ public class Game : MonoBehaviour
 		return multiplier;
 	}
 
+	public void HealthUpgradeHover(int a)
+	{
+		upgradeEffectText.SetText("Effect: " + healthUpgradeEffects[a]);
+		if (healthUpgradeLevel >= a)
+		{
+			upgradePriceText.SetText("Cost: Unlocked");
+		}
+		else
+		{
+			int cost = healthUpgradeCosts[a];
+			upgradePriceText.SetText("Cost: " + cost);
+		}
+	}
+
+	public void HealthButton(int a)
+	{
+		if (healthUpgradeLevel < a)
+		{
+			int cost = healthUpgradeCosts[a];
+			if (cost <= funds)
+			{
+				funds -= cost;
+				healthUpgradeLevel = a;
+				HealthUpgradeHover(a);
+			}
+		}
+
+		UpdateButtons();
+	}
+
+	public void DamageUpgradeHover(int a)
+	{
+		upgradeEffectText.SetText("Effect: " + damageUpgradeEffects[a]);
+		if (damageUpgradeLevel >= a)
+		{
+			upgradePriceText.SetText("Cost: Unlocked");
+		}
+		else
+		{
+			int cost = damageUpgradeCosts[a];
+			upgradePriceText.SetText("Cost: " + cost);
+		}
+	}
+
+	public void DamageButton(int a)
+	{
+		if (damageUpgradeLevel < a)
+		{
+			int cost = damageUpgradeCosts[a];
+			if (cost <= funds)
+			{
+				funds -= cost;
+				damageUpgradeLevel = a;
+				DamageUpgradeHover(a);
+			}
+		}
+
+		UpdateButtons();
+	}
+
+	public void ShopHover(int a)
+	{
+		if (weaponsUnlocked[a])
+		{
+			weaponPriceText.SetText("Cost: Unlocked");
+		}
+		else
+		{
+			int cost = weaponPrices[a];
+			weaponPriceText.SetText("Cost: " + cost);
+		}
+	}
+
+	public void WeaponButton(int a)
+	{
+		if (weaponsUnlocked[a])
+		{
+			weaponsEquipped[a] = !weaponsEquipped[a];
+		}
+		else
+		{
+			int cost = weaponPrices[a];
+			if (cost <= funds)
+			{
+				funds -= cost;
+				weaponsUnlocked[a] = true;
+				weaponsEquipped[a] = true;
+			}
+		}
+
+		UpdateButtons();
+	}
+
 	public void Play()
 	{
 		Debug.Log("Play");
@@ -217,6 +405,7 @@ public class Game : MonoBehaviour
 			case MenuState.Ingame_Shop:
 				menuState = MenuState.Shop;
 				gameState = GameState.Shop;
+				TestScore(score);
 				break;
 
 			case MenuState.Shop_Ingame:
@@ -258,11 +447,7 @@ public class Game : MonoBehaviour
 			menuState = MenuState.Ingame_Shop;
 			gameAnimator.SetTrigger("Ingame_Shop");
 
-			int addFunds = score / 10;
-			AddFunds(addFunds);
-			scoreText.SetText("Score: " + score);
-			highscoreText.SetText("Highscore: " + highscore);
-			fundsText.SetText("Funds: " + funds + " (+" + addFunds + ")");
+			UpdateButtons();
 		}
 
 		UpdateCanvas();

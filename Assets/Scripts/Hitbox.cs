@@ -25,8 +25,12 @@ public class Hitbox : MonoBehaviour
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
 			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
 			Camera.main.GetComponent<CameraScript>().Freeze(hitFreezeLength);
-			Debug.Log(self.ToString() + " hit for " + damage + " damage.");
-			return damage;
+			float damageMultiplier = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().damageMultiplier;
+			Debug.Log(self.ToString() + " hit for " + damage + " x " + damageMultiplier + " damage.");
+
+			if (hitboxSource != HitboxSource.player)
+				return damage;
+			return damage * damageMultiplier;
 		}
 
 		return 0;
@@ -39,8 +43,12 @@ public class Hitbox : MonoBehaviour
 			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
 			float frameDamage = (damage * Time.deltaTime);
-			Debug.Log(self.ToString() + " hit for " + frameDamage + " damage. ");
-			return frameDamage;
+			float damageMultiplier = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().damageMultiplier;
+			Debug.Log(self.ToString() + " hit for " + frameDamage + " x " + damageMultiplier + " frame damage.");
+
+			if (hitboxSource != HitboxSource.player)
+				return frameDamage;
+			return frameDamage * damageMultiplier;
 		}
 
 		return 0;
