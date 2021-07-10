@@ -41,7 +41,7 @@ public class ProjectileScript : MonoBehaviour
 			transform.rotation = Quaternion.Euler(0, 0, angle);
 		}
 
-		if (homing)
+		if (homing && homingTarget != null)
 		{
 			Vector3 dir = homingTarget.transform.position - transform.position;
 			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

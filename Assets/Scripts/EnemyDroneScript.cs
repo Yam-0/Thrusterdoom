@@ -8,12 +8,17 @@ public class EnemyDroneScript : MonoBehaviour
 	[Header("Enemy Specs")]
 	public float maxHealth = 100.0f;
 	public Weapon currentWeapon;
-	private float health;
 	public DroneAiType ai;
+	public string scoreText;
+	public int scoreWorth;
+	public float scoreGibForce = 0.0f;
+
+	private float health;
 
 	[Space]
 	public GameObject dieEffect;
 	public GameObject wreckage;
+	public GameObject scoreGib;
 	public float killShakeDuration = 0.3f;
 	public float killShakeIntensity = 0.4f;
 
@@ -28,7 +33,8 @@ public class EnemyDroneScript : MonoBehaviour
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
 	private DroneController droneController;
-	private GameObject player;
+	private GameObject target;
+	private Vector3 targetPos = Vector3.zero;
 	private List<Material> materials;
 	private float hurtTimer;
 
@@ -36,7 +42,7 @@ public class EnemyDroneScript : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody2D>();
 		droneController = GetComponent<DroneController>();
-		player = GameObject.FindGameObjectWithTag("Player");
+		target = GameObject.FindGameObjectWithTag("Player");
 		materials = new List<Material>();
 
 		for (int i = 0; i < spriteRenderers.Count; i++)
@@ -49,6 +55,9 @@ public class EnemyDroneScript : MonoBehaviour
 
 	void Update()
 	{
+		if (target != null)
+			targetPos = target.transform.position;
+
 		switch (ai)
 		{
 			case DroneAiType.chaser:
@@ -95,6 +104,12 @@ public class EnemyDroneScript : MonoBehaviour
 				Instantiate(dieEffect, transform.position, Quaternion.identity);
 			if (wreckage != null)
 				Instantiate(wreckage, transform.position, transform.rotation).GetComponent<ProjectileScript>().SetInitialVelocity(rb.velocity);
+
+			GameObject scoreGibInstance = Instantiate(scoreGib, transform.position, Quaternion.identity);
+			scoreGibInstance.GetComponent<ScoreGibManager>().Set(scoreText, scoreGibForce);
+			Game.Instance.AddScore(scoreWorth);
+			Game.Instance.KilledEnemy();
+
 			Destroy(gameObject, 0);
 		}
 	}
@@ -104,7 +119,7 @@ public class EnemyDroneScript : MonoBehaviour
 		float ammo = 1.0f; //Infinite ammo temp fix
 		currentWeapon.Handle(ref ammo, firePoint, (droneController.GetGliding() && (transform.position.y > 0)), rb, null);
 
-		Vector2 deltaPosition = player.transform.position - transform.position;
+		Vector2 deltaPosition = targetPos - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		Vector2 direction = droneController.GetLookDirection();
 		float lookAngle = Mathf.Atan2(direction.y, direction.x);
@@ -123,7 +138,7 @@ public class EnemyDroneScript : MonoBehaviour
 		float ammo = 1.0f; //Infinite ammo temp fix
 		currentWeapon.Handle(ref ammo, firePoint, (droneController.GetGliding() && (transform.position.y > 0)), rb, turretScript);
 
-		Vector2 deltaPosition = player.transform.position - transform.position;
+		Vector2 deltaPosition = targetPos - transform.position;
 		Vector2 playerOffset = new Vector2(0.0f, 10.0f);
 		deltaPosition += playerOffset;
 
@@ -149,7 +164,7 @@ public class EnemyDroneScript : MonoBehaviour
 		float ammo = 1.0f; //Infinite ammo temp fix
 		currentWeapon.Handle(ref ammo, firePoint, (droneController.GetGliding() && (transform.position.y > 0)), rb, null);
 
-		Vector2 deltaPosition = player.transform.position - transform.position;
+		Vector2 deltaPosition = targetPos - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		Vector2 direction = droneController.GetLookDirection();
 		float lookAngle = Mathf.Atan2(direction.y, direction.x);

@@ -12,6 +12,7 @@ public class TurretScript : MonoBehaviour
 
 	private float initialRotation;
 	private GameObject target;
+	private Vector3 targetPos = Vector3.zero;
 	private float angleToTarget;
 	private bool withinRange;
 	private Animation an;
@@ -25,9 +26,12 @@ public class TurretScript : MonoBehaviour
 
 	void Update()
 	{
+		if (target != null)
+			targetPos = target.transform.position;
+
 		transform.localScale = new Vector3(boat.transform.localScale.x, 1, 1);
 
-		Vector2 deltaPosition = transform.position - target.transform.position;
+		Vector2 deltaPosition = transform.position - targetPos;
 		angleToTarget = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		float targetRotation = angleToTarget * Mathf.Rad2Deg + 90;
 		float distanceToTarget = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);

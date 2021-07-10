@@ -23,9 +23,12 @@ public class PlayerScript : MonoBehaviour
 
 	[Space]
 	public GameObject dieEffect;
+	public GameObject wreckage;
 	public GameObject waterSplash;
 	public GameObject wakeSplash;
 	public float wakeSplashRate = 16.0f;
+	public float killShakeDuration = 0.3f;
+	public float killShakeIntensity = 0.6f;
 
 	[Space]
 	public Transform firePoint;
@@ -40,6 +43,7 @@ public class PlayerScript : MonoBehaviour
 	private float wakeSplashTimer = 0.0f;
 	private List<Material> materials;
 	private float hurtTimer;
+	private bool alive = true;
 
 	void Start()
 	{
@@ -90,9 +94,25 @@ public class PlayerScript : MonoBehaviour
 
 		input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 		input.y = Mathf.Max(0, input.y);
+
+		bool boosting = Input.GetKey(KeyCode.LeftShift) && boost > 0;
+		bool gliding = Input.GetKey(KeyCode.Space);
+
+		if (!alive)
+		{
+			input = Vector2.zero;
+			boosting = false;
+			gliding = false;
+		}
+
+		if (Input.GetKeyDown(KeyCode.L))
+		{
+			health = 0;
+		}
+
 		droneController.SetMoveInput(input);
-		droneController.SetBoostingInput(Input.GetKey(KeyCode.LeftShift) && boost > 0);
-		droneController.SetGlideInput(Input.GetKey(KeyCode.Space));
+		droneController.SetBoostingInput(boosting);
+		droneController.SetGlideInput(gliding);
 
 		if (Input.GetKeyDown(KeyCode.Tab) && !droneController.GetGliding())
 		{
@@ -138,9 +158,22 @@ public class PlayerScript : MonoBehaviour
 			hurtTimer = Mathf.Max(0, hurtTimer - Time.deltaTime);
 		}
 
-		if (health <= 0)
+		if (health <= 0 && alive)
 		{
+			CameraScript cameraScript = Camera.main.GetComponent<CameraScript>();
+			cameraScript.Shake(killShakeDuration, killShakeIntensity);
+			if (dieEffect != null)
+				Instantiate(dieEffect, transform.position, Quaternion.identity);
+			if (wreckage != null)
+			{
+				GameObject wreckageInstance = Instantiate(wreckage, transform.position, transform.rotation);
+				wreckageInstance.GetComponent<ProjectileScript>().SetInitialVelocity(rb.velocity);
+				cameraScript.SetTrackObject(wreckageInstance);
+				Destroy(gameObject, 0);
+			}
+
 			Game.Instance.PlayerDied();
+			alive = false;
 		}
 	}
 
@@ -204,7 +237,10 @@ public class PlayerScript : MonoBehaviour
 				float _health = health;
 				health = Mathf.Max(0, health - hitbox.Hit(Hitbox.HitboxSource.player, other.transform.position));
 				if (_health != health && hurtTimer < hitbox.hurtTime)
+				{
 					hurtTimer = hitbox.hurtTime;
+					Game.Instance.ResetMultiplier();
+				}
 			}
 		}
 	}
@@ -213,7 +249,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Ocean")
 		{
-			health -= 10 * Time.deltaTime;
+			health -= 20 * Time.deltaTime;
 		}
 	}
 }

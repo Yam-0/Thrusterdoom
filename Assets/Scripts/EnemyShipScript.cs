@@ -10,6 +10,9 @@ public class EnemyShipScript : MonoBehaviour
 	public Weapon currentWeapon;
 	public Weapon extraWeapon;
 	public ShipAiType ai;
+	public string scoreText;
+	public int scoreWorth;
+	public float scoreGibForce = 0.0f;
 
 	private float health;
 
@@ -17,6 +20,7 @@ public class EnemyShipScript : MonoBehaviour
 	public GameObject dieEffect;
 	public GameObject wreckage;
 	public GameObject engine;
+	public GameObject scoreGib;
 	public float killShakeDuration = 0.3f;
 	public float killShakeIntensity = 0.4f;
 
@@ -33,7 +37,8 @@ public class EnemyShipScript : MonoBehaviour
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
 	private ShipController shipController;
-	private GameObject player;
+	private GameObject target;
+	private Vector3 targetPos = Vector3.zero;
 	private bool dir = false;
 	private List<Material> materials;
 	private float hurtTimer;
@@ -42,7 +47,7 @@ public class EnemyShipScript : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody2D>();
 		shipController = GetComponent<ShipController>();
-		player = GameObject.FindGameObjectWithTag("Player");
+		target = GameObject.FindGameObjectWithTag("Player");
 		materials = new List<Material>();
 
 		for (int i = 0; i < spriteRenderers.Count; i++)
@@ -57,6 +62,9 @@ public class EnemyShipScript : MonoBehaviour
 
 	void Update()
 	{
+		if (target != null)
+			targetPos = target.transform.position;
+
 		switch (ai)
 		{
 			case ShipAiType.enforcer:
@@ -123,6 +131,12 @@ public class EnemyShipScript : MonoBehaviour
 				Instantiate(dieEffect, transform.position, Quaternion.identity);
 			if (wreckage != null)
 				Instantiate(wreckage, transform.position, transform.rotation);
+
+			GameObject scoreGibInstance = Instantiate(scoreGib, transform.position, Quaternion.identity);
+			scoreGibInstance.GetComponent<ScoreGibManager>().Set(scoreText, scoreGibForce);
+			Game.Instance.AddScore(scoreWorth);
+			Game.Instance.KilledEnemy();
+
 			Destroy(gameObject, 0);
 		}
 	}
@@ -133,7 +147,7 @@ public class EnemyShipScript : MonoBehaviour
 		currentWeapon.Handle(ref ammo, firePoint, true, rb, turretScript);
 		extraWeapon.Handle(ref ammo, extraFirePoint, true, rb, extraTurretScript);
 
-		Vector2 deltaPosition = player.transform.position - transform.position;
+		Vector2 deltaPosition = targetPos - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
 
@@ -162,7 +176,7 @@ public class EnemyShipScript : MonoBehaviour
 		float ammo = 1.0f; //Infinite ammo temp fix
 		currentWeapon.Handle(ref ammo, firePoint, true, rb, turretScript);
 
-		Vector2 deltaPosition = player.transform.position - transform.position;
+		Vector2 deltaPosition = targetPos - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
 
@@ -186,7 +200,7 @@ public class EnemyShipScript : MonoBehaviour
 		float ammo = 1.0f; //Infinite ammo temp fix
 		currentWeapon.Handle(ref ammo, firePoint, true, rb, turretScript);
 
-		Vector2 deltaPosition = player.transform.position - transform.position;
+		Vector2 deltaPosition = targetPos - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
 
@@ -211,7 +225,7 @@ public class EnemyShipScript : MonoBehaviour
 		currentWeapon.Handle(ref ammo, firePoint, true, rb, turretScript);
 		extraWeapon.Handle(ref ammo, extraFirePoint, true, rb, extraTurretScript);
 
-		Vector2 deltaPosition = player.transform.position - transform.position;
+		Vector2 deltaPosition = target.transform.position - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
 

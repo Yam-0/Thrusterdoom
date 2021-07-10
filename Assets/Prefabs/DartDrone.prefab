@@ -5075,8 +5075,11 @@ MonoBehaviour:
   maxHealth: 40
   currentWeapon: {fileID: 11400000, guid: 3c2226578e0fcfb499b8cecee1420948, type: 2}
   ai: 2
+  scoreText: 160
+  scoreWorth: 160
   dieEffect: {fileID: 8155597095875993238, guid: e0851243ec17009488ef2ca8946f835b, type: 3}
   wreckage: {fileID: 8398265978084215800, guid: 7f4176dd10564494f9ee4858d1f8a9bd, type: 3}
+  scoreGib: {fileID: 1226370306197883333, guid: 86f336e74f13d0f41a823390e24fef11, type: 3}
   killShakeDuration: 0.3
   killShakeIntensity: 0.4
   firePoint: {fileID: 7676707051202367455}

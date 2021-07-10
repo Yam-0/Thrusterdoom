@@ -21,3 +21,4 @@ MonoBehaviour:
   fireShakeLength: 0.1
   fireShakeIntensity: 0.15
   spread: 0
+  loadTime: 0

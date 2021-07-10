@@ -5048,9 +5048,13 @@ MonoBehaviour:
   currentWeapon: {fileID: 11400000, guid: 3c2226578e0fcfb499b8cecee1420948, type: 2}
   extraWeapon: {fileID: 0}
   ai: 1
+  scoreText: 320!
+  scoreWorth: 320
+  scoreGibForce: 4
   dieEffect: {fileID: 3755075594882541199, guid: b73077f32296f544d849b73b34322e7e, type: 3}
   wreckage: {fileID: 5219217727100501529, guid: e651814636967b04887ea024721421f0, type: 3}
   engine: {fileID: 5592465755161810099}
+  scoreGib: {fileID: 1226370306197883333, guid: 86f336e74f13d0f41a823390e24fef11, type: 3}
   killShakeDuration: 0.3
   killShakeIntensity: 0.4
   firePoint: {fileID: 7681550744849601225}
