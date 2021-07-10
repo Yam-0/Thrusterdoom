@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be7b36176a2b864da6dd8b23f11fc4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 460
+  maxHealth: 600
   currentWeapon: {fileID: 11400000, guid: 920f3435b81eb8742ae6d6e37de4e484, type: 2}
   extraWeapon: {fileID: 11400000, guid: 3c2226578e0fcfb499b8cecee1420948, type: 2}
   ai: 3

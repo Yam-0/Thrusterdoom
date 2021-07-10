@@ -8,21 +8,19 @@ public class Game : MonoBehaviour
 {
 	private static Game _instance;
 	public static Game Instance { get { return _instance; } }
-	public List<GameObject> levels;
-	private int level = 0;
-	private int world = 0;
 
 	public GameObject player;
 	public Transform spawnPoint;
 
-	private CameraScript cameraScript;
+	[Space]
+	public List<Enemy> enemies;
 
 	[Space]
 	public Animator canvasAnimator;
-	public Animator popupAnimator;
-	public Text levelPopup1;
-	public Text levelPopup2;
-	public Text levelPopup3;
+
+	private CameraScript cameraScript;
+	private bool ingame = false;
+	private float timer;
 
 	void Awake()
 	{
@@ -35,23 +33,37 @@ public class Game : MonoBehaviour
 			_instance = this;
 			DontDestroyOnLoad(_instance);
 		}
-
-		level = 0;
 	}
 
 	void Start()
+	{
+		Setup();
+	}
+
+	void Setup()
 	{
 		Camera.main.TryGetComponent<CameraScript>(out cameraScript);
 		player = Instantiate(player, spawnPoint.position, spawnPoint.rotation);
 		cameraScript.SetTrackObject(player);
 		player.SetActive(false);
+		timer = 0.0f;
+
+		foreach (Enemy enemy in enemies)
+		{
+			enemy.timer = enemy.spawnDelay;
+		}
 	}
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.J))
+		if (ingame)
 		{
-			StartCoroutine(StartLevel_Event());
+			timer += Time.deltaTime;
+
+			foreach (Enemy enemy in enemies)
+			{
+				enemy.Handle(player.transform.position, timer);
+			}
 		}
 	}
 
@@ -72,50 +84,47 @@ public class Game : MonoBehaviour
 		cameraScript.smoothTrack = true;
 		yield return new WaitForSeconds(0.3f);
 		cameraScript.smoothTrack = false;
+		ingame = true;
 	}
 
-	private IEnumerator StartLevel_Event()
+	public void PlayerDied()
 	{
-		GameObject levelObject = levels[level];
-		LevelGroup levelGroup = levelObject.GetComponent<LevelGroup>();
-		levelPopup1.text = levelGroup.spawnMessage1;
-		levelPopup2.text = levelGroup.spawnMessage2;
-		levelPopup3.text = levelGroup.spawnMessage3;
-		popupAnimator.SetTrigger("NewLevel");
-
-		Instantiate(levelObject, new Vector3(player.transform.position.x + 75, 0.0f, 0.0f), Quaternion.identity);
-		Time.timeScale = 0;
-		yield return new WaitForSecondsRealtime(3.0f);
-		Time.timeScale = 1;
+		Debug.Log("Player Died!!");
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		ingame = false;
 	}
 
-	static public void LoadScene(int index)
+	[System.Serializable]
+	public class Enemy
 	{
-		SceneManager.LoadScene(index);
-	}
+		public string enemyName;
+		public EnemyType enemyType;
+		public GameObject enemy;
+		public float spawnTime;
+		public float spawnDelay;
+		[HideInInspector]
+		public float timer;
 
-	static public int GetCurrentSceneIndex()
-	{
-		return SceneManager.GetActiveScene().buildIndex;
-	}
-
-	static public void ReloadScene()
-	{
-		LoadScene(GetCurrentSceneIndex());
-	}
-
-	public void LevelComplete()
-	{
-		Debug.Log("Level complete!!");
-		level++;
-	}
-
-	public static class Events
-	{
-		public static void PlayerDied()
+		public void Handle(Vector3 playerPos, float timeAlive)
 		{
-			Debug.Log("Player Died!!");
-			Game.ReloadScene();
+			timer = Mathf.Max(0.0f, timer - Time.deltaTime);
+
+			if (timer == 0)
+			{
+				timer = spawnTime;
+
+				Vector3 spawnPosition = new Vector3();
+				spawnPosition.y = enemyType == EnemyType.ship ? 0.0f : Random.Range(0.0f, 15.0f);
+				spawnPosition.x = playerPos.x + ((Mathf.RoundToInt(Random.value) * 2 - 1) * Random.Range(70.0f, 100.0f));
+				Instantiate(enemy, spawnPosition, Quaternion.identity);
+			}
 		}
 	}
+
+	public enum EnemyType
+	{
+		drone,
+		ship
+	}
 }
+

@@ -140,7 +140,7 @@ public class PlayerScript : MonoBehaviour
 
 		if (health <= 0)
 		{
-			Game.Events.PlayerDied();
+			Game.Instance.PlayerDied();
 		}
 	}
 
