@@ -80,8 +80,10 @@ public class Game : MonoBehaviour
 	private int missionCount = 0;
 	public GameObject thrusterdoom;
 	private GameObject thrusterdoomInstance;
-	private bool thrusterdoomKilled;
-	private bool thrusterdoomSpawned;
+	private bool thrusterdoomKilled = false;
+	private bool thrusterdoomSpawned = false;
+	private float thrusterDoomHealth;
+	private float thrusterDoomMaxHealth;
 	public TextMeshProUGUI timerText;
 	private string formattedTime;
 	public CanvasGroup[] missionGroups;
@@ -96,21 +98,21 @@ public class Game : MonoBehaviour
 	public RectTransform healthBackground;
 	public RectTransform boostBar;
 	public RectTransform boostBackground;
+	public GameObject thrusterDoomHealthBarContainer;
+	public RectTransform thrusterDoomHealthBar;
+	public RectTransform thrusterDoomHealthBackground;
+	public Animation bossBarFadeIn;
+	private bool paused;
+	private float pauseSpeedSwap;
+	public GameObject pauseMenu;
 
 	//Temp --------------------
-	//Missions:
-	//Kill 10 enemies
-	//Get a 4x multiplier
-	//Get 3200 score
-	//Survive for 3.5 minutes
-	//?? - Spot the ship
-	//?? - Destroy H.M.S Thrusterdoom
 
 	//TODO:
-	//Missions
 	//H.M.S Thrusterdoom
 	//Main Menu buttons etc
-	//Ingame Pause
+	//pause menu buttons
+	//Audio SFX/MUSIC
 
 	//Temp --------------------
 
@@ -205,15 +207,38 @@ public class Game : MonoBehaviour
 				{
 					timer += Time.deltaTime;
 
-					foreach (Enemy enemy in enemies)
+					if (!thrusterdoomSpawned)
 					{
-						enemy.Handle(playerInstance.transform.position, timer);
+						foreach (Enemy enemy in enemies)
+						{
+							enemy.Handle(playerInstance.transform.position, timer);
+						}
+					}
+					else
+					{
+						if (thrusterdoomInstance == null && !thrusterdoomKilled)
+						{
+							Debug.Log("Killed H.M.S Thrusterdoom");
+							thrusterdoomKilled = true;
+							gameAnimator.SetTrigger("Ingame_End");
+						}
 					}
 				}
 
-				if (thrusterdoomKilled)
+				if (Input.GetKeyDown(KeyCode.Escape))
 				{
-					Debug.Log("Epic win");
+					if (paused)
+					{
+						Time.timeScale = pauseSpeedSwap;
+					}
+					else
+					{
+						pauseSpeedSwap = Time.timeScale;
+						Time.timeScale = 0.0f;
+					}
+
+					paused = !paused;
+					pauseMenu.SetActive(paused);
 				}
 
 				if (Input.GetKeyDown(KeyCode.K))
@@ -221,7 +246,7 @@ public class Game : MonoBehaviour
 					kills = 10;
 					multiplier = 4;
 					score = 3200;
-					timer = 3.5f * 30;
+					timer = 3.5f * 60;
 				}
 
 				System.TimeSpan t = System.TimeSpan.FromSeconds(timer);
@@ -290,9 +315,7 @@ public class Game : MonoBehaviour
 		TestScore(score);
 		highscoreText.SetText("Highscore: " + highscore);
 		fundsText.SetText("Funds: " + funds + " (+" + addFunds + ")");
-
 		missionText.SetText("Missions: (" + missionCount + "/6)");
-
 		timeText.SetText("Time: " + formattedTime);
 		bestMultiplierText.SetText("Best Multiplier: " + bestMultiplier);
 		damageText.SetText("Damage: " + (int)damage);
@@ -337,7 +360,21 @@ public class Game : MonoBehaviour
 
 	public void UpdateBottomHud()
 	{
+		if (thrusterdoomSpawned)
+		{
+			if (!thrusterdoomKilled)
+			{
+				EnemyShipScript enemyShipScript = thrusterdoomInstance.GetComponent<EnemyShipScript>();
+				thrusterDoomHealth = enemyShipScript.GetHealth();
+				thrusterDoomMaxHealth = enemyShipScript.GetMaxHealth();
+			}
+			else
+			{
+				thrusterDoomHealth = 0.0f;
+			}
 
+			thrusterDoomHealthBar.localScale = new Vector3(thrusterDoomHealth / thrusterDoomMaxHealth, 1, 1);
+		}
 	}
 
 	public void UpdateMissions()
@@ -376,12 +413,23 @@ public class Game : MonoBehaviour
 			{
 				SpawnThrusterdoom();
 			}
-
-			if (thrusterdoomSpawned)
-				thrusterdoomKilled = true;
 		}
 
-		if (!spotMission)
+		bool spotted = false;
+
+		if (thrusterdoomInstance != null && !spotMission && playerInstance != null)
+		{
+			float dist = Vector3.Distance(thrusterdoomInstance.transform.position, playerInstance.transform.position);
+			if (dist < 15.0f)
+			{
+				thrusterDoomHealthBarContainer.SetActive(true);
+				bossBarFadeIn.Play();
+
+				spotted = true;
+			}
+		}
+
+		if (!spotMission && spotted)
 		{
 			spotMission = true;
 			redraw = true;
@@ -475,7 +523,20 @@ public class Game : MonoBehaviour
 		Vector3 playerPos = player.transform.position;
 		Vector3 spawnPos = new Vector3(playerPos.x - 100.0f, 10.0f, 0.0f);
 		thrusterdoomInstance = Instantiate(thrusterdoom, spawnPos, Quaternion.identity);
+		if (thrusterdoomInstance != null)
+			print("Spawned H.M.S Thrusterdoom");
 		thrusterdoomSpawned = true;
+		thrusterdoomKilled = false;
+	}
+
+	public void WinGame()
+	{
+		Reload();
+	}
+
+	public void EndGame()
+	{
+
 	}
 
 	public void AddScore(int addScore)
@@ -706,6 +767,10 @@ public class Game : MonoBehaviour
 			kills = 0;
 			damage = 0;
 			bestMultiplier = 0;
+			thrusterdoomKilled = false;
+			thrusterdoomSpawned = false;
+			thrusterdoomInstance = null;
+			thrusterDoomHealthBarContainer.SetActive(false);
 
 			for (int i = 0; i < 6; i++)
 			{
@@ -804,7 +869,8 @@ public class Game : MonoBehaviour
 		Ingame,
 		Ingame_Shop,
 		Shop,
-		Shop_Ingame
+		Shop_Ingame,
+		Ingame_End
 	}
 }
 

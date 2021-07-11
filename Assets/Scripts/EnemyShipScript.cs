@@ -249,6 +249,16 @@ public class EnemyShipScript : MonoBehaviour
 		}
 	}
 
+	public float GetMaxHealth()
+	{
+		return maxHealth;
+	}
+
+	public float GetHealth()
+	{
+		return health;
+	}
+
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "Hitbox")
