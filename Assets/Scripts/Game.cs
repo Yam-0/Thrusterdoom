@@ -25,6 +25,11 @@ public class Game : MonoBehaviour
 	public TextMeshProUGUI scoreText;
 	public TextMeshProUGUI highscoreText;
 	public TextMeshProUGUI fundsText;
+	public TextMeshProUGUI timeText;
+	public TextMeshProUGUI missionText;
+	public TextMeshProUGUI bestMultiplierText;
+	public TextMeshProUGUI damageText;
+	public TextMeshProUGUI killsText;
 
 	[Space(30)]
 	public List<Weapon> weapons;
@@ -51,8 +56,11 @@ public class Game : MonoBehaviour
 
 	private int score = 0;
 	private int multiplier = 1;
+	private int bestMultiplier = 1;
 	private int highscore = 0;
 	private int funds = 14000;
+	private int kills = 0;
+	private float damage = 0;
 	private int addFunds = 0;
 	private bool gainMultiplier;
 
@@ -62,6 +70,15 @@ public class Game : MonoBehaviour
 	private GameState gameState;
 	private MenuState menuState;
 	private float timer;
+
+	//Temp --------------------
+	//Missions:
+	//Kill 10 enemies
+	//Get a 4x multiplier
+	//Get 2400 score
+	//Survive for 3.5 minutes
+	//Spot the ship
+	//Destroy H.M.S Thrusterdoom
 
 	void Awake()
 	{
@@ -212,8 +229,22 @@ public class Game : MonoBehaviour
 		addFunds = score / 10;
 		AddFunds(addFunds);
 		scoreText.SetText("Score: " + score);
+		TestScore(score);
 		highscoreText.SetText("Highscore: " + highscore);
 		fundsText.SetText("Funds: " + funds + " (+" + addFunds + ")");
+
+		missionText.SetText("Missions: (4/6)");
+
+		System.TimeSpan t = System.TimeSpan.FromSeconds(timer);
+		string time = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
+						t.Hours,
+						t.Minutes,
+						t.Seconds);
+
+		timeText.SetText("Time: " + time);
+		bestMultiplierText.SetText("Best Multiplier: " + bestMultiplier);
+		damageText.SetText("Damage: " + (int)damage);
+		killsText.SetText("Kills: " + kills);
 
 		for (int i = 0; i < 10; i++)
 		{
@@ -260,14 +291,24 @@ public class Game : MonoBehaviour
 
 	public void KilledEnemy()
 	{
+		kills++;
+
 		if (gainMultiplier)
 		{
 			this.multiplier += 1;
+			if (multiplier > bestMultiplier)
+				bestMultiplier = multiplier;
 		}
 		else
 		{
 			gainMultiplier = true;
 		}
+	}
+
+	public void DamagedEnemy(float damage)
+	{
+		this.damage += damage;
+		AddScore(Mathf.RoundToInt(damage / 5));
 	}
 
 	public void ResetMultiplier()
@@ -405,7 +446,6 @@ public class Game : MonoBehaviour
 			case MenuState.Ingame_Shop:
 				menuState = MenuState.Shop;
 				gameState = GameState.Shop;
-				TestScore(score);
 				break;
 
 			case MenuState.Shop_Ingame:
@@ -438,6 +478,10 @@ public class Game : MonoBehaviour
 			menuState = MenuState.Shop_Ingame;
 			gameAnimator.SetTrigger("Shop_Ingame");
 			score = 0;
+			timer = 0;
+			kills = 0;
+			damage = 0;
+			bestMultiplier = 0;
 			ResetMultiplier();
 		}
 

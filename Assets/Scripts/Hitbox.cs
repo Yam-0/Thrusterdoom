@@ -27,10 +27,9 @@ public class Hitbox : MonoBehaviour
 			Camera.main.GetComponent<CameraScript>().Freeze(hitFreezeLength);
 			float damageMultiplier = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().damageMultiplier;
 			Debug.Log(self.ToString() + " hit for " + damage + " x " + damageMultiplier + " damage.");
-
-			if (hitboxSource != HitboxSource.player)
-				return damage;
-			return damage * damageMultiplier;
+			float totalDamage = hitboxSource != HitboxSource.player ? damage : damage * damageMultiplier;
+			Game.Instance.DamagedEnemy(totalDamage);
+			return totalDamage;
 		}
 
 		return 0;
@@ -45,10 +44,9 @@ public class Hitbox : MonoBehaviour
 			float frameDamage = (damage * Time.deltaTime);
 			float damageMultiplier = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().damageMultiplier;
 			Debug.Log(self.ToString() + " hit for " + frameDamage + " x " + damageMultiplier + " frame damage.");
-
-			if (hitboxSource != HitboxSource.player)
-				return frameDamage;
-			return frameDamage * damageMultiplier;
+			float totalDamage = hitboxSource != HitboxSource.player ? frameDamage : frameDamage * damageMultiplier;
+			Game.Instance.DamagedEnemy(totalDamage);
+			return totalDamage;
 		}
 
 		return 0;
