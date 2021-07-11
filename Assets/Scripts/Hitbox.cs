@@ -25,7 +25,10 @@ public class Hitbox : MonoBehaviour
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
 			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
 			Camera.main.GetComponent<CameraScript>().Freeze(hitFreezeLength);
-			float damageMultiplier = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().damageMultiplier;
+			GameObject player = GameObject.FindGameObjectWithTag("Player");
+			float damageMultiplier = 1;
+			if (player != null)
+				damageMultiplier = player.GetComponent<PlayerScript>().damageMultiplier;
 			Debug.Log(self.ToString() + " hit for " + damage + " x " + damageMultiplier + " damage.");
 			float totalDamage = hitboxSource != HitboxSource.player ? damage : damage * damageMultiplier;
 			Game.Instance.DamagedEnemy(totalDamage);
@@ -42,7 +45,10 @@ public class Hitbox : MonoBehaviour
 			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity);
 			Instantiate(hitEffect, hitPoint, Quaternion.identity);
 			float frameDamage = (damage * Time.deltaTime);
-			float damageMultiplier = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().damageMultiplier;
+			GameObject player = GameObject.FindGameObjectWithTag("Player");
+			float damageMultiplier = 1;
+			if (player != null)
+				damageMultiplier = player.GetComponent<PlayerScript>().damageMultiplier;
 			Debug.Log(self.ToString() + " hit for " + frameDamage + " x " + damageMultiplier + " frame damage.");
 			float totalDamage = hitboxSource != HitboxSource.player ? frameDamage : frameDamage * damageMultiplier;
 			Game.Instance.DamagedEnemy(totalDamage);

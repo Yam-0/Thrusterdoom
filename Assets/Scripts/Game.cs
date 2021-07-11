@@ -71,14 +71,48 @@ public class Game : MonoBehaviour
 	private MenuState menuState;
 	private float timer;
 
+	private bool killMission = false;
+	private bool multiplierMission = false;
+	private bool scoreMission = false;
+	private bool timeMission = false;
+	private bool spotMission = false;
+	private bool thrusterdoomMission = false;
+	private int missionCount = 0;
+	public GameObject thrusterdoom;
+	private GameObject thrusterdoomInstance;
+	private bool thrusterdoomKilled;
+	private bool thrusterdoomSpawned;
+	public TextMeshProUGUI timerText;
+	private string formattedTime;
+	public CanvasGroup[] missionGroups;
+	public Image[] missionCheckmarks;
+	public TextMeshProUGUI[] missionTexts;
+	public GameObject killExplosion;
+	public Sprite checkmarkSprite;
+	public Sprite crossSprite;
+	private float playerHealth = 0.0f;
+	private float playerBoost = 0.0f;
+	public RectTransform healthBar;
+	public RectTransform healthBackground;
+	public RectTransform boostBar;
+	public RectTransform boostBackground;
+
 	//Temp --------------------
 	//Missions:
 	//Kill 10 enemies
 	//Get a 4x multiplier
-	//Get 2400 score
+	//Get 3200 score
 	//Survive for 3.5 minutes
-	//Spot the ship
-	//Destroy H.M.S Thrusterdoom
+	//?? - Spot the ship
+	//?? - Destroy H.M.S Thrusterdoom
+
+	//TODO:
+	//Missions
+	//H.M.S Thrusterdoom
+	//Main Menu buttons etc
+	//Ingame Pause
+
+	//Temp --------------------
 
 	void Awake()
 	{
@@ -176,6 +210,30 @@ public class Game : MonoBehaviour
 						enemy.Handle(playerInstance.transform.position, timer);
 					}
 				}
+
+				if (thrusterdoomKilled)
+				{
+					Debug.Log("Epic win");
+				}
+
+				if (Input.GetKeyDown(KeyCode.K))
+				{
+					kills = 10;
+					multiplier = 4;
+					score = 3200;
+					timer = 3.5f * 30;
+				}
+
+				System.TimeSpan t = System.TimeSpan.FromSeconds(timer);
+				formattedTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+								t.Hours,
+								t.Minutes,
+								t.Seconds);
+
+				UpdateMissions();
+				UpdateTopHud();
+				UpdateBottomHud();
+
 				break;
 			case GameState.Shop:
 				break;
@@ -233,15 +291,9 @@ public class Game : MonoBehaviour
 		highscoreText.SetText("Highscore: " + highscore);
 		fundsText.SetText("Funds: " + funds + " (+" + addFunds + ")");
 
-		missionText.SetText("Missions: (4/6)");
+		missionText.SetText("Missions: (" + missionCount + "/6)");
 
-		System.TimeSpan t = System.TimeSpan.FromSeconds(timer);
-		string time = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
-						t.Hours,
-						t.Minutes,
-						t.Seconds);
-
-		timeText.SetText("Time: " + time);
+		timeText.SetText("Time: " + formattedTime);
 		bestMultiplierText.SetText("Best Multiplier: " + bestMultiplier);
 		damageText.SetText("Damage: " + (int)damage);
 		killsText.SetText("Kills: " + kills);
@@ -270,6 +322,160 @@ public class Game : MonoBehaviour
 				damageUpgradeButtons[i].gameObject.GetComponent<Image>().color = lockedColor;
 			}
 		}
+	}
+
+	public void UpdateTopHud()
+	{
+		float maxHealth = healthUpgradeValues[healthUpgradeLevel];
+		float maxBoost = 1.2f;
+
+		healthBackground.localScale = new Vector3(maxHealth / 300.0f, 1, 1);
+		boostBackground.localScale = new Vector3(maxBoost / 1.2f, 1, 1);
+		healthBar.localScale = new Vector3(playerHealth / maxHealth, 1, 1);
+		boostBar.localScale = new Vector3(playerBoost / maxBoost, 1, 1);
+	}
+
+	public void UpdateBottomHud()
+	{
+
+	}
+
+	public void UpdateMissions()
+	{
+		bool redraw = false;
+		timerText.SetText(formattedTime);
+
+		if (!killMission && kills >= 10)
+		{
+			killMission = true;
+			redraw = true;
+			missionCount++;
+		}
+		if (!multiplierMission && multiplier >= 4)
+		{
+			multiplierMission = true;
+			redraw = true;
+			missionCount++;
+		}
+		if (!scoreMission && score >= 3200)
+		{
+			scoreMission = true;
+			redraw = true;
+			missionCount++;
+		}
+		if (!timeMission && timer >= (3.5 * 60))
+		{
+			timeMission = true;
+			redraw = true;
+			missionCount++;
+		}
+
+		if (!thrusterdoomSpawned)
+		{
+			if (missionCount >= 4 && !thrusterdoomSpawned)
+			{
+				SpawnThrusterdoom();
+			}
+
+			if (thrusterdoomSpawned)
+				thrusterdoomKilled = true;
+		}
+
+		if (!spotMission)
+		{
+			spotMission = true;
+			redraw = true;
+			missionCount++;
+		}
+		if (!thrusterdoomMission && thrusterdoomKilled)
+		{
+			thrusterdoomMission = true;
+			redraw = true;
+			missionCount++;
+		}
+
+		string killText = Mathf.Clamp(kills, 0, 10).ToString();
+		missionTexts[0].SetText("Kill 10 enemies (" + killText + "/10)");
+		string multiplierText = Mathf.Clamp(multiplier, 0, 4).ToString();
+		missionTexts[1].SetText("Get a 4x multiplier (" + multiplierText + "/4)");
+		string scoreText = Mathf.Clamp(score, 0, 3200).ToString();
+		missionTexts[2].SetText("Get 3200 score (" + scoreText + "/3200)");
+		string surviveText = Mathf.Clamp((timer / 60.0f), 0.0f, 3.5f).ToString("0.0");
+		missionTexts[3].SetText("Survive for 3.5 minutes (" + surviveText + "/3.5");
+
+		string spotText = "";
+		if (missionCount >= 4)
+		{
+			spotText = "Spot the ship";
+		}
+		else
+		{
+			spotText = "???";
+		}
+		missionTexts[4].SetText(spotText);
+
+		string thrusterdoomText = "";
+		if (missionCount >= 5)
+		{
+			thrusterdoomText = "Destroy H.M.S Thrusterdoom";
+		}
+		else
+		{
+			thrusterdoomText = "???";
+		}
+		missionTexts[5].SetText(thrusterdoomText);
+
+		if (redraw)
+		{
+			float alpha = 0.3f;
+			if (killMission)
+			{
+				missionGroups[0].alpha = alpha;
+				missionCheckmarks[0].sprite = checkmarkSprite;
+			}
+			if (multiplierMission)
+			{
+				missionGroups[1].alpha = alpha;
+				missionCheckmarks[1].sprite = checkmarkSprite;
+			}
+			if (scoreMission)
+			{
+				missionGroups[2].alpha = alpha;
+				missionCheckmarks[2].sprite = checkmarkSprite;
+			}
+			if (timeMission)
+			{
+				missionGroups[3].alpha = alpha;
+				missionCheckmarks[3].sprite = checkmarkSprite;
+			}
+			if (spotMission)
+			{
+				missionGroups[4].alpha = alpha;
+				missionCheckmarks[4].sprite = checkmarkSprite;
+			}
+			if (thrusterdoomMission)
+			{
+				missionGroups[5].alpha = alpha;
+				missionCheckmarks[5].sprite = checkmarkSprite;
+			}
+		}
+	}
+
+	public void SpawnThrusterdoom()
+	{
+		Debug.Log("Spawning H.M.S Thrusterdoom");
+
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+		for (int i = 0; i < enemies.Length; i++)
+		{
+			Instantiate(killExplosion, enemies[i].transform.position, Quaternion.identity);
+			Destroy(enemies[i], 0.0f);
+		}
+
+		Vector3 playerPos = player.transform.position;
+		Vector3 spawnPos = new Vector3(playerPos.x - 100.0f, 10.0f, 0.0f);
+		thrusterdoomInstance = Instantiate(thrusterdoom, spawnPos, Quaternion.identity);
+		thrusterdoomSpawned = true;
 	}
 
 	public void AddScore(int addScore)
@@ -303,6 +509,16 @@ public class Game : MonoBehaviour
 		{
 			gainMultiplier = true;
 		}
+	}
+
+	public void SetHealth(float health)
+	{
+		playerHealth = health;
+	}
+
+	public void SetBoost(float boost)
+	{
+		playerBoost = boost;
 	}
 
 	public void DamagedEnemy(float damage)
@@ -477,11 +693,26 @@ public class Game : MonoBehaviour
 		{
 			menuState = MenuState.Shop_Ingame;
 			gameAnimator.SetTrigger("Shop_Ingame");
+			missionCount = 0;
+			killMission = false;
+			multiplierMission = false;
+			scoreMission = false;
+			timeMission = false;
+			spotMission = false;
+			thrusterdoomMission = false;
+			thrusterdoomSpawned = false;
 			score = 0;
 			timer = 0;
 			kills = 0;
 			damage = 0;
 			bestMultiplier = 0;
+
+			for (int i = 0; i < 6; i++)
+			{
+				missionGroups[i].alpha = 1.0f;
+				missionCheckmarks[i].sprite = crossSprite;
+			}
+
 			ResetMultiplier();
 		}
 

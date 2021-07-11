@@ -86,10 +86,8 @@ public class PlayerScript : MonoBehaviour
 		boost = droneController.GetBoosting() ? Mathf.Max(0, boost - Time.deltaTime) : boost;
 		boost = droneController.GetGliding() ? Mathf.Min(maxBoost, boost + Time.deltaTime) : boost;
 
-		transform.Find("BoostMeter").localScale = new Vector3(0.4f, (boost / maxBoost) * 10, 1);
-		transform.Find("AmmoMeter").localScale = new Vector3(0.4f, (ammo / maxAmmo) * 10, 1);
-		transform.Find("Healthbar").gameObject.SetActive(health != maxHealth);
-		transform.Find("Healthbar").localScale = new Vector3((health / maxHealth) * 10, 0.4f, 1);
+		Game.Instance.SetHealth(health);
+		Game.Instance.SetBoost(boost);
 
 		input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 		input.y = Mathf.Max(0, input.y);
