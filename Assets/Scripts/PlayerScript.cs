@@ -169,6 +169,11 @@ public class PlayerScript : MonoBehaviour
 				Destroy(gameObject, 0);
 			}
 
+			AudioManager.Instance.PlaySfx("die1");
+			AudioManager.Instance.PlaySfx("crash1");
+			AudioManager.Instance.PlaySfx("explosioncrunch");
+			AudioManager.Instance.PlaySfx("lowexplosion");
+
 			Game.Instance.PlayerDied();
 			alive = false;
 		}

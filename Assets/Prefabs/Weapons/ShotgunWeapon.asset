@@ -22,3 +22,5 @@ MonoBehaviour:
   fireShakeIntensity: 0.4
   spread: 0
   loadTime: 0.2
+  soundEffect: crash1
+  loadSoundEffect: metalclick

@@ -21,3 +21,6 @@ MonoBehaviour:
   fireShakeLength: 0.05
   fireShakeIntensity: 0.2
   spread: 0
+  loadTime: 0
+  soundEffect: 
+  loadSoundEffect: 

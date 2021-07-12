@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: hurtTime
       value: 0.08
       objectReference: {fileID: 0}
+    - target: {fileID: 2322460477854894369, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
+      propertyPath: hitWaterSoundEffect
+      value: watersplash2
+      objectReference: {fileID: 0}
     - target: {fileID: 4167882573897670885, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

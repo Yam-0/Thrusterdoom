@@ -15,6 +15,8 @@ public class Hitbox : MonoBehaviour
 	public float hitShakeLength;
 	public float hitShakeIntensity;
 	public float hurtTime = 0.1f;
+	public string hitSoundEffect;
+	public string hitWaterSoundEffect;
 
 	public float Hit(HitboxSource self, Vector2 hitPoint)
 	{
@@ -32,6 +34,7 @@ public class Hitbox : MonoBehaviour
 			Debug.Log(self.ToString() + " hit for " + damage + " x " + damageMultiplier + " damage.");
 			float totalDamage = hitboxSource != HitboxSource.player ? damage : damage * damageMultiplier;
 			Game.Instance.DamagedEnemy(totalDamage);
+			AudioManager.Instance.PlaySfx(hitSoundEffect);
 			return totalDamage;
 		}
 
@@ -52,6 +55,7 @@ public class Hitbox : MonoBehaviour
 			Debug.Log(self.ToString() + " hit for " + frameDamage + " x " + damageMultiplier + " frame damage.");
 			float totalDamage = hitboxSource != HitboxSource.player ? frameDamage : frameDamage * damageMultiplier;
 			Game.Instance.DamagedEnemy(totalDamage);
+			AudioManager.Instance.PlaySfx(hitSoundEffect);
 			return totalDamage;
 		}
 
@@ -64,6 +68,7 @@ public class Hitbox : MonoBehaviour
 		{
 			Camera.main.GetComponent<CameraScript>().Shake(hitShakeLength, hitShakeIntensity / 2);
 			Instantiate(hitWaterEffect, transform.position, Quaternion.identity);
+			AudioManager.Instance.PlaySfx(hitWaterSoundEffect);
 			Destroy(projectile, 0);
 		}
 	}

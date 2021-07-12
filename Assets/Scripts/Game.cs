@@ -224,6 +224,7 @@ public class Game : MonoBehaviour
 					Debug.Log("Killed H.M.S Thrusterdoom");
 					thrusterdoomKilled = true;
 					gameAnimator.SetTrigger("Ingame_End");
+					AudioManager.Instance.PlaySfx("title");
 				}
 
 				if (Input.GetKeyDown(KeyCode.Escape))
@@ -468,6 +469,7 @@ public class Game : MonoBehaviour
 		{
 			if (missionCount >= 4 && !thrusterdoomSpawned)
 			{
+				AudioManager.Instance.PlaySfx("menace");
 				SpawnThrusterdoom();
 			}
 		}
@@ -491,6 +493,7 @@ public class Game : MonoBehaviour
 			spotMission = true;
 			redraw = true;
 			missionCount++;
+			AudioManager.Instance.PlaySfx("braam");
 		}
 		if (!thrusterdoomMission && thrusterdoomKilled)
 		{
@@ -580,6 +583,7 @@ public class Game : MonoBehaviour
 		Vector3 playerPos = playerInstance.transform.position;
 		Vector3 spawnPos = new Vector3(playerPos.x - 100.0f, 16.0f, 0.0f);
 		thrusterdoomInstance = Instantiate(thrusterdoom, spawnPos, Quaternion.identity);
+		AudioManager.Instance.PlaySfx("sneaky");
 		if (thrusterdoomInstance != null)
 			print("Spawned H.M.S Thrusterdoom");
 		thrusterdoomSpawned = true;
@@ -664,6 +668,8 @@ public class Game : MonoBehaviour
 
 	public void HealthUpgradeHover(int a)
 	{
+		AudioManager.Instance.PlaySfx("bong");
+
 		upgradeEffectText.SetText("Effect: " + healthUpgradeEffects[a]);
 		if (healthUpgradeLevel >= a)
 		{
@@ -678,6 +684,8 @@ public class Game : MonoBehaviour
 
 	public void HealthButton(int a)
 	{
+		AudioManager.Instance.PlaySfx("click");
+
 		if (healthUpgradeLevel < a)
 		{
 			int cost = healthUpgradeCosts[a];
@@ -694,6 +702,8 @@ public class Game : MonoBehaviour
 
 	public void DamageUpgradeHover(int a)
 	{
+		AudioManager.Instance.PlaySfx("bong");
+
 		upgradeEffectText.SetText("Effect: " + damageUpgradeEffects[a]);
 		if (damageUpgradeLevel >= a)
 		{
@@ -708,6 +718,8 @@ public class Game : MonoBehaviour
 
 	public void DamageButton(int a)
 	{
+		AudioManager.Instance.PlaySfx("click");
+
 		if (damageUpgradeLevel < a)
 		{
 			int cost = damageUpgradeCosts[a];
@@ -724,6 +736,8 @@ public class Game : MonoBehaviour
 
 	public void ShopHover(int a)
 	{
+		AudioManager.Instance.PlaySfx("bong");
+
 		if (weaponsUnlocked[a])
 		{
 			weaponPriceText.SetText("Cost: Unlocked");
@@ -739,6 +753,7 @@ public class Game : MonoBehaviour
 	{
 		if (weaponsUnlocked[a])
 		{
+			AudioManager.Instance.PlaySfx("switch");
 			weaponsEquipped[a] = !weaponsEquipped[a];
 		}
 		else
@@ -746,6 +761,7 @@ public class Game : MonoBehaviour
 			int cost = weaponPrices[a];
 			if (cost <= funds)
 			{
+				AudioManager.Instance.PlaySfx("click");
 				funds -= cost;
 				weaponsUnlocked[a] = true;
 				weaponsEquipped[a] = true;
@@ -815,6 +831,7 @@ public class Game : MonoBehaviour
 			menuState = MenuState.StartScreen_Ingame;
 			gameAnimator.SetTrigger("StartScreen_Ingame");
 			score = 0;
+			AudioManager.Instance.PlaySfx("magic");
 			ResetMultiplier();
 		}
 
@@ -841,6 +858,7 @@ public class Game : MonoBehaviour
 			thrusterdoomInstance = null;
 			thrusterDoomHealthBarContainer.SetActive(false);
 
+			AudioManager.Instance.PlaySfx("magic");
 			for (int i = 0; i < 6; i++)
 			{
 				missionGroups[i].alpha = 1.0f;

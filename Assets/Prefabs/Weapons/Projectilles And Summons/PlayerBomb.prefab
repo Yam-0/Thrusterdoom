@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2738433206064638748, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
       propertyPath: damage
-      value: 80
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2738433206064638748, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
       propertyPath: hitShakeLength
@@ -34,6 +34,14 @@ PrefabInstance:
     - target: {fileID: 2738433206064638748, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
       propertyPath: hurtTime
       value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 2738433206064638748, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
+      propertyPath: hitSoundEffect
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2738433206064638748, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
+      propertyPath: hitWaterSoundEffect
+      value: watersplash2
       objectReference: {fileID: 0}
     - target: {fileID: 5323288904504983636, guid: 9ca70096315c9b946865fb28ce4ae7ca, type: 3}
       propertyPath: m_LocalPosition.x

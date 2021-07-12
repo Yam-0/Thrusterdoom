@@ -32,6 +32,8 @@ public class DroneController : MonoBehaviour
 
 	private Rigidbody2D rb;
 	private Transform objectTransform;
+	private AudioSource rocketSoundEffect;
+	private float initialRocketVolume;
 
 	private Vector2 moveInput = Vector2.zero;
 	private Vector2 moveDirection = Vector2.zero;
@@ -46,6 +48,12 @@ public class DroneController : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody2D>();
 		objectTransform = transform.Find("object");
+		rocketSoundEffect = GetComponent<AudioSource>();
+		if (rocketSoundEffect != null)
+		{
+			initialRocketVolume = rocketSoundEffect.volume;
+			rocketSoundEffect.volume = 0.0f;
+		}
 
 		if (rocket != null)
 		{
@@ -68,6 +76,7 @@ public class DroneController : MonoBehaviour
 			rocketSettings.startSpeedMultiplier = 1.0f;
 			rocketEmission.rateOverTime = 100 * moveInput.y;
 
+
 			if (!gliding)
 			{
 				if (boosting)
@@ -81,6 +90,12 @@ public class DroneController : MonoBehaviour
 					rocketSettings.startSpeedMultiplier = 2.0f;
 				}
 			}
+
+		}
+		if (rocketSoundEffect != null)
+		{
+			float rocketVolume = boosting ? 0.15f : 0.1f;
+			rocketSoundEffect.volume = initialRocketVolume * moveInput.y * rocketVolume;
 		}
 	}
 

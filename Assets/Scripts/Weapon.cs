@@ -16,6 +16,7 @@ public class Weapon : ScriptableObject
 	public float spread = 0.0f;
 	public float loadTime = 0.0f;
 	public string soundEffect;
+	public string loadSoundEffect;
 
 	private GameObject weaponReference;
 	private float fireCooldown;
@@ -45,6 +46,7 @@ public class Weapon : ScriptableObject
 						weaponReference.transform.position = firePoint.transform.position;
 						weaponReference.transform.rotation = firePoint.transform.rotation;
 					}
+
 				}
 
 				if (firing && weaponReference == null)
@@ -64,12 +66,18 @@ public class Weapon : ScriptableObject
 			case Weapon.WeaponType.summon:
 				if (loadTimer <= 0 && fireCooldown == 0) { loadTimer = loadTime; }
 				firing = ammo > 0 && tryFire;
+
 				if (turretScript != null)
 				{
 					if (turretScript.limitFire)
 					{
 						firing = firing && turretScript.GetWithinRange();
 					}
+				}
+
+				if (loadTimer == loadTime && tryFire && fireCooldown == 0)
+				{
+					AudioManager.Instance.PlaySfx(loadSoundEffect);
 				}
 
 				if (tryFire && loadHolding)
@@ -85,6 +93,7 @@ public class Weapon : ScriptableObject
 				{
 					firing = false;
 				}
+
 				loadHolding = tryFire;
 
 				if (firing && fireCooldown == 0)
@@ -146,6 +155,7 @@ public class Weapon : ScriptableObject
 		newWeapon.spread = weapon.spread;
 		newWeapon.loadTime = weapon.loadTime;
 		newWeapon.soundEffect = weapon.soundEffect;
+		newWeapon.loadSoundEffect = weapon.loadSoundEffect;
 		return newWeapon;
 	}
 

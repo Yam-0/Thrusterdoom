@@ -29,6 +29,7 @@ public class EnemyDroneScript : MonoBehaviour
 	[Space]
 	public Material hurtMaterial;
 	public List<SpriteRenderer> spriteRenderers;
+	public string killSoundEffect;
 
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
@@ -109,6 +110,10 @@ public class EnemyDroneScript : MonoBehaviour
 			scoreGibInstance.GetComponent<ScoreGibManager>().Set(scoreText, scoreGibForce);
 			Game.Instance.AddScore(scoreWorth);
 			Game.Instance.KilledEnemy();
+
+			//Funky
+			AudioManager.Instance.PlaySfx("die1");
+			AudioManager.Instance.PlaySfx("die2");
 
 			Destroy(gameObject, 0);
 		}
@@ -200,7 +205,10 @@ public class EnemyDroneScript : MonoBehaviour
 				float _health = health;
 				health = Mathf.Max(0, health - hitbox.Hit(Hitbox.HitboxSource.enemy, other.transform.position));
 				if (_health != health && hurtTimer < hitbox.hurtTime)
+				{
 					hurtTimer = hitbox.hurtTime;
+
+				}
 			}
 		}
 	}
@@ -215,7 +223,10 @@ public class EnemyDroneScript : MonoBehaviour
 				float _health = health;
 				health = Mathf.Max(0, health - hitbox.Hitting(Hitbox.HitboxSource.enemy, transform.position));
 				if (_health != health && hurtTimer < hitbox.hurtTime)
+				{
 					hurtTimer = hitbox.hurtTime;
+
+				}
 			}
 		}
 	}

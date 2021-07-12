@@ -10062,3 +10062,5 @@ MonoBehaviour:
   hitShakeLength: 0.1
   hitShakeIntensity: 0.3
   hurtTime: 0.1
+  hitSoundEffect: 
+  hitWaterSoundEffect: explosioncrunch

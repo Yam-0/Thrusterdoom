@@ -57,7 +57,8 @@ public class AudioManager : MonoBehaviour
 
 	public void PlaySfx(string name)
 	{
-		sfx[0].PlaySound(name);
+		if (name != null)
+			sfx[0].PlaySound(name);
 	}
 
 	public void StopAll()

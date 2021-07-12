@@ -10063,6 +10063,8 @@ MonoBehaviour:
   hitShakeLength: 0.1
   hitShakeIntensity: 0.3
   hurtTime: 0.1
+  hitSoundEffect: 
+  hitWaterSoundEffect: explosioncrunch
 --- !u!1 &8596500228471349521
 GameObject:
   m_ObjectHideFlags: 0

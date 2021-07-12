@@ -973,8 +973,86 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
+  - soundName: pistol
+    clip: {fileID: 8300000, guid: c0b7c28e2099057499d901b261e88f37, type: 3}
+  - soundName: shell
+    clip: {fileID: 8300000, guid: 2eeeb17703b413241bc6512fdb7d9288, type: 3}
+  - soundName: spam
+    clip: {fileID: 8300000, guid: 5a8baeaf91777ae43bbdde2d97c052b4, type: 3}
+  - soundName: machinegun
+    clip: {fileID: 8300000, guid: c697d6b85d2ee4e45a65cb405231b240, type: 3}
+  - soundName: watersplash1
+    clip: {fileID: 8300000, guid: baac4b8360fe3f84480af407f577b4d5, type: 3}
+  - soundName: watersplash2
+    clip: {fileID: 8300000, guid: b0a177c13f86d264780dbbab4acf7adb, type: 3}
+  - soundName: slice
+    clip: {fileID: 8300000, guid: 80d1dd6f7341d0241879ecb02d7c8b2c, type: 3}
+  - soundName: metalclick
+    clip: {fileID: 8300000, guid: cbb598a1482db254bbc60838b1b1b670, type: 3}
+  - soundName: metallatch
+    clip: {fileID: 8300000, guid: e53cc301c7c95a04d9b1df82a059bc76, type: 3}
+  - soundName: thrusterfire
+    clip: {fileID: 8300000, guid: 3bf53bd2492bc374d989671f26ac826b, type: 3}
   - soundName: sniper
-    clip: {fileID: 8300000, guid: 9bee159ed29b0db4eb6a2df15eb7ffb9, type: 3}
+    clip: {fileID: 8300000, guid: 6e979c25dc40ef443a07a7dc5eff97c7, type: 3}
+  - soundName: braam
+    clip: {fileID: 8300000, guid: a0cf4241be184364bb2ed78228c041fa, type: 3}
+  - soundName: sneaky
+    clip: {fileID: 8300000, guid: fb42681dead7a78449849e1a729e87c7, type: 3}
+  - soundName: title
+    clip: {fileID: 8300000, guid: b1dd0e3c7e930c94bb9a038fbfc2af4a, type: 3}
+  - soundName: menace
+    clip: {fileID: 8300000, guid: a31a5ffcc768ac344bea66b7ef907f36, type: 3}
+  - soundName: magic
+    clip: {fileID: 8300000, guid: d1c417899ffb8b947a154dffd5a01ea4, type: 3}
+  - soundName: hit1
+    clip: {fileID: 8300000, guid: 073c430d7377ddd438350c38ad0c7ad1, type: 3}
+  - soundName: hit2
+    clip: {fileID: 8300000, guid: ed15566ca9e262d46be6c2fd32881048, type: 3}
+  - soundName: die1
+    clip: {fileID: 8300000, guid: 374b6f024424932478f4812578e86b7e, type: 3}
+  - soundName: die2
+    clip: {fileID: 8300000, guid: 2521e466ed5afd34e9bde2273d7a4f2f, type: 3}
+  - soundName: crash1
+    clip: {fileID: 8300000, guid: 655685e6d52f1314aa594c200d71490c, type: 3}
+  - soundName: explosioncrunch
+    clip: {fileID: 8300000, guid: 70d6f503a7096534aaaaa7b6fcc49f3b, type: 3}
+  - soundName: click
+    clip: {fileID: 8300000, guid: 53c717e1121662f469623237eb4cd4f7, type: 3}
+  - soundName: lowexplosion
+    clip: {fileID: 8300000, guid: bea1254e14c4edc498962257b67350a1, type: 3}
+  - soundName: switch
+    clip: {fileID: 8300000, guid: 062c0792b1a9de34397091ba4391bbd3, type: 3}
+  - soundName: bong
+    clip: {fileID: 8300000, guid: 746bc6432fbc737419166047eb88dda2, type: 3}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
+  - soundName: tmp
+    clip: {fileID: 0}
 --- !u!82 &215855994
 AudioSource:
   m_ObjectHideFlags: 0
@@ -987,7 +1065,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -9247,7 +9325,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5ef6c80c1d6af6a4d9c0158790ae32fc, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

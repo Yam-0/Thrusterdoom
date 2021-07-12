@@ -167,6 +167,12 @@ public class EnemyShipScript : MonoBehaviour
 				if (wreckage != null)
 					Instantiate(wreckage, transform.position, transform.rotation);
 
+				AudioManager.Instance.PlaySfx("die1");
+				AudioManager.Instance.PlaySfx("die2");
+				AudioManager.Instance.PlaySfx("crash1");
+				AudioManager.Instance.PlaySfx("explosioncrunch");
+				AudioManager.Instance.PlaySfx("lowexplosion");
+
 				GameObject scoreGibInstance = Instantiate(scoreGib, transform.position, Quaternion.identity);
 				scoreGibInstance.GetComponent<ScoreGibManager>().Set(scoreText, scoreGibForce);
 				Game.Instance.AddScore(scoreWorth);
@@ -344,7 +350,10 @@ public class EnemyShipScript : MonoBehaviour
 				float _health = health;
 				health = Mathf.Max(0, health - hitbox.Hit(Hitbox.HitboxSource.enemy, other.transform.position));
 				if (_health != health && hurtTimer < hitbox.hurtTime)
+				{
 					hurtTimer = hitbox.hurtTime;
+
+				}
 			}
 		}
 	}
@@ -359,7 +368,10 @@ public class EnemyShipScript : MonoBehaviour
 				float _health = health;
 				health = Mathf.Max(0, health - hitbox.Hitting(Hitbox.HitboxSource.enemy, transform.position));
 				if (_health != health && hurtTimer < hitbox.hurtTime)
+				{
 					hurtTimer = hitbox.hurtTime;
+
+				}
 			}
 		}
 	}
