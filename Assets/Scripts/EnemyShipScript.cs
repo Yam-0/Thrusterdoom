@@ -152,6 +152,9 @@ public class EnemyShipScript : MonoBehaviour
 			bool kill = true;
 			if (ai == ShipAiType.thrusterdoom)
 			{
+				AudioManager.Instance.StopSource(1);
+				AudioManager.Instance.StopSource(0);
+
 				Game.Instance.SetKillable(false);
 				Game.Instance.KilledThrusterdoom();
 				thrusterDoomKillTimer = Mathf.Max(0, thrusterDoomKillTimer - Time.deltaTime);

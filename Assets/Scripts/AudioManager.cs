@@ -55,6 +55,34 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
+	public void Swap()
+	{
+		AudioSource source1 = bgm[0];
+		AudioSource source2 = bgm[1];
+
+		if (source1.isPlaying && !source2.isPlaying)
+		{
+			source2.Stop();
+			return;
+		}
+		if (source2.isPlaying && !source1.isPlaying)
+		{
+			source1.Stop();
+			return;
+		}
+	}
+
+	public void StartSource(int a)
+	{
+		AudioSource source = bgm[a];
+		source.Play();
+	}
+	public void StopSource(int a)
+	{
+		AudioSource source = bgm[a];
+		source.Stop();
+	}
+
 	public void PlaySfx(string name)
 	{
 		if (name != null)

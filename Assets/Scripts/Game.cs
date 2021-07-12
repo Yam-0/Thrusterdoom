@@ -59,7 +59,7 @@ public class Game : MonoBehaviour
 	private int multiplier = 1;
 	private int bestMultiplier = 1;
 	private int highscore = 0;
-	private int funds = 14000;
+	private int funds = 0;
 	private int kills = 0;
 	private float damage = 0;
 	private int addFunds = 0;
@@ -469,6 +469,7 @@ public class Game : MonoBehaviour
 		{
 			if (missionCount >= 4 && !thrusterdoomSpawned)
 			{
+				AudioManager.Instance.StopSource(0);
 				AudioManager.Instance.PlaySfx("menace");
 				SpawnThrusterdoom();
 			}
@@ -494,6 +495,7 @@ public class Game : MonoBehaviour
 			redraw = true;
 			missionCount++;
 			AudioManager.Instance.PlaySfx("braam");
+			AudioManager.Instance.StartSource(1);
 		}
 		if (!thrusterdoomMission && thrusterdoomKilled)
 		{
@@ -857,6 +859,9 @@ public class Game : MonoBehaviour
 			thrusterdoomSpawned = false;
 			thrusterdoomInstance = null;
 			thrusterDoomHealthBarContainer.SetActive(false);
+
+			AudioManager.Instance.StopSource(1);
+			AudioManager.Instance.StartSource(0);
 
 			AudioManager.Instance.PlaySfx("magic");
 			for (int i = 0; i < 6; i++)
