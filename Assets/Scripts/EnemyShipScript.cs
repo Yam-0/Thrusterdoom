@@ -34,6 +34,15 @@ public class EnemyShipScript : MonoBehaviour
 	public Material hurtMaterial;
 	public List<SpriteRenderer> spriteRenderers;
 
+	[Header("Thrusterdoom")]
+	public ThrusterdoomTurret[] thrusterdoomTurrets;
+	public GameObject specialSpawn;
+	public List<GameObject> specialProjectiles;
+	public float specialCooldown = 10.0f;
+	private float specialTimer;
+	private int specialIndex;
+	private float thrusterDoomKillTimer = 1.0f;
+
 	private Rigidbody2D rb;
 	private Vector2 input = Vector2.zero;
 	private ShipController shipController;
@@ -42,6 +51,7 @@ public class EnemyShipScript : MonoBehaviour
 	private bool dir = false;
 	private List<Material> materials;
 	private float hurtTimer;
+	private bool alive = true;
 
 	void Start()
 	{
@@ -57,6 +67,11 @@ public class EnemyShipScript : MonoBehaviour
 		if (extraWeapon != null)
 			extraWeapon = Weapon.MakeNewWeapon(extraWeapon);
 
+		for (int i = 0; i < thrusterdoomTurrets.Length; i++)
+		{
+			thrusterdoomTurrets[i].turretWeapon = Weapon.MakeNewWeapon(thrusterdoomTurrets[i].turretWeapon);
+		}
+
 		health = maxHealth;
 	}
 
@@ -65,20 +80,26 @@ public class EnemyShipScript : MonoBehaviour
 		if (target != null)
 			targetPos = target.transform.position;
 
-		switch (ai)
+		if (alive)
 		{
-			case ShipAiType.enforcer:
-				EnforcerAi();
-				break;
-			case ShipAiType.gunboat:
-				GunboatAi();
-				break;
-			case ShipAiType.canonboat:
-				CanonboatAi();
-				break;
-			case ShipAiType.carrier:
-				CarrierAi();
-				break;
+			switch (ai)
+			{
+				case ShipAiType.enforcer:
+					EnforcerAi();
+					break;
+				case ShipAiType.gunboat:
+					GunboatAi();
+					break;
+				case ShipAiType.canonboat:
+					CanonboatAi();
+					break;
+				case ShipAiType.carrier:
+					CarrierAi();
+					break;
+				case ShipAiType.thrusterdoom:
+					ThrusterdoomAi();
+					break;
+			}
 		}
 
 		Vector3 scale = transform.localScale;
@@ -126,18 +147,32 @@ public class EnemyShipScript : MonoBehaviour
 
 		if (health <= 0)
 		{
-			Camera.main.GetComponent<CameraScript>().Shake(killShakeDuration, killShakeIntensity);
-			if (dieEffect != null)
-				Instantiate(dieEffect, transform.position, Quaternion.identity);
-			if (wreckage != null)
-				Instantiate(wreckage, transform.position, transform.rotation);
+			alive = false;
 
-			GameObject scoreGibInstance = Instantiate(scoreGib, transform.position, Quaternion.identity);
-			scoreGibInstance.GetComponent<ScoreGibManager>().Set(scoreText, scoreGibForce);
-			Game.Instance.AddScore(scoreWorth);
-			Game.Instance.KilledEnemy();
+			bool kill = true;
+			if (ai == ShipAiType.thrusterdoom)
+			{
+				Game.Instance.KilledThrusterdoom();
+				thrusterDoomKillTimer = Mathf.Max(0, thrusterDoomKillTimer - Time.deltaTime);
+				if (thrusterDoomKillTimer > 0)
+					kill = false;
+			}
 
-			Destroy(gameObject, 0);
+			if (kill)
+			{
+				Camera.main.GetComponent<CameraScript>().Shake(killShakeDuration, killShakeIntensity);
+				if (dieEffect != null)
+					Instantiate(dieEffect, transform.position, Quaternion.identity);
+				if (wreckage != null)
+					Instantiate(wreckage, transform.position, transform.rotation);
+
+				GameObject scoreGibInstance = Instantiate(scoreGib, transform.position, Quaternion.identity);
+				scoreGibInstance.GetComponent<ScoreGibManager>().Set(scoreText, scoreGibForce);
+				Game.Instance.AddScore(scoreWorth);
+				Game.Instance.KilledEnemy();
+
+				Destroy(gameObject, 0.0f);
+			}
 		}
 	}
 
@@ -225,7 +260,7 @@ public class EnemyShipScript : MonoBehaviour
 		currentWeapon.Handle(ref ammo, firePoint, true, rb, turretScript);
 		extraWeapon.Handle(ref ammo, extraFirePoint, true, rb, extraTurretScript);
 
-		Vector2 deltaPosition = target.transform.position - transform.position;
+		Vector2 deltaPosition = targetPos - transform.position;
 		float toPlayerAngle = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
 		float distance = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
 
@@ -249,6 +284,40 @@ public class EnemyShipScript : MonoBehaviour
 		}
 	}
 
+	void ThrusterdoomAi()
+	{
+		dir = true;
+
+		Vector2 delta = targetPos - transform.position;
+		float dist = Vector3.Distance(targetPos, transform.position);
+		float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+
+		input.y = 1.0f;
+		input.x = 1.0f;
+
+		shipController.SetMoveInput(input.normalized);
+
+		if (dist < 45.0f)
+		{
+			foreach (ThrusterdoomTurret turret in thrusterdoomTurrets)
+			{
+				float ammo = 1.0f;
+				turret.turretWeapon.Handle(ref ammo, turret.firePoint, true, rb, turret.turretScript);
+			}
+
+			specialTimer = Mathf.Max(0, specialTimer - Time.deltaTime);
+			if (specialTimer == 0)
+			{
+				specialTimer = specialCooldown;
+				float _angle = Vector2.Angle(specialSpawn.transform.position, targetPos);
+				Instantiate(specialProjectiles[specialIndex], specialSpawn.transform.position, Quaternion.Euler(0, 0, angle), specialSpawn.transform);
+				specialIndex++;
+				if (specialIndex >= specialProjectiles.Count) { specialIndex = 0; }
+			}
+		}
+
+	}
+
 	public float GetMaxHealth()
 	{
 		return maxHealth;
@@ -257,6 +326,11 @@ public class EnemyShipScript : MonoBehaviour
 	public float GetHealth()
 	{
 		return health;
+	}
+
+	public void Hurt(float time)
+	{
+		hurtTimer = time;
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -289,11 +363,20 @@ public class EnemyShipScript : MonoBehaviour
 		}
 	}
 
+	[System.Serializable]
+	public class ThrusterdoomTurret
+	{
+		public Weapon turretWeapon;
+		public TurretScript turretScript;
+		public Transform firePoint;
+	}
+
 	public enum ShipAiType
 	{
 		enforcer,
 		gunboat,
 		canonboat,
-		carrier
+		carrier,
+		thrusterdoom
 	}
 }

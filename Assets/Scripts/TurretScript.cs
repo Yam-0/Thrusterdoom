@@ -14,6 +14,7 @@ public class TurretScript : MonoBehaviour
 	private GameObject target;
 	private Vector3 targetPos = Vector3.zero;
 	private float angleToTarget;
+	private float targetRotation;
 	private bool withinRange;
 	private Animation an;
 
@@ -21,6 +22,7 @@ public class TurretScript : MonoBehaviour
 	{
 		target = GameObject.FindGameObjectWithTag("Player");
 		initialRotation = transform.rotation.eulerAngles.z;
+		targetRotation = initialRotation;
 		an = GetComponent<Animation>();
 	}
 
@@ -32,18 +34,19 @@ public class TurretScript : MonoBehaviour
 		transform.localScale = new Vector3(boat.transform.localScale.x, 1, 1);
 
 		Vector2 deltaPosition = transform.position - targetPos;
-		angleToTarget = Mathf.Atan2(deltaPosition.y, deltaPosition.x);
-		float targetRotation = angleToTarget * Mathf.Rad2Deg + 90;
-		float distanceToTarget = Mathf.Sqrt(deltaPosition.x * deltaPosition.x + deltaPosition.y * deltaPosition.y);
+		angleToTarget = Mathf.Atan2(deltaPosition.y, deltaPosition.x) * Mathf.Rad2Deg + 90;
+		float distanceToTarget = Vector3.Distance(transform.position, targetPos);
 
-		if (deltaPosition.y < 0 || (targetUnder && deltaPosition.y > 0))
+		if (deltaPosition.y <= 0 || (targetUnder && deltaPosition.y > 0))
 		{
-			targetRotation = Mathf.Clamp(targetRotation, initialRotation - maxAngle / 2, initialRotation + maxAngle / 2);
+			targetRotation = Mathf.Clamp(angleToTarget, initialRotation - maxAngle / 2, initialRotation + maxAngle / 2);
 			transform.rotation = Quaternion.Euler(0, 0, targetRotation);
 		}
 
-		withinRange = (deltaPosition.y < 0 && targetRotation > initialRotation - maxAngle / 2 && targetRotation < initialRotation + maxAngle / 2);
+
+		withinRange = (targetRotation > initialRotation - maxAngle / 2 && targetRotation < initialRotation + maxAngle / 2);
 		withinRange = withinRange && distanceToTarget <= maxRange;
+		withinRange = withinRange && ((deltaPosition.y > 0 && targetUnder) || (deltaPosition.y <= 0 && !targetUnder));
 	}
 
 	public void Fire()

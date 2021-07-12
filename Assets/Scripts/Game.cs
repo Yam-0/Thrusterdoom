@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -105,14 +106,15 @@ public class Game : MonoBehaviour
 	private bool paused;
 	private float pauseSpeedSwap;
 	public GameObject pauseMenu;
+	private GameObject thrusterDoomPointer;
 
 	//Temp --------------------
 
 	//TODO:
-	//H.M.S Thrusterdoom
 	//Main Menu buttons etc
 	//pause menu buttons
 	//Audio SFX/MUSIC
+	//Helicopter
 
 	//Temp --------------------
 
@@ -247,6 +249,53 @@ public class Game : MonoBehaviour
 					multiplier = 4;
 					score = 3200;
 					timer = 3.5f * 60;
+				}
+
+				if (!thrusterdoomKilled && thrusterdoomSpawned)
+				{
+					if (thrusterdoomInstance != null && playerInstance != null)
+					{
+						float dist = Vector3.Distance(thrusterdoomInstance.transform.position, playerInstance.transform.position);
+						PixelPerfectCamera perfectCamera = Camera.main.GetComponent<PixelPerfectCamera>();
+
+						if (perfectCamera != null)
+						{
+							thrusterDoomPointer = playerInstance.transform.Find("pointer").gameObject;
+
+							if (dist < 45.0f)
+							{
+								if (cameraScript.trackObject != thrusterdoomInstance)
+								{
+									cameraScript.SetTrackObject(thrusterdoomInstance);
+									//cameraScript.smoothTrack = true;
+									perfectCamera.assetsPPU = 8;
+									cameraScript.shakeMult = 2;
+								}
+
+								thrusterDoomPointer.SetActive(false);
+							}
+							else
+							{
+								if (cameraScript.trackObject != playerInstance)
+								{
+									cameraScript.SetTrackObject(playerInstance);
+									//cameraScript.smoothTrack = false;
+									perfectCamera.assetsPPU = 16;
+									cameraScript.shakeMult = 1;
+								}
+
+								thrusterDoomPointer.SetActive(true);
+
+								Vector2 delta = thrusterdoomInstance.transform.position - playerInstance.transform.position;
+								float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+								thrusterDoomPointer.transform.rotation = Quaternion.Euler(0, 0, angle);
+							}
+						}
+						else
+						{
+							Debug.Log("Ca");
+						}
+					}
 				}
 
 				System.TimeSpan t = System.TimeSpan.FromSeconds(timer);
@@ -420,7 +469,7 @@ public class Game : MonoBehaviour
 		if (thrusterdoomInstance != null && !spotMission && playerInstance != null)
 		{
 			float dist = Vector3.Distance(thrusterdoomInstance.transform.position, playerInstance.transform.position);
-			if (dist < 15.0f)
+			if (dist < 45.0f)
 			{
 				thrusterDoomHealthBarContainer.SetActive(true);
 				bossBarFadeIn.Play();
@@ -521,7 +570,7 @@ public class Game : MonoBehaviour
 		}
 
 		Vector3 playerPos = player.transform.position;
-		Vector3 spawnPos = new Vector3(playerPos.x - 100.0f, 10.0f, 0.0f);
+		Vector3 spawnPos = new Vector3(playerPos.x - 100.0f, 16.0f, 0.0f);
 		thrusterdoomInstance = Instantiate(thrusterdoom, spawnPos, Quaternion.identity);
 		if (thrusterdoomInstance != null)
 			print("Spawned H.M.S Thrusterdoom");
@@ -534,9 +583,15 @@ public class Game : MonoBehaviour
 		Reload();
 	}
 
+	public void KilledThrusterdoom()
+	{
+		cameraScript.Shake(1.0f, 0.6f);
+		thrusterdoomInstance.GetComponent<EnemyShipScript>().Hurt(1.0f);
+	}
+
 	public void EndGame()
 	{
-
+		Application.Quit();
 	}
 
 	public void AddScore(int addScore)

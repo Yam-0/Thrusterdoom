@@ -49,6 +49,12 @@ public class ProjectileScript : MonoBehaviour
 		}
 
 		rb.velocity = transform.right * rb.velocity.magnitude;
+
+		if (homingTarget == null)
+		{
+			GameObject player = GameObject.FindGameObjectWithTag("Player");
+			if (player != null) { homingTarget = player; }
+		}
 	}
 
 	void SelfDestruct()

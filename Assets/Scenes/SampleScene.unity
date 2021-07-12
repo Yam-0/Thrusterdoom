@@ -4341,7 +4341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &934947368
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4359,9 +4359,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -169.46295}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &934947369
 CanvasGroup:
@@ -7165,7 +7165,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: H.M.S ThrusterDoom still floats
+  m_text: H.M.S ThrusterDoom still flies
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f06efdbeaf21664a80501690dfc6db6, type: 2}
   m_sharedMaterial: {fileID: -3341587040957469365, guid: 0f06efdbeaf21664a80501690dfc6db6, type: 2}
@@ -8322,9 +8322,9 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -169.46295}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1797341194
 CanvasGroup:
@@ -9858,7 +9858,7 @@ MonoBehaviour:
   - {fileID: 1977432332}
   - {fileID: 1106970375}
   - {fileID: 1921941931}
-  thrusterdoom: {fileID: 3032039462734304375, guid: 352e1eb5a3bb2e84b8e079610831d941, type: 3}
+  thrusterdoom: {fileID: 1970024592662679669, guid: 75528a8d15dc9924dbbf392f1204997e, type: 3}
   timerText: {fileID: 1660650592}
   missionGroups:
   - {fileID: 2023531325}
@@ -10670,6 +10670,18 @@ PrefabInstance:
     - target: {fileID: 5775134987506490091, guid: 0db4f0f329e1e8f4686a1533639b4ee7, type: 3}
       propertyPath: m_Name
       value: World_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5775134987715247144, guid: 0db4f0f329e1e8f4686a1533639b4ee7, type: 3}
+      propertyPath: m_RefResolutionX
+      value: 640
+      objectReference: {fileID: 0}
+    - target: {fileID: 5775134987715247144, guid: 0db4f0f329e1e8f4686a1533639b4ee7, type: 3}
+      propertyPath: m_RefResolutionY
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 5775134987715247144, guid: 0db4f0f329e1e8f4686a1533639b4ee7, type: 3}
+      propertyPath: m_AssetsPPU
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0db4f0f329e1e8f4686a1533639b4ee7, type: 3}

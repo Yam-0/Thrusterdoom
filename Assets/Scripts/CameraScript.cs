@@ -9,6 +9,8 @@ public class CameraScript : MonoBehaviour
 	public CameraTrackingType cameraTrackingType;
 	public float preMoveDistance;
 	public bool smoothTrack = false;
+	[HideInInspector]
+	public float shakeMult = 1.0f;
 
 	[Space]
 	public bool limitPosition = false;
@@ -93,11 +95,11 @@ public class CameraScript : MonoBehaviour
 			{
 				Vector3 moveDelta = (targetPos - transform.position) * Time.deltaTime * 16;
 				Vector3 newPos = transform.position + moveDelta;
-				transform.position = newPos + shakeOffset;
+				transform.position = newPos + shakeOffset * shakeMult;
 			}
 			else
 			{
-				transform.position = targetPos + shakeOffset;
+				transform.position = targetPos + shakeOffset * shakeMult;
 			}
 		}
 
