@@ -243,6 +243,7 @@ public class Game : MonoBehaviour
 					pauseMenu.SetActive(paused);
 				}
 
+				/*
 				if (Input.GetKeyDown(KeyCode.K))
 				{
 					kills = 10;
@@ -250,6 +251,7 @@ public class Game : MonoBehaviour
 					score = 3200;
 					timer = 3.5f * 60;
 				}
+				*/
 
 				if (!thrusterdoomKilled && thrusterdoomSpawned)
 				{
@@ -361,7 +363,6 @@ public class Game : MonoBehaviour
 		}
 
 		addFunds = score / 10;
-		AddFunds(addFunds);
 		scoreText.SetText("Score: " + score);
 		TestScore(score);
 		highscoreText.SetText("Highscore: " + highscore);
@@ -878,6 +879,8 @@ public class Game : MonoBehaviour
 		{
 			menuState = MenuState.Ingame_Shop;
 			gameAnimator.SetTrigger("Ingame_Shop");
+			addFunds = score / 10;
+			AddFunds(addFunds);
 
 			UpdateButtons();
 		}

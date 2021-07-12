@@ -102,10 +102,12 @@ public class PlayerScript : MonoBehaviour
 			gliding = false;
 		}
 
+		/*
 		if (Input.GetKeyDown(KeyCode.L))
 		{
 			health = 0;
 		}
+		*/
 
 		droneController.SetMoveInput(input);
 		droneController.SetBoostingInput(boosting);
