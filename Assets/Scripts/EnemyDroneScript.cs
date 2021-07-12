@@ -157,6 +157,18 @@ public class EnemyDroneScript : MonoBehaviour
 		//Rotate towards x move direction
 		float angle = droneController.GetMoveDirection().x * -30.0f;
 		transform.rotation = Quaternion.Euler(0, 0, angle);
+
+		GameObject hull = transform.Find("Hull").gameObject;
+		Vector3 scale = hull.transform.localScale;
+		if (rb.velocity.x > 0)
+		{
+			scale.x = -1;
+		}
+		else
+		{
+			scale.x = 1;
+		}
+		hull.transform.localScale = scale;
 	}
 
 	void DartAi()

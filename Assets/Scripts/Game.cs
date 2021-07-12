@@ -107,6 +107,7 @@ public class Game : MonoBehaviour
 	private float pauseSpeedSwap;
 	public GameObject pauseMenu;
 	private GameObject thrusterDoomPointer;
+	private bool killable = true;
 
 	//Temp --------------------
 
@@ -114,7 +115,7 @@ public class Game : MonoBehaviour
 	//Main Menu buttons etc
 	//pause menu buttons
 	//Audio SFX/MUSIC
-	//Helicopter
+	//Proper graphics
 
 	//Temp --------------------
 
@@ -216,15 +217,13 @@ public class Game : MonoBehaviour
 							enemy.Handle(playerInstance.transform.position, timer);
 						}
 					}
-					else
-					{
-						if (thrusterdoomInstance == null && !thrusterdoomKilled)
-						{
-							Debug.Log("Killed H.M.S Thrusterdoom");
-							thrusterdoomKilled = true;
-							gameAnimator.SetTrigger("Ingame_End");
-						}
-					}
+				}
+
+				if (thrusterdoomInstance == null && !thrusterdoomKilled && thrusterdoomSpawned)
+				{
+					Debug.Log("Killed H.M.S Thrusterdoom");
+					thrusterdoomKilled = true;
+					gameAnimator.SetTrigger("Ingame_End");
 				}
 
 				if (Input.GetKeyDown(KeyCode.Escape))
@@ -262,7 +261,7 @@ public class Game : MonoBehaviour
 						{
 							thrusterDoomPointer = playerInstance.transform.Find("pointer").gameObject;
 
-							if (dist < 45.0f)
+							if (dist < 50.0f)
 							{
 								if (cameraScript.trackObject != thrusterdoomInstance)
 								{
@@ -273,6 +272,7 @@ public class Game : MonoBehaviour
 								}
 
 								thrusterDoomPointer.SetActive(false);
+								Camera.main.transform.Find("arrow").GetComponent<ArrowPointerScript>().multiplier = 2.0f;
 							}
 							else
 							{
@@ -285,6 +285,7 @@ public class Game : MonoBehaviour
 								}
 
 								thrusterDoomPointer.SetActive(true);
+								Camera.main.transform.Find("arrow").GetComponent<ArrowPointerScript>().multiplier = 1.0f;
 
 								Vector2 delta = thrusterdoomInstance.transform.position - playerInstance.transform.position;
 								float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
@@ -411,11 +412,18 @@ public class Game : MonoBehaviour
 	{
 		if (thrusterdoomSpawned)
 		{
-			if (!thrusterdoomKilled)
+			if (!thrusterdoomKilled && thrusterdoomInstance != null)
 			{
 				EnemyShipScript enemyShipScript = thrusterdoomInstance.GetComponent<EnemyShipScript>();
-				thrusterDoomHealth = enemyShipScript.GetHealth();
-				thrusterDoomMaxHealth = enemyShipScript.GetMaxHealth();
+				if (enemyShipScript != null)
+				{
+					thrusterDoomHealth = enemyShipScript.GetHealth();
+					thrusterDoomMaxHealth = enemyShipScript.GetMaxHealth();
+				}
+				else
+				{
+					thrusterDoomHealth = 0.0f;
+				}
 			}
 			else
 			{
@@ -469,7 +477,7 @@ public class Game : MonoBehaviour
 		if (thrusterdoomInstance != null && !spotMission && playerInstance != null)
 		{
 			float dist = Vector3.Distance(thrusterdoomInstance.transform.position, playerInstance.transform.position);
-			if (dist < 45.0f)
+			if (dist < 50.0f)
 			{
 				thrusterDoomHealthBarContainer.SetActive(true);
 				bossBarFadeIn.Play();
@@ -569,7 +577,7 @@ public class Game : MonoBehaviour
 			Destroy(enemies[i], 0.0f);
 		}
 
-		Vector3 playerPos = player.transform.position;
+		Vector3 playerPos = playerInstance.transform.position;
 		Vector3 spawnPos = new Vector3(playerPos.x - 100.0f, 16.0f, 0.0f);
 		thrusterdoomInstance = Instantiate(thrusterdoom, spawnPos, Quaternion.identity);
 		if (thrusterdoomInstance != null)
@@ -585,7 +593,7 @@ public class Game : MonoBehaviour
 
 	public void KilledThrusterdoom()
 	{
-		cameraScript.Shake(1.0f, 0.6f);
+		cameraScript.Shake(4.0f, 0.8f);
 		thrusterdoomInstance.GetComponent<EnemyShipScript>().Hurt(1.0f);
 	}
 
@@ -762,7 +770,13 @@ public class Game : MonoBehaviour
 	public void PlayerDied()
 	{
 		Debug.Log("Player died, " + gameState.ToString());
-		TransitionTo(MenuState.Shop);
+		if (killable)
+			TransitionTo(MenuState.Shop);
+	}
+
+	public void SetKillable(bool killable)
+	{
+		this.killable = killable;
 	}
 
 	public void TransitionDone()

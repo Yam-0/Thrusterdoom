@@ -22,3 +22,4 @@ MonoBehaviour:
   fireShakeIntensity: 0.2
   spread: 0
   loadTime: 0
+  soundEffect: sniper

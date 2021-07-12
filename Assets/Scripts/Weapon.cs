@@ -15,6 +15,7 @@ public class Weapon : ScriptableObject
 	public float fireShakeIntensity;
 	public float spread = 0.0f;
 	public float loadTime = 0.0f;
+	public string soundEffect;
 
 	private GameObject weaponReference;
 	private float fireCooldown;
@@ -105,7 +106,8 @@ public class Weapon : ScriptableObject
 					Vector2 recoilDirection = -fireDirection;
 					rb.AddForce(recoilDirection * recoilForce);
 
-					AudioManager.Instance.PlaySfx("shoot1");
+					if (soundEffect != null)
+						AudioManager.Instance.PlaySfx(soundEffect);
 
 					GameObject projectile = Instantiate(weapon, firePoint.position, Quaternion.Euler(0, 0, fireRotation));
 					ProjectileScript projectileScript;
@@ -143,6 +145,7 @@ public class Weapon : ScriptableObject
 		newWeapon.fireShakeIntensity = weapon.fireShakeIntensity;
 		newWeapon.spread = weapon.spread;
 		newWeapon.loadTime = weapon.loadTime;
+		newWeapon.soundEffect = weapon.soundEffect;
 		return newWeapon;
 	}
 

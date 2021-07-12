@@ -43,7 +43,6 @@ public class TurretScript : MonoBehaviour
 			transform.rotation = Quaternion.Euler(0, 0, targetRotation);
 		}
 
-
 		withinRange = (targetRotation > initialRotation - maxAngle / 2 && targetRotation < initialRotation + maxAngle / 2);
 		withinRange = withinRange && distanceToTarget <= maxRange;
 		withinRange = withinRange && ((deltaPosition.y > 0 && targetUnder) || (deltaPosition.y <= 0 && !targetUnder));

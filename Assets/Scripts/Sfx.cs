@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class Sfx : MonoBehaviour
 {
-    public Sound[] sounds;
+	public Sound[] sounds;
 
-    AudioSource audioSource;
-    Dictionary<string, Sound> soundByName = new Dictionary<string, Sound>();
+	AudioSource audioSource;
+	Dictionary<string, Sound> soundByName = new Dictionary<string, Sound>();
 
-    void Start() {
-        audioSource = GetComponent<AudioSource>();
+	void Start()
+	{
+		audioSource = GetComponent<AudioSource>();
 
-        foreach (Sound s in sounds) {
-            soundByName.Add(s.soundName, s);
-        }
-    }
+		foreach (Sound s in sounds)
+		{
+			soundByName.Add(s.soundName, s);
+		}
+	}
 
-    public void PlaySound(string soundName) {
-        Sound s;
-        soundByName.TryGetValue(soundName, out s);
-        if (s != null) {
-            audioSource.PlayOneShot(s.clip);
-        }
-    }
+	public void PlaySound(string soundName)
+	{
+		Sound s;
+		soundByName.TryGetValue(soundName, out s);
+		if (s != null)
+		{
+			audioSource.PlayOneShot(s.clip);
+		}
+	}
 }

@@ -17,8 +17,9 @@ MonoBehaviour:
   ammoCost: 0
   fireEffect: {fileID: 3042152123338241840, guid: a48c1d0272680974395e423ec0f6df4d, type: 3}
   recoilForce: 0
-  firerate: 12
+  firerate: 8
   fireShakeLength: 0.05
   fireShakeIntensity: 0.1
   spread: 15
   loadTime: 0
+  soundEffect: spam
