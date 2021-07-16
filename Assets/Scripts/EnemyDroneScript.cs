@@ -203,11 +203,13 @@ public class EnemyDroneScript : MonoBehaviour
 			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
 			{
 				float _health = health;
+				float damage = hitbox.Hit(Hitbox.HitboxSource.enemy, other.transform.position);
+				damage = DamageMask() ? damage : 0;
 				health = Mathf.Max(0, health - hitbox.Hit(Hitbox.HitboxSource.enemy, other.transform.position));
 				if (_health != health && hurtTimer < hitbox.hurtTime)
 				{
+					Game.Instance.DamagedEnemy(damage);
 					hurtTimer = hitbox.hurtTime;
-
 				}
 			}
 		}
@@ -221,14 +223,23 @@ public class EnemyDroneScript : MonoBehaviour
 			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
 			{
 				float _health = health;
+				float damage = hitbox.Hitting(Hitbox.HitboxSource.enemy, transform.position);
+				damage = DamageMask() ? damage : 0;
 				health = Mathf.Max(0, health - hitbox.Hitting(Hitbox.HitboxSource.enemy, transform.position));
 				if (_health != health && hurtTimer < hitbox.hurtTime)
 				{
+					Game.Instance.DamagedEnemy(damage);
 					hurtTimer = hitbox.hurtTime;
-
 				}
 			}
 		}
+	}
+
+	private bool DamageMask()
+	{
+		bool takeDamage = true;
+
+		return takeDamage;
 	}
 
 	public enum DroneAiType

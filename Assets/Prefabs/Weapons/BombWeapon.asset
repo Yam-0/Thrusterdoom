@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c37735a649779949b418362632fbdc7, type: 3}
   m_Name: BombWeapon
   m_EditorClassIdentifier: 
+  weaponName: StratoBomb
   weaponType: 1
   weapon: {fileID: 9002992386147124476, guid: f30294ff1fddc7a44a04d5152fb71ad8, type: 3}
   ammoCost: 1
@@ -23,3 +24,5 @@ MonoBehaviour:
   spread: 0
   loadTime: 0
   soundEffect: slice
+  loadSoundEffect: 
+  hudIcon: {fileID: 21300000, guid: 97c4e8bfdb7803244a7c89f28e6647cb, type: 3}

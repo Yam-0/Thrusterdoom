@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon", menuName = "ScriptableObjects/Weapon", order = 10)]
 public class Weapon : ScriptableObject
 {
+	public string weaponName;
 	public WeaponType weaponType;
 	public GameObject weapon;
 	public float ammoCost;
@@ -46,7 +47,6 @@ public class Weapon : ScriptableObject
 						weaponReference.transform.position = firePoint.transform.position;
 						weaponReference.transform.rotation = firePoint.transform.rotation;
 					}
-
 				}
 
 				if (firing && weaponReference == null)
@@ -167,6 +167,11 @@ public class Weapon : ScriptableObject
 	public float GetLoadTime()
 	{
 		return loadTimer;
+	}
+
+	public void UserDied()
+	{
+		Destroy(weaponReference);
 	}
 
 	public enum WeaponType

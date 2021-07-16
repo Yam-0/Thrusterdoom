@@ -33,7 +33,6 @@ public class Hitbox : MonoBehaviour
 				damageMultiplier = player.GetComponent<PlayerScript>().damageMultiplier;
 			Debug.Log(self.ToString() + " hit for " + damage + " x " + damageMultiplier + " damage.");
 			float totalDamage = hitboxSource != HitboxSource.player ? damage : damage * damageMultiplier;
-			Game.Instance.DamagedEnemy(totalDamage);
 			AudioManager.Instance.PlaySfx(hitSoundEffect);
 			return totalDamage;
 		}
@@ -54,7 +53,6 @@ public class Hitbox : MonoBehaviour
 				damageMultiplier = player.GetComponent<PlayerScript>().damageMultiplier;
 			Debug.Log(self.ToString() + " hit for " + frameDamage + " x " + damageMultiplier + " frame damage.");
 			float totalDamage = hitboxSource != HitboxSource.player ? frameDamage : frameDamage * damageMultiplier;
-			Game.Instance.DamagedEnemy(totalDamage);
 			AudioManager.Instance.PlaySfx(hitSoundEffect);
 			return totalDamage;
 		}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c37735a649779949b418362632fbdc7, type: 3}
   m_Name: ShotgunWeapon
   m_EditorClassIdentifier: 
+  weaponName: .28 Scatter
   weaponType: 1
   weapon: {fileID: 8155597095875993238, guid: 979d057369a0c7e408985e01eaf35228, type: 3}
   ammoCost: 1
@@ -24,3 +25,4 @@ MonoBehaviour:
   loadTime: 0.2
   soundEffect: crash1
   loadSoundEffect: metalclick
+  hudIcon: {fileID: 21300000, guid: 3a7b8e7abcd6dfa4ebd509cd1933dd95, type: 3}

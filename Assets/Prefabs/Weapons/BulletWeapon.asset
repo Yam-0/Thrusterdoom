@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c37735a649779949b418362632fbdc7, type: 3}
   m_Name: BulletWeapon
   m_EditorClassIdentifier: 
+  weaponName: .50 Doom
   weaponType: 1
   weapon: {fileID: 1399594618760184098, guid: ce7e3fd3fbb5d744395a760713928f5c, type: 3}
   ammoCost: 0.2
@@ -23,3 +24,5 @@ MonoBehaviour:
   spread: 0
   loadTime: 0
   soundEffect: pistol
+  loadSoundEffect: 
+  hudIcon: {fileID: 21300000, guid: 00b72d1f1ab7d7b4da9f381b9ad96157, type: 3}

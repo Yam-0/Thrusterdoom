@@ -59,7 +59,7 @@ public class Game : MonoBehaviour
 	private int multiplier = 1;
 	private int bestMultiplier = 1;
 	private int highscore = 0;
-	private int funds = 0;
+	private int funds = 20000;
 	private int kills = 0;
 	private float damage = 0;
 	private int addFunds = 0;
@@ -108,6 +108,11 @@ public class Game : MonoBehaviour
 	public GameObject pauseMenu;
 	private GameObject thrusterDoomPointer;
 	private bool killable = true;
+	private int playerEquippedWeapon;
+	public TextMeshProUGUI[] hudWeaponDescriptions;
+	public Image[] hudWeaponPanels;
+	public Color weapodHudColor;
+	public Color weapodHudEquippedColor;
 
 	//Temp --------------------
 
@@ -227,7 +232,7 @@ public class Game : MonoBehaviour
 					AudioManager.Instance.PlaySfx("title");
 				}
 
-				if (Input.GetKeyDown(KeyCode.Escape))
+				if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
 				{
 					if (paused)
 					{
@@ -243,7 +248,6 @@ public class Game : MonoBehaviour
 					pauseMenu.SetActive(paused);
 				}
 
-				/*
 				if (Input.GetKeyDown(KeyCode.K))
 				{
 					kills = 10;
@@ -251,7 +255,6 @@ public class Game : MonoBehaviour
 					score = 3200;
 					timer = 3.5f * 60;
 				}
-				*/
 
 				if (!thrusterdoomKilled && thrusterdoomSpawned)
 				{
@@ -309,6 +312,7 @@ public class Game : MonoBehaviour
 								t.Seconds);
 
 				UpdateMissions();
+				UpdateWeaponsHud();
 				UpdateTopHud();
 				UpdateBottomHud();
 
@@ -572,6 +576,36 @@ public class Game : MonoBehaviour
 		}
 	}
 
+	public void UpdateWeaponsHud()
+	{
+		List<Weapon> weaponList = new List<Weapon>();
+		for (int i = 0; i < weaponsEquipped.Length; i++)
+		{
+			if (weaponsEquipped[i])
+			{
+				weaponList.Add(weapons[i]);
+			}
+		}
+
+		for (int i = 0; i < weapons.Count; i++)
+		{
+			bool enabled = i <= weaponList.Count - 1;
+			hudWeaponPanels[i].enabled = enabled;
+			hudWeaponDescriptions[i].enabled = enabled;
+		}
+
+		for (int i = 0; i < weaponList.Count; i++)
+		{
+			hudWeaponDescriptions[i].SetText(weaponList[i].weaponName);
+			Color hudColor = weapodHudColor;
+			if (playerEquippedWeapon == i)
+			{
+				hudColor = weapodHudEquippedColor;
+			}
+			hudWeaponPanels[i].color = hudColor;
+		}
+	}
+
 	public void SpawnThrusterdoom()
 	{
 		Debug.Log("Spawning H.M.S Thrusterdoom");
@@ -591,6 +625,11 @@ public class Game : MonoBehaviour
 			print("Spawned H.M.S Thrusterdoom");
 		thrusterdoomSpawned = true;
 		thrusterdoomKilled = false;
+	}
+
+	public void SetWeaponIndex(int index)
+	{
+		playerEquippedWeapon = index;
 	}
 
 	public void WinGame()

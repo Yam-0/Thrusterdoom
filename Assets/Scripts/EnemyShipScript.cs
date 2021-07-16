@@ -351,11 +351,13 @@ public class EnemyShipScript : MonoBehaviour
 			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
 			{
 				float _health = health;
-				health = Mathf.Max(0, health - hitbox.Hit(Hitbox.HitboxSource.enemy, other.transform.position));
+				float damage = hitbox.Hit(Hitbox.HitboxSource.enemy, other.transform.position);
+				damage = DamageMask() ? damage : 0;
+				health = Mathf.Max(0, health - damage);
 				if (_health != health && hurtTimer < hitbox.hurtTime)
 				{
+					Game.Instance.DamagedEnemy(damage);
 					hurtTimer = hitbox.hurtTime;
-
 				}
 			}
 		}
@@ -369,14 +371,29 @@ public class EnemyShipScript : MonoBehaviour
 			if (other.gameObject.TryGetComponent<Hitbox>(out hitbox))
 			{
 				float _health = health;
-				health = Mathf.Max(0, health - hitbox.Hitting(Hitbox.HitboxSource.enemy, transform.position));
+				float damage = hitbox.Hitting(Hitbox.HitboxSource.enemy, transform.position);
+				damage = DamageMask() ? damage : 0;
+				health = Mathf.Max(0, health - damage);
 				if (_health != health && hurtTimer < hitbox.hurtTime)
 				{
+					Game.Instance.DamagedEnemy(damage);
 					hurtTimer = hitbox.hurtTime;
-
 				}
 			}
 		}
+	}
+
+	private bool DamageMask()
+	{
+		bool takeDamage = true;
+		if (ai == ShipAiType.thrusterdoom)
+		{
+			float dist = Vector3.Distance(targetPos, transform.position);
+			if (dist > 50.0f)
+				takeDamage = false;
+		}
+
+		return takeDamage;
 	}
 
 	[System.Serializable]

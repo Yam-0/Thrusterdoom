@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c37735a649779949b418362632fbdc7, type: 3}
   m_Name: SniperWeapon
   m_EditorClassIdentifier: 
+  weaponName: Thumper
   weaponType: 1
   weapon: {fileID: 1399594618760184098, guid: cbeed99e3ab31c14f97606ba74245e49, type: 3}
   ammoCost: 4
@@ -24,3 +25,4 @@ MonoBehaviour:
   loadTime: 0.6
   soundEffect: sniper
   loadSoundEffect: metallatch
+  hudIcon: {fileID: 21300000, guid: 5134de3e7dbd5294b8aeb4986ae9606b, type: 3}

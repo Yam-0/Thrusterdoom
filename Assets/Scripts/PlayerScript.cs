@@ -102,12 +102,10 @@ public class PlayerScript : MonoBehaviour
 			gliding = false;
 		}
 
-		/*
 		if (Input.GetKeyDown(KeyCode.L))
 		{
 			health = 0;
 		}
-		*/
 
 		droneController.SetMoveInput(input);
 		droneController.SetBoostingInput(boosting);
@@ -117,6 +115,38 @@ public class PlayerScript : MonoBehaviour
 		{
 			selectedWeapon++;
 			if (selectedWeapon > weapons.Count - 1) { selectedWeapon -= weapons.Count; }
+			Game.Instance.SetWeaponIndex(selectedWeapon);
+		}
+
+		if (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			if (1 <= weapons.Count)
+				selectedWeapon = 0;
+			Game.Instance.SetWeaponIndex(selectedWeapon);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			if (2 <= weapons.Count)
+				selectedWeapon = 1;
+			Game.Instance.SetWeaponIndex(selectedWeapon);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			if (3 <= weapons.Count)
+				selectedWeapon = 2;
+			Game.Instance.SetWeaponIndex(selectedWeapon);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			if (4 <= weapons.Count)
+				selectedWeapon = 3;
+			Game.Instance.SetWeaponIndex(selectedWeapon);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha5))
+		{
+			if (5 <= weapons.Count)
+				selectedWeapon = 4;
+			Game.Instance.SetWeaponIndex(selectedWeapon);
 		}
 
 		float shakeIntensity = droneController.GetMoveInput().y / 20.0f;
@@ -176,6 +206,7 @@ public class PlayerScript : MonoBehaviour
 			AudioManager.Instance.PlaySfx("explosioncrunch");
 			AudioManager.Instance.PlaySfx("lowexplosion");
 
+			currentWeapon.UserDied();
 			Game.Instance.PlayerDied();
 			alive = false;
 		}
