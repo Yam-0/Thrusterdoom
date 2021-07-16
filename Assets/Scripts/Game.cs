@@ -59,7 +59,7 @@ public class Game : MonoBehaviour
 	private int multiplier = 1;
 	private int bestMultiplier = 1;
 	private int highscore = 0;
-	private int funds = 20000;
+	private int funds = 0;
 	private int kills = 0;
 	private float damage = 0;
 	private int addFunds = 0;
@@ -248,6 +248,7 @@ public class Game : MonoBehaviour
 					pauseMenu.SetActive(paused);
 				}
 
+				/*
 				if (Input.GetKeyDown(KeyCode.K))
 				{
 					kills = 10;
@@ -255,6 +256,7 @@ public class Game : MonoBehaviour
 					score = 3200;
 					timer = 3.5f * 60;
 				}
+				*/
 
 				if (!thrusterdoomKilled && thrusterdoomSpawned)
 				{
